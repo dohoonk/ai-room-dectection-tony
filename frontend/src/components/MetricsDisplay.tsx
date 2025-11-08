@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, Grid } from '@mui/material';
+import { Card, CardContent, Typography, Box, Stack } from '@mui/material';
 
 export interface MetricsDisplayProps {
   roomsCount: number;
@@ -48,42 +48,40 @@ const MetricsDisplay: React.FC<MetricsDisplayProps> = ({
         <Typography variant="h6" gutterBottom>
           Detection Metrics
         </Typography>
-        <Grid container spacing={2} sx={{ mt: 1 }}>
-          <Grid item xs={12} sm={4}>
-            <Box>
-              <Typography variant="body2" color="text.secondary">
-                Rooms Detected
-              </Typography>
-              <Typography variant="h5" component="div">
-                {roomsCount}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Box>
-              <Typography variant="body2" color="text.secondary">
-                Processing Time
-              </Typography>
-              <Typography variant="h5" component="div">
-                {formatTime(processingTime)}
-              </Typography>
-            </Box>
-          </Grid>
-          <Grid item xs={12} sm={4}>
-            <Box>
-              <Typography variant="body2" color="text.secondary">
-                Confidence Score
-              </Typography>
-              <Typography
-                variant="h5"
-                component="div"
-                color={getConfidenceColor(confidenceScore)}
-              >
-                {formatConfidence(confidenceScore)}
-              </Typography>
-            </Box>
-          </Grid>
-        </Grid>
+        <Stack
+          direction={{ xs: 'column', sm: 'row' }}
+          spacing={2}
+          sx={{ mt: 1 }}
+        >
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="body2" color="text.secondary">
+              Rooms Detected
+            </Typography>
+            <Typography variant="h5" component="div">
+              {roomsCount}
+            </Typography>
+          </Box>
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="body2" color="text.secondary">
+              Processing Time
+            </Typography>
+            <Typography variant="h5" component="div">
+              {formatTime(processingTime)}
+            </Typography>
+          </Box>
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="body2" color="text.secondary">
+              Confidence Score
+            </Typography>
+            <Typography
+              variant="h5"
+              component="div"
+              color={getConfidenceColor(confidenceScore)}
+            >
+              {formatConfidence(confidenceScore)}
+            </Typography>
+          </Box>
+        </Stack>
       </CardContent>
     </Card>
   );
