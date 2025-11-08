@@ -48,6 +48,35 @@ EXPECTED_RESULTS = {
     'test_l_shape_floorplan.json': {
         'expected_rooms': 1,
         'description': 'L-shaped room'
+    },
+    # Irregular shapes
+    'irregular_shapes/l_shaped_room.json': {
+        'expected_rooms': 1,
+        'description': 'L-shaped room (irregular)'
+    },
+    'irregular_shapes/t_shaped_room.json': {
+        'expected_rooms': 1,
+        'description': 'T-shaped room'
+    },
+    'irregular_shapes/irregular_pentagon.json': {
+        'expected_rooms': 1,
+        'description': 'Irregular pentagon room'
+    },
+    'irregular_shapes/hexagon_room.json': {
+        'expected_rooms': 1,
+        'description': 'Regular hexagon room'
+    },
+    'irregular_shapes/trapezoid_room.json': {
+        'expected_rooms': 1,
+        'description': 'Trapezoid room'
+    },
+    'irregular_shapes/multi_irregular_rooms.json': {
+        'expected_rooms': 3,
+        'description': 'Multiple irregular-shaped rooms'
+    },
+    'irregular_shapes/angled_walls_room.json': {
+        'expected_rooms': 1,
+        'description': 'Room with angled walls'
     }
 }
 

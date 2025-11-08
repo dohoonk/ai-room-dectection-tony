@@ -1,0 +1,50 @@
+[
+  {
+    "type": "line",
+    "start": [
+      50,
+      0
+    ],
+    "end": [
+      350,
+      0
+    ],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [
+      350,
+      0
+    ],
+    "end": [
+      400,
+      300
+    ],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [
+      400,
+      300
+    ],
+    "end": [
+      0,
+      300
+    ],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [
+      0,
+      300
+    ],
+    "end": [
+      50,
+      0
+    ],
+    "is_load_bearing": true
+  }
+]
