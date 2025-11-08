@@ -1,0 +1,2402 @@
+[
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      0.0
+    ],
+    "end": [
+      77.55,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      0.0
+    ],
+    "end": [
+      77.55,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      77.55
+    ],
+    "end": [
+      0.0,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      77.55
+    ],
+    "end": [
+      0.0,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      0.0
+    ],
+    "end": [
+      174.49,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      0.0
+    ],
+    "end": [
+      174.49,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      77.55
+    ],
+    "end": [
+      96.94,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      77.55
+    ],
+    "end": [
+      96.94,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      0.0
+    ],
+    "end": [
+      271.43,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      0.0
+    ],
+    "end": [
+      271.43,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      77.55
+    ],
+    "end": [
+      193.88,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      77.55
+    ],
+    "end": [
+      193.88,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      0.0
+    ],
+    "end": [
+      368.37,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      0.0
+    ],
+    "end": [
+      368.37,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      77.55
+    ],
+    "end": [
+      290.82,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      77.55
+    ],
+    "end": [
+      290.82,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      0.0
+    ],
+    "end": [
+      465.31,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      0.0
+    ],
+    "end": [
+      465.31,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      77.55
+    ],
+    "end": [
+      387.76,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      77.55
+    ],
+    "end": [
+      387.76,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      0.0
+    ],
+    "end": [
+      562.24,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      0.0
+    ],
+    "end": [
+      562.24,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      77.55
+    ],
+    "end": [
+      484.69,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      77.55
+    ],
+    "end": [
+      484.69,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      0.0
+    ],
+    "end": [
+      659.18,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      0.0
+    ],
+    "end": [
+      659.18,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      77.55
+    ],
+    "end": [
+      581.63,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      77.55
+    ],
+    "end": [
+      581.63,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      0.0
+    ],
+    "end": [
+      756.12,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      0.0
+    ],
+    "end": [
+      756.12,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      77.55
+    ],
+    "end": [
+      678.57,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      77.55
+    ],
+    "end": [
+      678.57,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      0.0
+    ],
+    "end": [
+      853.06,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      0.0
+    ],
+    "end": [
+      853.06,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      77.55
+    ],
+    "end": [
+      775.51,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      77.55
+    ],
+    "end": [
+      775.51,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      0.0
+    ],
+    "end": [
+      950.0,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      0.0
+    ],
+    "end": [
+      950.0,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      77.55
+    ],
+    "end": [
+      872.45,
+      77.55
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      77.55
+    ],
+    "end": [
+      872.45,
+      0.0
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      96.94
+    ],
+    "end": [
+      77.55,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      96.94
+    ],
+    "end": [
+      77.55,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      174.49
+    ],
+    "end": [
+      0.0,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      174.49
+    ],
+    "end": [
+      0.0,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      96.94
+    ],
+    "end": [
+      174.49,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      96.94
+    ],
+    "end": [
+      174.49,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      174.49
+    ],
+    "end": [
+      96.94,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      174.49
+    ],
+    "end": [
+      96.94,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      96.94
+    ],
+    "end": [
+      271.43,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      96.94
+    ],
+    "end": [
+      271.43,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      174.49
+    ],
+    "end": [
+      193.88,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      174.49
+    ],
+    "end": [
+      193.88,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      96.94
+    ],
+    "end": [
+      368.37,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      96.94
+    ],
+    "end": [
+      368.37,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      174.49
+    ],
+    "end": [
+      290.82,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      174.49
+    ],
+    "end": [
+      290.82,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      96.94
+    ],
+    "end": [
+      465.31,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      96.94
+    ],
+    "end": [
+      465.31,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      174.49
+    ],
+    "end": [
+      387.76,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      174.49
+    ],
+    "end": [
+      387.76,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      96.94
+    ],
+    "end": [
+      562.24,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      96.94
+    ],
+    "end": [
+      562.24,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      174.49
+    ],
+    "end": [
+      484.69,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      174.49
+    ],
+    "end": [
+      484.69,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      96.94
+    ],
+    "end": [
+      659.18,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      96.94
+    ],
+    "end": [
+      659.18,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      174.49
+    ],
+    "end": [
+      581.63,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      174.49
+    ],
+    "end": [
+      581.63,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      96.94
+    ],
+    "end": [
+      756.12,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      96.94
+    ],
+    "end": [
+      756.12,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      174.49
+    ],
+    "end": [
+      678.57,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      174.49
+    ],
+    "end": [
+      678.57,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      96.94
+    ],
+    "end": [
+      853.06,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      96.94
+    ],
+    "end": [
+      853.06,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      174.49
+    ],
+    "end": [
+      775.51,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      174.49
+    ],
+    "end": [
+      775.51,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      96.94
+    ],
+    "end": [
+      950.0,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      96.94
+    ],
+    "end": [
+      950.0,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      174.49
+    ],
+    "end": [
+      872.45,
+      174.49
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      174.49
+    ],
+    "end": [
+      872.45,
+      96.94
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      193.88
+    ],
+    "end": [
+      77.55,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      193.88
+    ],
+    "end": [
+      77.55,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      271.43
+    ],
+    "end": [
+      0.0,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      271.43
+    ],
+    "end": [
+      0.0,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      193.88
+    ],
+    "end": [
+      174.49,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      193.88
+    ],
+    "end": [
+      174.49,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      271.43
+    ],
+    "end": [
+      96.94,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      271.43
+    ],
+    "end": [
+      96.94,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      193.88
+    ],
+    "end": [
+      271.43,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      193.88
+    ],
+    "end": [
+      271.43,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      271.43
+    ],
+    "end": [
+      193.88,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      271.43
+    ],
+    "end": [
+      193.88,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      193.88
+    ],
+    "end": [
+      368.37,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      193.88
+    ],
+    "end": [
+      368.37,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      271.43
+    ],
+    "end": [
+      290.82,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      271.43
+    ],
+    "end": [
+      290.82,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      193.88
+    ],
+    "end": [
+      465.31,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      193.88
+    ],
+    "end": [
+      465.31,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      271.43
+    ],
+    "end": [
+      387.76,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      271.43
+    ],
+    "end": [
+      387.76,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      193.88
+    ],
+    "end": [
+      562.24,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      193.88
+    ],
+    "end": [
+      562.24,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      271.43
+    ],
+    "end": [
+      484.69,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      271.43
+    ],
+    "end": [
+      484.69,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      193.88
+    ],
+    "end": [
+      659.18,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      193.88
+    ],
+    "end": [
+      659.18,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      271.43
+    ],
+    "end": [
+      581.63,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      271.43
+    ],
+    "end": [
+      581.63,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      193.88
+    ],
+    "end": [
+      756.12,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      193.88
+    ],
+    "end": [
+      756.12,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      271.43
+    ],
+    "end": [
+      678.57,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      271.43
+    ],
+    "end": [
+      678.57,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      193.88
+    ],
+    "end": [
+      853.06,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      193.88
+    ],
+    "end": [
+      853.06,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      271.43
+    ],
+    "end": [
+      775.51,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      271.43
+    ],
+    "end": [
+      775.51,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      193.88
+    ],
+    "end": [
+      950.0,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      193.88
+    ],
+    "end": [
+      950.0,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      271.43
+    ],
+    "end": [
+      872.45,
+      271.43
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      271.43
+    ],
+    "end": [
+      872.45,
+      193.88
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      290.82
+    ],
+    "end": [
+      77.55,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      290.82
+    ],
+    "end": [
+      77.55,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      368.37
+    ],
+    "end": [
+      0.0,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      368.37
+    ],
+    "end": [
+      0.0,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      290.82
+    ],
+    "end": [
+      174.49,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      290.82
+    ],
+    "end": [
+      174.49,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      368.37
+    ],
+    "end": [
+      96.94,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      368.37
+    ],
+    "end": [
+      96.94,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      290.82
+    ],
+    "end": [
+      271.43,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      290.82
+    ],
+    "end": [
+      271.43,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      368.37
+    ],
+    "end": [
+      193.88,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      368.37
+    ],
+    "end": [
+      193.88,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      290.82
+    ],
+    "end": [
+      368.37,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      290.82
+    ],
+    "end": [
+      368.37,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      368.37
+    ],
+    "end": [
+      290.82,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      368.37
+    ],
+    "end": [
+      290.82,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      290.82
+    ],
+    "end": [
+      465.31,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      290.82
+    ],
+    "end": [
+      465.31,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      368.37
+    ],
+    "end": [
+      387.76,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      368.37
+    ],
+    "end": [
+      387.76,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      290.82
+    ],
+    "end": [
+      562.24,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      290.82
+    ],
+    "end": [
+      562.24,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      368.37
+    ],
+    "end": [
+      484.69,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      368.37
+    ],
+    "end": [
+      484.69,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      290.82
+    ],
+    "end": [
+      659.18,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      290.82
+    ],
+    "end": [
+      659.18,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      368.37
+    ],
+    "end": [
+      581.63,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      368.37
+    ],
+    "end": [
+      581.63,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      290.82
+    ],
+    "end": [
+      756.12,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      290.82
+    ],
+    "end": [
+      756.12,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      368.37
+    ],
+    "end": [
+      678.57,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      368.37
+    ],
+    "end": [
+      678.57,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      290.82
+    ],
+    "end": [
+      853.06,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      290.82
+    ],
+    "end": [
+      853.06,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      368.37
+    ],
+    "end": [
+      775.51,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      368.37
+    ],
+    "end": [
+      775.51,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      290.82
+    ],
+    "end": [
+      950.0,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      290.82
+    ],
+    "end": [
+      950.0,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      368.37
+    ],
+    "end": [
+      872.45,
+      368.37
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      368.37
+    ],
+    "end": [
+      872.45,
+      290.82
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      387.76
+    ],
+    "end": [
+      77.55,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      387.76
+    ],
+    "end": [
+      77.55,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      77.55,
+      465.31
+    ],
+    "end": [
+      0.0,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      0.0,
+      465.31
+    ],
+    "end": [
+      0.0,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      387.76
+    ],
+    "end": [
+      174.49,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      387.76
+    ],
+    "end": [
+      174.49,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      174.49,
+      465.31
+    ],
+    "end": [
+      96.94,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      96.94,
+      465.31
+    ],
+    "end": [
+      96.94,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      387.76
+    ],
+    "end": [
+      271.43,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      387.76
+    ],
+    "end": [
+      271.43,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      271.43,
+      465.31
+    ],
+    "end": [
+      193.88,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      193.88,
+      465.31
+    ],
+    "end": [
+      193.88,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      387.76
+    ],
+    "end": [
+      368.37,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      387.76
+    ],
+    "end": [
+      368.37,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      368.37,
+      465.31
+    ],
+    "end": [
+      290.82,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      290.82,
+      465.31
+    ],
+    "end": [
+      290.82,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      387.76
+    ],
+    "end": [
+      465.31,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      387.76
+    ],
+    "end": [
+      465.31,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      465.31,
+      465.31
+    ],
+    "end": [
+      387.76,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      387.76,
+      465.31
+    ],
+    "end": [
+      387.76,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      387.76
+    ],
+    "end": [
+      562.24,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      387.76
+    ],
+    "end": [
+      562.24,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      562.24,
+      465.31
+    ],
+    "end": [
+      484.69,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      484.69,
+      465.31
+    ],
+    "end": [
+      484.69,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      387.76
+    ],
+    "end": [
+      659.18,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      387.76
+    ],
+    "end": [
+      659.18,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      659.18,
+      465.31
+    ],
+    "end": [
+      581.63,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      581.63,
+      465.31
+    ],
+    "end": [
+      581.63,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      387.76
+    ],
+    "end": [
+      756.12,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      387.76
+    ],
+    "end": [
+      756.12,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      756.12,
+      465.31
+    ],
+    "end": [
+      678.57,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      678.57,
+      465.31
+    ],
+    "end": [
+      678.57,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      387.76
+    ],
+    "end": [
+      853.06,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      387.76
+    ],
+    "end": [
+      853.06,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      853.06,
+      465.31
+    ],
+    "end": [
+      775.51,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      775.51,
+      465.31
+    ],
+    "end": [
+      775.51,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      387.76
+    ],
+    "end": [
+      950.0,
+      387.76
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      387.76
+    ],
+    "end": [
+      950.0,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      950.0,
+      465.31
+    ],
+    "end": [
+      872.45,
+      465.31
+    ],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [
+      872.45,
+      465.31
+    ],
+    "end": [
+      872.45,
+      387.76
+    ],
+    "is_load_bearing": false
+  }
+]
