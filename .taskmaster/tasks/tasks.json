@@ -447,7 +447,7 @@
         "id": 7,
         "title": "Implement Core Algorithm: Convert Polygon to Bounding Box",
         "description": "Convert detected polygons into axis-aligned bounding boxes.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           6
         ],
@@ -461,7 +461,7 @@
             "description": "Create pytest unit tests to verify the accuracy of bounding box calculations.",
             "dependencies": [],
             "details": "Ensure tests cover various polygon shapes and sizes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Use pytest to validate bounding box dimensions against expected results."
           },
           {
@@ -470,7 +470,7 @@
             "description": "Ensure bounding boxes are axis-aligned.",
             "dependencies": [],
             "details": "Test with polygons that have non-axis-aligned edges to confirm conversion.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that all bounding boxes are axis-aligned post-conversion."
           },
           {
@@ -479,7 +479,7 @@
             "description": "Test edge cases such as degenerate polygons and single points.",
             "dependencies": [],
             "details": "Include tests for polygons that collapse into lines or points.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure bounding boxes are correctly calculated for edge cases."
           },
           {
@@ -488,7 +488,7 @@
             "description": "Ensure bounding boxes correctly encompass the original polygons.",
             "dependencies": [],
             "details": "Test with complex polygons to ensure full coverage.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Check that bounding boxes fully contain the polygons without excess space."
           },
           {
@@ -496,7 +496,7 @@
             "title": "Implement Polygon to Bounding Box Conversion",
             "description": "Use shapely to convert cycles to bounding boxes",
             "details": "Implement a function that takes a cycle (list of nodes) and uses shapely to create a polygon, then extract its axis-aligned bounding box.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 7
           },
@@ -505,7 +505,7 @@
             "title": "Ensure Axis-Alignment",
             "description": "Verify bounding boxes are axis-aligned",
             "details": "Ensure all bounding boxes are axis-aligned (aligned with x and y axes) as required by the MVP specification.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 7
           },
@@ -514,7 +514,7 @@
             "title": "Calculate Bounding Box Coordinates",
             "description": "Extract min/max coordinates for each bounding box",
             "details": "Calculate and return the bounding box coordinates in the format [min_x, min_y, max_x, max_y] for each detected room.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 7
           }
@@ -1020,7 +1020,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T20:59:30.957Z",
+      "updated": "2025-11-08T21:09:31.134Z",
       "description": "Tasks for master context"
     }
   }
