@@ -155,7 +155,8 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
         ctx.fillStyle = isSelected ? 'rgba(255, 152, 0, 0.2)' : 'rgba(76, 175, 80, 0.1)';
         ctx.fillRect(boxMinX, boxMinY, boxWidth, boxHeight);
 
-        // Draw room ID label
+        // Draw room name label (use name_hint if available, otherwise use id)
+        const roomLabel = room.name_hint || room.id;
         ctx.fillStyle = isSelected ? '#ff9800' : '#4caf50';
         ctx.font = 'bold 14px Arial';
         ctx.textAlign = 'left';
@@ -164,14 +165,14 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
         const labelY = boxMinY + 5;
         
         // Draw background for text
-        const textMetrics = ctx.measureText(room.id);
+        const textMetrics = ctx.measureText(roomLabel);
         const textWidth = textMetrics.width;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
         ctx.fillRect(labelX - 2, labelY - 2, textWidth + 4, 18);
         
         // Draw text
         ctx.fillStyle = isSelected ? '#ff9800' : '#4caf50';
-        ctx.fillText(room.id, labelX, labelY);
+        ctx.fillText(roomLabel, labelX, labelY);
       });
     }
   }, [walls, dimensions, rooms, selectedRoomId]);

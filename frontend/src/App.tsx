@@ -7,6 +7,18 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import FileUpload from './components/FileUpload';
 import WallVisualization from './components/WallVisualization';
 import MetricsDisplay from './components/MetricsDisplay';
@@ -33,6 +45,9 @@ function App() {
   const [error, setError] = React.useState<string | null>(null);
   const [metrics, setMetrics] = React.useState<DetectionMetrics | null>(null);
   const [processingStartTime, setProcessingStartTime] = React.useState<number | null>(null);
+  const [renamingRoomId, setRenamingRoomId] = React.useState<string | null>(null);
+  const [renameDialogOpen, setRenameDialogOpen] = React.useState(false);
+  const [newRoomName, setNewRoomName] = React.useState('');
 
   const handleFileUpload = async (data: WallSegment[]) => {
     setWallData(data);
@@ -71,6 +86,51 @@ function App() {
 
   const handleRoomClick = (roomId: string) => {
     setSelectedRoomId(selectedRoomId === roomId ? null : roomId);
+  };
+
+  const handleRenameRoom = (roomId: string) => {
+    const room = rooms?.find(r => r.id === roomId);
+    if (room) {
+      setRenamingRoomId(roomId);
+      setNewRoomName(room.name_hint || room.id);
+      setRenameDialogOpen(true);
+    }
+  };
+
+  const handleRenameConfirm = () => {
+    if (renamingRoomId && newRoomName.trim()) {
+      setRooms(prevRooms => 
+        prevRooms?.map(room => 
+          room.id === renamingRoomId 
+            ? { ...room, name_hint: newRoomName.trim() }
+            : room
+        ) || null
+      );
+      setRenameDialogOpen(false);
+      setRenamingRoomId(null);
+      setNewRoomName('');
+    }
+  };
+
+  const handleRenameCancel = () => {
+    setRenameDialogOpen(false);
+    setRenamingRoomId(null);
+    setNewRoomName('');
+  };
+
+  const handleRemoveRoom = (roomId: string) => {
+    setRooms(prevRooms => prevRooms?.filter(room => room.id !== roomId) || null);
+    if (selectedRoomId === roomId) {
+      setSelectedRoomId(null);
+    }
+    // Update metrics
+    if (metrics && rooms) {
+      const remainingRooms = rooms.filter(room => room.id !== roomId);
+      setMetrics({
+        ...metrics,
+        rooms_count: remainingRooms.length
+      });
+    }
   };
 
   return (
@@ -130,8 +190,59 @@ function App() {
                 selectedRoomId={selectedRoomId}
                 onRoomClick={handleRoomClick}
               />
+              
+              {selectedRoomId && rooms && (
+                <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="body2" color="text.secondary">
+                    Selected: {rooms.find(r => r.id === selectedRoomId)?.name_hint || selectedRoomId}
+                  </Typography>
+                  <IconButton
+                    size="small"
+                    onClick={() => handleRenameRoom(selectedRoomId)}
+                    color="primary"
+                    title="Rename room"
+                  >
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => handleRemoveRoom(selectedRoomId)}
+                    color="error"
+                    title="Remove room"
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              )}
             </Paper>
           )}
+
+          {/* Rename Dialog */}
+          <Dialog open={renameDialogOpen} onClose={handleRenameCancel} maxWidth="sm" fullWidth>
+            <DialogTitle>Rename Room</DialogTitle>
+            <DialogContent>
+              <TextField
+                autoFocus
+                margin="dense"
+                label="Room Name"
+                fullWidth
+                variant="outlined"
+                value={newRoomName}
+                onChange={(e) => setNewRoomName(e.target.value)}
+                onKeyPress={(e) => {
+                  if (e.key === 'Enter') {
+                    handleRenameConfirm();
+                  }
+                }}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleRenameCancel}>Cancel</Button>
+              <Button onClick={handleRenameConfirm} variant="contained" disabled={!newRoomName.trim()}>
+                Save
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Container>
     </ThemeProvider>

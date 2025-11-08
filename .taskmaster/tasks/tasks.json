@@ -730,7 +730,7 @@
         "id": 12,
         "title": "Implement Observability Features",
         "description": "Add UI elements to display processing metrics such as detection time and confidence score.",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           11
         ],
@@ -744,7 +744,7 @@
             "description": "Develop component tests for metrics display rendering, real-time updates, and Material UI integration.",
             "dependencies": [],
             "details": "Include at least 3-5 test cases to ensure good coverage of the observability features.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure tests cover rendering, updates, and integration aspects."
           },
           {
@@ -752,7 +752,7 @@
             "title": "Create Metrics Display Component",
             "description": "Build Material UI component to display metrics",
             "details": "Create a React component using Material UI (e.g., Card, Typography) to display metrics like rooms detected count, processing time, and confidence score.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -761,7 +761,7 @@
             "title": "Implement Processing Time Calculation",
             "description": "Calculate and display processing time",
             "details": "Track the time from when room detection starts until results are received, and display it in a user-friendly format (e.g., \"2.34 seconds\").",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -770,7 +770,7 @@
             "title": "Implement Confidence Score Calculation",
             "description": "Calculate confidence score for detections",
             "details": "Implement logic to calculate a confidence score (0.00-1.00) based on factors like cycle size, shape regularity, and detection quality.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           },
@@ -779,7 +779,7 @@
             "title": "Add Real-Time Updates",
             "description": "Update metrics in real-time during processing",
             "details": "Implement real-time updates to the metrics display as processing progresses, using React state management and potentially WebSocket or polling.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 12
           }
@@ -789,7 +789,7 @@
         "id": 13,
         "title": "Implement Human-in-the-Loop UX",
         "description": "Allow users to interact with detected rooms, such as highlighting and renaming.",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           11
         ],
@@ -1020,7 +1020,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T21:38:47.918Z",
+      "updated": "2025-11-08T21:45:29.537Z",
       "description": "Tasks for master context"
     }
   }
