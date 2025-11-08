@@ -77,7 +77,8 @@ def detect_cycles(graph: nx.Graph) -> List[List[Tuple[float, float]]]:
     Detect all cycles (closed loops) in the graph.
     
     For floorplans, we need to find all faces/regions. This implementation
-    uses cycle_basis and also finds cycles by exploring alternative paths.
+    uses a combination of cycle_basis and edge-based cycle finding to
+    discover all room boundaries, including those formed by internal walls.
     
     Args:
         graph: NetworkX graph of wall connections
@@ -88,57 +89,79 @@ def detect_cycles(graph: nx.Graph) -> List[List[Tuple[float, float]]]:
     cycles = []
     
     try:
-        # Get fundamental cycles
-        cycle_basis = nx.cycle_basis(graph)
         all_cycles = []
+        seen_cycles = set()
         
-        # Add cycles from basis
-        for cycle in cycle_basis:
-            if len(cycle) >= 3:
-                all_cycles.append(cycle)
+        # Method 1: Get cycle basis (fundamental cycles)
+        try:
+            cycle_basis = nx.cycle_basis(graph)
+            for cycle in cycle_basis:
+                if len(cycle) >= 3:
+                    # Normalize: remove duplicate start/end node if present
+                    if cycle[0] == cycle[-1]:
+                        cycle = cycle[:-1]
+                    cycle_tuple = tuple(sorted(cycle))
+                    if cycle_tuple not in seen_cycles:
+                        seen_cycles.add(cycle_tuple)
+                        all_cycles.append(cycle)
+        except:
+            pass
         
-        # Find additional cycles by exploring paths between nodes
-        # For each pair of connected nodes, try to find alternative paths
-        nodes = list(graph.nodes())
-        for i, start in enumerate(nodes):
-            for end in graph.neighbors(start):
-                # Try to find alternative path from end to start
-                graph_temp = graph.copy()
-                graph_temp.remove_edge(start, end)
-                
-                try:
-                    if nx.has_path(graph_temp, end, start):
-                        path = nx.shortest_path(graph_temp, end, start)
-                        if len(path) >= 3:
-                            # Form cycle: start -> end -> path back to start
-                            cycle = [start] + [end] + path[1:]
-                            # Check if this is a new cycle
-                            cycle_set = set(cycle)
-                            is_new = True
-                            for existing in all_cycles:
-                                if set(existing) == cycle_set:
-                                    is_new = False
-                                    break
-                            if is_new and len(cycle) >= 3:
+        # Method 2: For each edge, find cycles that include it
+        # This helps find cycles that share edges (like internal rooms)
+        edges = list(graph.edges())
+        for start, end in edges:
+            # Create a temporary graph without this edge
+            graph_temp = graph.copy()
+            graph_temp.remove_edge(start, end)
+            
+            try:
+                # If there's still a path from end to start, we have a cycle
+                if nx.has_path(graph_temp, end, start):
+                    # Get the shortest alternative path
+                    path = nx.shortest_path(graph_temp, end, start)
+                    if len(path) >= 2:
+                        # Form cycle: start -> end -> path back to start
+                        cycle = [start] + path
+                        # Remove duplicate if start == end in path
+                        if len(cycle) > 1 and cycle[0] == cycle[-1]:
+                            cycle = cycle[:-1]
+                        
+                        if len(cycle) >= 3:
+                            cycle_tuple = tuple(sorted(cycle))
+                            if cycle_tuple not in seen_cycles:
+                                seen_cycles.add(cycle_tuple)
                                 all_cycles.append(cycle)
-                except:
-                    pass
+            except:
+                pass
         
-        # Remove duplicates
-        unique_cycles = []
-        seen = set()
-        for cycle in all_cycles:
-            cycle_tuple = tuple(sorted(cycle))
-            if cycle_tuple not in seen:
-                seen.add(cycle_tuple)
-                unique_cycles.append(cycle)
+        # Method 3: Use simple_cycles on directed graph for additional cycles
+        # Filter out 2-node cycles (just back-and-forth edges)
+        try:
+            digraph = graph.to_directed()
+            # Limit to reasonable cycle length to avoid explosion
+            for cycle in nx.simple_cycles(digraph):
+                # Filter out 2-node cycles (not real rooms)
+                if 3 <= len(cycle) <= 20:  # Reasonable room size
+                    # Remove duplicate start/end node if present
+                    if len(cycle) > 1 and cycle[0] == cycle[-1]:
+                        cycle = cycle[:-1]
+                    # Only add if still valid after removing duplicate
+                    if len(cycle) >= 3:
+                        cycle_tuple = tuple(sorted(cycle))
+                        if cycle_tuple not in seen_cycles:
+                            seen_cycles.add(cycle_tuple)
+                            all_cycles.append(cycle)
+        except:
+            pass
         
-        cycles = unique_cycles
+        cycles = all_cycles
         
     except Exception as e:
-        # Fallback
+        # Final fallback
         try:
-            cycles = nx.cycle_basis(graph)
+            cycle_basis = nx.cycle_basis(graph)
+            cycles = [cycle for cycle in cycle_basis if len(cycle) >= 3]
         except:
             cycles = []
     
