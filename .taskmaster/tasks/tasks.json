@@ -629,7 +629,7 @@
         "id": 10,
         "title": "Build React Frontend with Material UI",
         "description": "Set up the React project with Material UI and create a basic UI component to visualize wall line segments from JSON.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           1
         ],
@@ -643,7 +643,7 @@
             "description": "Set up a new React project and integrate Material UI for styling.",
             "dependencies": [],
             "details": "Use Create React App to initialize the project and add Material UI dependencies.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure the project runs without errors and Material UI components render correctly. Implement Jest and React Testing Library tests to verify Material UI integration."
           },
           {
@@ -652,7 +652,7 @@
             "description": "Create a component to allow users to upload JSON files containing wall line data.",
             "dependencies": [],
             "details": "Develop a file input component that accepts JSON files and reads their content.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test file upload functionality with sample JSON files to ensure data is read correctly. Include Jest and React Testing Library tests with at least 3-5 test cases to verify component rendering and file handling."
           },
           {
@@ -661,7 +661,7 @@
             "description": "Develop a component to draw wall line segments on a canvas or SVG based on JSON input.",
             "dependencies": [],
             "details": "Use HTML5 Canvas or SVG to render lines representing wall segments from the JSON data.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that the visual representation matches the data in the JSON files. Implement Jest and React Testing Library tests with at least 3-5 test cases to ensure accurate rendering of wall lines."
           }
         ]
@@ -1020,7 +1020,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T21:11:07.775Z",
+      "updated": "2025-11-08T21:13:05.353Z",
       "description": "Tasks for master context"
     }
   }
