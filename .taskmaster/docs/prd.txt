@@ -114,7 +114,7 @@ React → Draws boundary overlays on the image
 | DynamoDB | Job state and metadata |
 | SQS Queue | Decoupled room-detection job processing |
 | ECS Fargate Worker | Runs room detection graph algorithm |
-| Python: `networkx`, `shapely` | Geometry + cycle detection core |
+| Python: `networkx`, `shapely` | Geometry + face-finding algorithm (polygonize) for multi-room detection |
 
 Latency target: **< 30s** from job submit → response availability.
 
@@ -122,8 +122,12 @@ Latency target: **< 30s** from job submit → response availability.
 
 1. Parse line segments
 2. Snap endpoints within tolerance to form a wall adjacency graph
-3. Detect **closed loops** (cycles) in the graph
-4. Filter cycles by size/shape (ignore closets, hall fragments, invalid polygons)
+3. **Detect all bounded regions (faces)** using face-finding algorithm:
+   - Split wall segments at intersection points
+   - Use Shapely's polygonize to find all polygons formed by the line segments
+   - This enables detection of all rooms, including those formed by internal walls and T-junctions
+   - Fallback to graph-based cycle detection if polygonize doesn't find regions
+4. Filter cycles/faces by size/shape (ignore closets, hall fragments, invalid polygons)
 5. Convert polygon → bounding box
 6. Normalize bounding box into 0–1000 coordinate space
 
