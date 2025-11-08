@@ -31,12 +31,23 @@ def parse_line_segments(json_data: str) -> List[WallSegment]:
         FileNotFoundError: If json_data is a file path that doesn't exist
     """
     # Try to load from file if it's a path, otherwise parse as JSON string
-    try:
-        with open(json_data, 'r') as f:
-            data = json.load(f)
-    except (FileNotFoundError, OSError):
-        # Not a file path, try parsing as JSON string
-        data = json.loads(json_data)
+    # First check if it looks like a file path (contains path separators or ends with .json)
+    is_likely_file = '/' in json_data or '\\' in json_data or json_data.endswith('.json')
+    
+    if is_likely_file:
+        try:
+            with open(json_data, 'r') as f:
+                data = json.load(f)
+        except FileNotFoundError:
+            raise FileNotFoundError(f"File not found: {json_data}")
+        except OSError as e:
+            raise OSError(f"Error reading file {json_data}: {e}")
+    else:
+        # Try parsing as JSON string
+        try:
+            data = json.loads(json_data)
+        except json.JSONDecodeError as e:
+            raise ValueError(f"Invalid JSON string: {e}")
     
     if not isinstance(data, list):
         raise ValueError("JSON data must be an array of wall segments")
