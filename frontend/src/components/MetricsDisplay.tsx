@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardContent, Typography, Box, Grid2 } from '@mui/material';
+import { Card, CardContent, Typography, Box, Grid } from '@mui/material';
 
 export interface MetricsDisplayProps {
   roomsCount: number;
@@ -48,8 +48,8 @@ const MetricsDisplay: React.FC<MetricsDisplayProps> = ({
         <Typography variant="h6" gutterBottom>
           Detection Metrics
         </Typography>
-        <Grid2 container spacing={2} sx={{ mt: 1 }}>
-          <Grid2 size={{ xs: 12, sm: 4 }}>
+        <Grid container spacing={2} sx={{ mt: 1 }}>
+          <Grid item xs={12} sm={4}>
             <Box>
               <Typography variant="body2" color="text.secondary">
                 Rooms Detected
@@ -58,8 +58,8 @@ const MetricsDisplay: React.FC<MetricsDisplayProps> = ({
                 {roomsCount}
               </Typography>
             </Box>
-          </Grid2>
-          <Grid2 size={{ xs: 12, sm: 4 }}>
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <Box>
               <Typography variant="body2" color="text.secondary">
                 Processing Time
@@ -68,8 +68,8 @@ const MetricsDisplay: React.FC<MetricsDisplayProps> = ({
                 {formatTime(processingTime)}
               </Typography>
             </Box>
-          </Grid2>
-          <Grid2 size={{ xs: 12, sm: 4 }}>
+          </Grid>
+          <Grid item xs={12} sm={4}>
             <Box>
               <Typography variant="body2" color="text.secondary">
                 Confidence Score
@@ -82,8 +82,8 @@ const MetricsDisplay: React.FC<MetricsDisplayProps> = ({
                 {formatConfidence(confidenceScore)}
               </Typography>
             </Box>
-          </Grid2>
-        </Grid2>
+          </Grid>
+        </Grid>
       </CardContent>
     </Card>
   );
