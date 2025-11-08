@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
-import { detectRooms } from './services/api';
+import { detectRooms, Room } from './services/api';
 
 // Mock the API service
 jest.mock('./services/api');
@@ -133,9 +133,9 @@ describe('App Component', () => {
   });
 
   test('displays room count when rooms are detected', async () => {
-    const mockRooms = [
-      { id: 'room_001', bounding_box: [0, 0, 100, 100], name_hint: 'Room' },
-      { id: 'room_002', bounding_box: [100, 0, 200, 100], name_hint: 'Room' },
+    const mockRooms: Room[] = [
+      { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room' },
+      { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room' },
     ];
     mockDetectRooms.mockResolvedValueOnce(mockRooms);
 

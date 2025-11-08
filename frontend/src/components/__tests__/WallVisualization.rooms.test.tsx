@@ -42,7 +42,7 @@ describe('WallVisualization - Room Features', () => {
   const mockRooms: Room[] = [
     {
       id: 'room_001',
-      bounding_box: [0, 0, 100, 100],
+      bounding_box: [0, 0, 100, 100] as [number, number, number, number],
       name_hint: 'Room',
     },
   ];
@@ -143,8 +143,8 @@ describe('WallVisualization - Room Features', () => {
 
   test('displays multiple rooms', () => {
     const multipleRooms: Room[] = [
-      { id: 'room_001', bounding_box: [0, 0, 100, 100], name_hint: 'Room' },
-      { id: 'room_002', bounding_box: [100, 0, 200, 100], name_hint: 'Room' },
+      { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room' },
+      { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room' },
     ];
 
     render(
