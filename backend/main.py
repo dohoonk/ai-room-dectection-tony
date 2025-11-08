@@ -47,18 +47,22 @@ async def health():
     return {"status": "healthy"}
 
 
-@app.post("/detect-rooms", response_model=List[Dict[str, Any]])
+@app.post("/detect-rooms", response_model=Dict[str, Any])
 async def detect_rooms_endpoint(request: RoomDetectionRequest):
     """
     Detect rooms from wall line segments.
     
-    Accepts a list of wall segments and returns detected rooms with bounding boxes.
+    Accepts a list of wall segments and returns detected rooms with bounding boxes,
+    along with processing metrics (time and confidence score).
     """
+    import time
+    import json
+    import tempfile
+    
+    start_time = time.time()
+    
     try:
         # Convert request to temporary JSON file for processing
-        import json
-        import tempfile
-        
         walls_data = [wall.model_dump() for wall in request.walls]
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
@@ -68,7 +72,24 @@ async def detect_rooms_endpoint(request: RoomDetectionRequest):
         try:
             # Detect rooms
             rooms = detect_rooms(temp_path, tolerance=1.0)
-            return rooms
+            
+            # Calculate processing time
+            processing_time = time.time() - start_time
+            
+            # Calculate overall confidence score (average of all room confidences)
+            if rooms:
+                overall_confidence = sum(room.get('confidence', 0.5) for room in rooms) / len(rooms)
+            else:
+                overall_confidence = 0.0
+            
+            return {
+                "rooms": rooms,
+                "metrics": {
+                    "processing_time": round(processing_time, 3),
+                    "confidence_score": round(overall_confidence, 2),
+                    "rooms_count": len(rooms)
+                }
+            }
         finally:
             # Clean up temp file
             os.unlink(temp_path)

@@ -730,7 +730,7 @@
         "id": 12,
         "title": "Implement Observability Features",
         "description": "Add UI elements to display processing metrics such as detection time and confidence score.",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           11
         ],
@@ -1020,7 +1020,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T21:23:37.392Z",
+      "updated": "2025-11-08T21:38:47.918Z",
       "description": "Tasks for master context"
     }
   }

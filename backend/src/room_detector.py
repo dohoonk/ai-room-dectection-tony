@@ -570,6 +570,76 @@ def normalize_bounding_box(bbox: Tuple[float, float, float, float],
     return (new_min_x, new_min_y, new_max_x, new_max_y)
 
 
+def calculate_confidence_score(face: List[Tuple[float, float]], 
+                              total_faces: int,
+                              used_polygonize: bool) -> float:
+    """
+    Calculate confidence score (0.00-1.00) for a detected room.
+    
+    Factors considered:
+    - Polygon validity and regularity
+    - Room size (not too small, not too large)
+    - Detection method (polygonize is more reliable)
+    - Number of vertices (more vertices = more complex, potentially less reliable)
+    
+    Args:
+        face: List of coordinates forming the room boundary
+        total_faces: Total number of faces detected
+        used_polygonize: Whether polygonize was used (more reliable)
+        
+    Returns:
+        Confidence score between 0.00 and 1.00
+    """
+    try:
+        polygon = Polygon(face)
+        
+        # Base score from polygon validity
+        if not polygon.is_valid:
+            return 0.3  # Low confidence for invalid polygons
+        
+        score = 0.5  # Base score for valid polygon
+        
+        # Boost for using polygonize (more reliable method)
+        if used_polygonize:
+            score += 0.2
+        
+        # Check polygon regularity (compactness)
+        area = polygon.area
+        perimeter = polygon.length
+        
+        if area > 0 and perimeter > 0:
+            # Compactness ratio (4π*area/perimeter²) - closer to 1.0 is more circular/regular
+            compactness = (4 * 3.14159 * area) / (perimeter * perimeter)
+            # Regular shapes score higher
+            if compactness > 0.5:
+                score += 0.15
+            elif compactness > 0.3:
+                score += 0.1
+            elif compactness > 0.1:
+                score += 0.05
+        
+        # Size-based confidence (rooms that are too small or too large are less reliable)
+        if 500 <= area <= 500000:  # Reasonable room size range
+            score += 0.1
+        elif area < 500:
+            score -= 0.1  # Very small rooms might be noise
+        elif area > 500000:
+            score -= 0.05  # Very large might be outer perimeter
+        
+        # Vertex count (too many vertices might indicate complex/irregular shape)
+        vertex_count = len(face)
+        if 3 <= vertex_count <= 8:
+            score += 0.05  # Simple shapes are more reliable
+        elif vertex_count > 20:
+            score -= 0.05  # Very complex shapes might be less reliable
+        
+        # Normalize to 0.00-1.00 range
+        return max(0.0, min(1.0, score))
+        
+    except Exception:
+        return 0.2  # Low confidence if we can't evaluate
+
+
 def detect_rooms(json_path: str, tolerance: float = 1.0) -> List[Dict]:
     """
     Main function to detect rooms from wall line segments.
@@ -588,6 +658,7 @@ def detect_rooms(json_path: str, tolerance: float = 1.0) -> List[Dict]:
     
     # Try polygonize first (finds all regions formed by line segments)
     faces = find_faces_using_polygonize(segments)
+    used_polygonize = len(faces) > 0
     
     # If polygonize didn't find faces, fall back to graph-based approach
     if not faces:
@@ -606,10 +677,14 @@ def detect_rooms(json_path: str, tolerance: float = 1.0) -> List[Dict]:
         bbox = polygon_to_bounding_box(face)
         normalized_bbox = normalize_bounding_box(bbox)
         
+        # Calculate confidence score for this room
+        confidence = calculate_confidence_score(face, len(valid_faces), used_polygonize)
+        
         rooms.append({
             "id": f"room_{i+1:03d}",
             "bounding_box": list(normalized_bbox),
-            "name_hint": f"Room {i+1}"
+            "name_hint": f"Room {i+1}",
+            "confidence": round(confidence, 2)
         })
     
     return rooms

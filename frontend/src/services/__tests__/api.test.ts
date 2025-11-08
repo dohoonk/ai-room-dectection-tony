@@ -1,7 +1,7 @@
 /**
  * Tests for API service
  */
-import { detectRooms, checkHealth, WallSegment, Room } from '../api';
+import { detectRooms, checkHealth, WallSegment, Room, RoomDetectionResponse } from '../api';
 
 // Mock fetch
 global.fetch = jest.fn();
@@ -20,21 +20,32 @@ describe('API Service', () => {
     ];
 
     it('should successfully detect rooms', async () => {
-      const mockRooms: Room[] = [
-        {
-          id: 'room_001',
-          bounding_box: [0, 0, 100, 100] as [number, number, number, number],
-          name_hint: 'Room',
-        },
-      ];
+      const mockResponse: RoomDetectionResponse = {
+        rooms: [
+          {
+            id: 'room_001',
+            bounding_box: [0, 0, 100, 100] as [number, number, number, number],
+            name_hint: 'Room',
+          },
+        ],
+        metrics: {
+          processing_time: 0.5,
+          confidence_score: 0.85,
+          rooms_count: 1
+        }
+      };
 
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
-        json: async () => mockRooms,
+        json: async () => mockResponse,
       });
 
       const result = await detectRooms(mockWalls);
-      expect(result).toEqual(mockRooms);
+      expect(result).toEqual(mockResponse);
+      expect(result.rooms).toHaveLength(1);
+      expect(result.metrics).toBeDefined();
+      expect(result.metrics.processing_time).toBe(0.5);
+      expect(result.metrics.confidence_score).toBe(0.85);
       expect(fetch).toHaveBeenCalledWith(
         'http://localhost:8000/detect-rooms',
         expect.objectContaining({

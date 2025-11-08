@@ -1,6 +1,6 @@
 # Task ID: 1
 # Title: Set Up Development Environment
-# Status: pending
+# Status: done
 # Dependencies: None
 # Priority: medium
 # Description: Initialize the development environment with necessary tools, libraries, and testing frameworks.
@@ -11,31 +11,31 @@ Install Node.js, Python, and necessary libraries such as React, Material UI, Exp
 Verify installation by running a simple React app and a Python script. Ensure pytest and Jest are properly configured by running sample tests for both the backend and frontend.
 
 # Subtasks:
-## 1. Install Node.js and Python [pending]
+## 1. Install Node.js and Python [done]
 ### Dependencies: None
 ### Description: Install the latest versions of Node.js and Python.
 ### Details:
 Use package managers like nvm for Node.js and pyenv for Python.
 
-## 2. Set Up Version Control [pending]
+## 2. Set Up Version Control [done]
 ### Dependencies: None
 ### Description: Initialize a Git repository for the project.
 ### Details:
 Create a new repository on GitHub and clone it locally.
 
-## 3. Install Frontend Libraries [pending]
+## 3. Install Frontend Libraries [done]
 ### Dependencies: None
 ### Description: Install React and Material UI.
 ### Details:
 Use npm to install React and Material UI.
 
-## 4. Install Backend Libraries [pending]
+## 4. Install Backend Libraries [done]
 ### Dependencies: None
 ### Description: Install Express.js, FastAPI, networkx, and shapely.
 ### Details:
 Use npm for Express.js and pip for Python libraries.
 
-## 5. Set Up Testing Frameworks [pending]
+## 5. Set Up Testing Frameworks [done]
 ### Dependencies: None
 ### Description: Install and configure pytest and Jest with React Testing Library.
 ### Details:

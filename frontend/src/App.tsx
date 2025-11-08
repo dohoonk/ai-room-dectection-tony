@@ -9,7 +9,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import FileUpload from './components/FileUpload';
 import WallVisualization from './components/WallVisualization';
-import { detectRooms, WallSegment, Room } from './services/api';
+import MetricsDisplay from './components/MetricsDisplay';
+import { detectRooms, WallSegment, Room, DetectionMetrics } from './services/api';
 import './App.css';
 
 const theme = createTheme({
@@ -30,21 +31,41 @@ function App() {
   const [selectedRoomId, setSelectedRoomId] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
+  const [metrics, setMetrics] = React.useState<DetectionMetrics | null>(null);
+  const [processingStartTime, setProcessingStartTime] = React.useState<number | null>(null);
 
   const handleFileUpload = async (data: WallSegment[]) => {
     setWallData(data);
     setRooms(null);
     setSelectedRoomId(null);
     setError(null);
+    setMetrics(null);
     setLoading(true);
+    
+    // Track processing start time for client-side measurement
+    const startTime = performance.now();
+    setProcessingStartTime(startTime);
 
     try {
-      const detectedRooms = await detectRooms(data);
-      setRooms(detectedRooms);
+      const response = await detectRooms(data);
+      setRooms(response.rooms);
+      
+      // Use backend metrics if available, otherwise calculate client-side
+      if (response.metrics) {
+        setMetrics(response.metrics);
+      } else {
+        const clientProcessingTime = (performance.now() - startTime) / 1000;
+        setMetrics({
+          processing_time: clientProcessingTime,
+          confidence_score: 0.0,
+          rooms_count: response.rooms.length
+        });
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to detect rooms');
     } finally {
       setLoading(false);
+      setProcessingStartTime(null);
     }
   };
 
@@ -80,6 +101,16 @@ function App() {
           {error && (
             <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
               <Alert severity="error">{error}</Alert>
+            </Paper>
+          )}
+
+          {metrics && (
+            <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+              <MetricsDisplay
+                roomsCount={metrics.rooms_count}
+                processingTime={metrics.processing_time}
+                confidenceScore={metrics.confidence_score}
+              />
             </Paper>
           )}
 

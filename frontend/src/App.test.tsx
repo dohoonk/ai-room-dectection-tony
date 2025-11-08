@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
-import { detectRooms, Room } from './services/api';
+import { detectRooms, Room, RoomDetectionResponse } from './services/api';
 
 // Mock the API service
 jest.mock('./services/api');
@@ -59,8 +59,16 @@ describe('App Component', () => {
   });
 
   test('displays loading state when detecting rooms', async () => {
+    const mockResponse: RoomDetectionResponse = {
+      rooms: [],
+      metrics: {
+        processing_time: 0.1,
+        confidence_score: 0.0,
+        rooms_count: 0
+      }
+    };
     mockDetectRooms.mockImplementation(
-      () => new Promise((resolve) => setTimeout(() => resolve([]), 200))
+      () => new Promise((resolve) => setTimeout(() => resolve(mockResponse), 200))
     );
 
     render(<App />);
@@ -133,11 +141,18 @@ describe('App Component', () => {
   });
 
   test('displays room count when rooms are detected', async () => {
-    const mockRooms: Room[] = [
-      { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room' },
-      { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room' },
-    ];
-    mockDetectRooms.mockResolvedValueOnce(mockRooms);
+    const mockResponse: RoomDetectionResponse = {
+      rooms: [
+        { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room' },
+        { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room' },
+      ],
+      metrics: {
+        processing_time: 0.5,
+        confidence_score: 0.85,
+        rooms_count: 2
+      }
+    };
+    mockDetectRooms.mockResolvedValueOnce(mockResponse);
 
     render(<App />);
 
@@ -169,10 +184,24 @@ describe('App Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/2 rooms detected/i)).toBeInTheDocument();
     });
+
+    // Check that metrics are displayed
+    await waitFor(() => {
+      expect(screen.getByText(/Detection Metrics/i)).toBeInTheDocument();
+      expect(screen.getByText(/2/)).toBeInTheDocument(); // rooms count
+    });
   });
 
   test('calls detectRooms API when file is uploaded', async () => {
-    mockDetectRooms.mockResolvedValueOnce([]);
+    const mockResponse: RoomDetectionResponse = {
+      rooms: [],
+      metrics: {
+        processing_time: 0.1,
+        confidence_score: 0.0,
+        rooms_count: 0
+      }
+    };
+    mockDetectRooms.mockResolvedValueOnce(mockResponse);
 
     render(<App />);
 

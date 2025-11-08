@@ -1,6 +1,6 @@
 # Task ID: 2
 # Title: Create Sample Test Data
-# Status: pending
+# Status: done
 # Dependencies: 1
 # Priority: medium
 # Description: Develop sample blueprint images and wall-line JSON files for testing.
@@ -11,31 +11,31 @@ Create a set of JSON files representing wall line segments and corresponding PNG
 Manually verify that JSON data accurately represents the visual blueprint images.
 
 # Subtasks:
-## 1. Create Simple Floorplan JSON [pending]
+## 1. Create Simple Floorplan JSON [done]
 ### Dependencies: None
 ### Description: Develop a JSON file for a simple room configuration.
 ### Details:
 Design a JSON structure to represent basic wall line segments for a simple room. Ensure the format is consistent with project standards.
 
-## 2. Create Complex Floorplan JSON [pending]
+## 2. Create Complex Floorplan JSON [done]
 ### Dependencies: 2.1
 ### Description: Develop a JSON file for a complex room configuration.
 ### Details:
 Design a JSON structure to represent complex wall line segments, including multiple rooms and corridors. Ensure the format is consistent with project standards.
 
-## 3. Generate Corresponding Blueprint Images [pending]
+## 3. Generate Corresponding Blueprint Images [done]
 ### Dependencies: 2.1, 2.2
 ### Description: Create PNG/JPG images for the JSON floorplans.
 ### Details:
 Use graphic design tools to create visual representations of the simple and complex floorplans. Ensure images match the JSON data accurately.
 
-## 4. Organize Test Data Structure [pending]
+## 4. Organize Test Data Structure [done]
 ### Dependencies: 2.3
 ### Description: Organize JSON files and images into a structured directory.
 ### Details:
 Create a directory structure to store JSON files and images. Ensure easy access and retrieval for testing purposes.
 
-## 5. Document Test Cases for Sample Data [pending]
+## 5. Document Test Cases for Sample Data [done]
 ### Dependencies: 2.4
 ### Description: Write documentation for testing the sample data.
 ### Details:

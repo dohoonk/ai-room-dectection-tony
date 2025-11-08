@@ -1,6 +1,6 @@
 # Task ID: 7
 # Title: Implement Core Algorithm: Convert Polygon to Bounding Box
-# Status: pending
+# Status: done
 # Dependencies: 6
 # Priority: medium
 # Description: Convert detected polygons into axis-aligned bounding boxes.
@@ -11,43 +11,43 @@ Use shapely to convert polygon cycles into bounding boxes, ensuring they are axi
 Create pytest unit tests to verify bounding boxes accurately encompass the detected polygons. Include at least 5-7 test cases to ensure good coverage, focusing on accuracy, axis alignment, and handling of edge cases.
 
 # Subtasks:
-## 1. Develop Unit Tests for Bounding Box Calculation [pending]
+## 1. Develop Unit Tests for Bounding Box Calculation [done]
 ### Dependencies: None
 ### Description: Create pytest unit tests to verify the accuracy of bounding box calculations.
 ### Details:
 Ensure tests cover various polygon shapes and sizes.
 
-## 2. Test Axis-Aligned Conversion [pending]
+## 2. Test Axis-Aligned Conversion [done]
 ### Dependencies: None
 ### Description: Ensure bounding boxes are axis-aligned.
 ### Details:
 Test with polygons that have non-axis-aligned edges to confirm conversion.
 
-## 3. Handle Edge Cases [pending]
+## 3. Handle Edge Cases [done]
 ### Dependencies: None
 ### Description: Test edge cases such as degenerate polygons and single points.
 ### Details:
 Include tests for polygons that collapse into lines or points.
 
-## 4. Verify Encompassment of Polygons [pending]
+## 4. Verify Encompassment of Polygons [done]
 ### Dependencies: None
 ### Description: Ensure bounding boxes correctly encompass the original polygons.
 ### Details:
 Test with complex polygons to ensure full coverage.
 
-## 5. Implement Polygon to Bounding Box Conversion [pending]
+## 5. Implement Polygon to Bounding Box Conversion [done]
 ### Dependencies: None
 ### Description: Use shapely to convert cycles to bounding boxes
 ### Details:
 Implement a function that takes a cycle (list of nodes) and uses shapely to create a polygon, then extract its axis-aligned bounding box.
 
-## 6. Ensure Axis-Alignment [pending]
+## 6. Ensure Axis-Alignment [done]
 ### Dependencies: None
 ### Description: Verify bounding boxes are axis-aligned
 ### Details:
 Ensure all bounding boxes are axis-aligned (aligned with x and y axes) as required by the MVP specification.
 
-## 7. Calculate Bounding Box Coordinates [pending]
+## 7. Calculate Bounding Box Coordinates [done]
 ### Dependencies: None
 ### Description: Extract min/max coordinates for each bounding box
 ### Details:

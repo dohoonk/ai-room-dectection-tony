@@ -1,6 +1,6 @@
 # Task ID: 9
 # Title: Develop Local Backend API
-# Status: pending
+# Status: done
 # Dependencies: 3, 8
 # Priority: medium
 # Description: Create a REST API endpoint for room detection using Express.js or FastAPI. This API will work in conjunction with the UI component in task 11 to display detected room bounding boxes.
@@ -11,13 +11,13 @@ Set up a local server with an endpoint that accepts wall-line JSON and returns d
 Use Postman to test API endpoint, ensuring correct input/output handling. Additionally, verify integration with the React UI in task 11 for manual testing. Create integration tests using pytest (for FastAPI) or Jest/Supertest (for Express) to cover: valid JSON acceptance, correct room detection results, invalid input handling, error handling, and response format validation. Include 5-7 integration test cases for comprehensive coverage.
 
 # Subtasks:
-## 1. Set Up API Endpoint [pending]
+## 1. Set Up API Endpoint [done]
 ### Dependencies: None
 ### Description: Develop the API endpoint using Express.js or FastAPI to handle room detection requests.
 ### Details:
 Ensure the endpoint accepts wall-line JSON and returns room bounding boxes.
 
-## 2. Create Integration Tests [pending]
+## 2. Create Integration Tests [done]
 ### Dependencies: None
 ### Description: Develop integration tests for the API endpoint.
 ### Details:

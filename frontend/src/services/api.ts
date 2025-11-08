@@ -15,6 +15,18 @@ export interface Room {
   id: string;
   bounding_box: [number, number, number, number]; // [min_x, min_y, max_x, max_y]
   name_hint: string;
+  confidence?: number; // 0.00 to 1.00
+}
+
+export interface DetectionMetrics {
+  processing_time: number; // in seconds
+  confidence_score: number; // 0.00 to 1.00
+  rooms_count: number;
+}
+
+export interface RoomDetectionResponse {
+  rooms: Room[];
+  metrics: DetectionMetrics;
 }
 
 export interface RoomDetectionRequest {
@@ -24,7 +36,7 @@ export interface RoomDetectionRequest {
 /**
  * Detect rooms from wall segments
  */
-export async function detectRooms(walls: WallSegment[]): Promise<Room[]> {
+export async function detectRooms(walls: WallSegment[]): Promise<RoomDetectionResponse> {
   try {
     const response = await fetch(`${API_BASE_URL}/detect-rooms`, {
       method: 'POST',
@@ -39,8 +51,8 @@ export async function detectRooms(walls: WallSegment[]): Promise<Room[]> {
       throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
     }
 
-    const rooms: Room[] = await response.json();
-    return rooms;
+    const data: RoomDetectionResponse = await response.json();
+    return data;
   } catch (error) {
     if (error instanceof Error) {
       throw error;
