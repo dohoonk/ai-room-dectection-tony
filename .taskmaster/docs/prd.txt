@@ -98,7 +98,7 @@ React → Draws boundary overlays on the image
 |---|---|---|
 | React Frontend | Renders blueprint and overlays detected rooms | React + Material UI |
 | Local Backend API | REST API for room detection | Express.js or FastAPI |
-| Core Algorithm | Graph-based polygon + bounding box detection | Python: `networkx`, `shapely` |
+| Core Algorithm | Face-finding algorithm for multi-room detection | Python: `networkx`, `shapely` (polygonize) |
 | Sample Test Data | Blueprint images and wall-line JSON for testing | JSON files + PNG/JPG images |
 
 **Development Approach**: Build local prototype first. Each backend task must have a corresponding React UI task for manual testing as we go.
