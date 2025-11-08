@@ -1,0 +1,1027 @@
+{
+  "master": {
+    "tasks": [
+      {
+        "id": 1,
+        "title": "Set Up Development Environment",
+        "description": "Initialize the development environment with necessary tools, libraries, and testing frameworks.",
+        "status": "done",
+        "dependencies": [],
+        "priority": "medium",
+        "details": "Install Node.js, Python, and necessary libraries such as React, Material UI, Express.js, FastAPI, networkx, and shapely. Set up a version control system using Git. Additionally, install and configure pytest for Python backend testing and Jest with React Testing Library for React frontend testing. Set up test configuration files for both frameworks.",
+        "testStrategy": "Verify installation by running a simple React app and a Python script. Ensure pytest and Jest are properly configured by running sample tests for both the backend and frontend.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Install Node.js and Python",
+            "description": "Install the latest versions of Node.js and Python.",
+            "dependencies": [],
+            "details": "Use package managers like nvm for Node.js and pyenv for Python.",
+            "status": "done",
+            "testStrategy": "Run 'node -v' and 'python --version' to verify installations."
+          },
+          {
+            "id": 2,
+            "title": "Set Up Version Control",
+            "description": "Initialize a Git repository for the project.",
+            "dependencies": [],
+            "details": "Create a new repository on GitHub and clone it locally.",
+            "status": "done",
+            "testStrategy": "Verify by committing a README file."
+          },
+          {
+            "id": 3,
+            "title": "Install Frontend Libraries",
+            "description": "Install React and Material UI.",
+            "dependencies": [],
+            "details": "Use npm to install React and Material UI.",
+            "status": "done",
+            "testStrategy": "Create a simple React component to verify installation."
+          },
+          {
+            "id": 4,
+            "title": "Install Backend Libraries",
+            "description": "Install Express.js, FastAPI, networkx, and shapely.",
+            "dependencies": [],
+            "details": "Use npm for Express.js and pip for Python libraries.",
+            "status": "done",
+            "testStrategy": "Run a basic Express server and a Python script using FastAPI."
+          },
+          {
+            "id": 5,
+            "title": "Set Up Testing Frameworks",
+            "description": "Install and configure pytest and Jest with React Testing Library.",
+            "dependencies": [],
+            "details": "Use pip to install pytest and npm for Jest and React Testing Library. Create configuration files for both frameworks.",
+            "status": "done",
+            "testStrategy": "Run sample tests to ensure both frameworks are correctly configured."
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Create Sample Test Data",
+        "description": "Develop sample blueprint images and wall-line JSON files for testing.",
+        "details": "Create a set of JSON files representing wall line segments and corresponding PNG/JPG images for visual reference. Ensure data covers various room configurations.",
+        "testStrategy": "Manually verify that JSON data accurately represents the visual blueprint images.",
+        "priority": "medium",
+        "dependencies": [
+          1
+        ],
+        "status": "done",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Simple Floorplan JSON",
+            "description": "Develop a JSON file for a simple room configuration.",
+            "dependencies": [],
+            "details": "Design a JSON structure to represent basic wall line segments for a simple room. Ensure the format is consistent with project standards.",
+            "status": "done",
+            "testStrategy": "Verify JSON structure against a predefined schema."
+          },
+          {
+            "id": 2,
+            "title": "Create Complex Floorplan JSON",
+            "description": "Develop a JSON file for a complex room configuration.",
+            "dependencies": [
+              1
+            ],
+            "details": "Design a JSON structure to represent complex wall line segments, including multiple rooms and corridors. Ensure the format is consistent with project standards.",
+            "status": "done",
+            "testStrategy": "Verify JSON structure against a predefined schema and test with edge cases."
+          },
+          {
+            "id": 3,
+            "title": "Generate Corresponding Blueprint Images",
+            "description": "Create PNG/JPG images for the JSON floorplans.",
+            "dependencies": [
+              1,
+              2
+            ],
+            "details": "Use graphic design tools to create visual representations of the simple and complex floorplans. Ensure images match the JSON data accurately.",
+            "status": "done",
+            "testStrategy": "Manually compare images with JSON data to ensure accuracy."
+          },
+          {
+            "id": 4,
+            "title": "Organize Test Data Structure",
+            "description": "Organize JSON files and images into a structured directory.",
+            "dependencies": [
+              3
+            ],
+            "details": "Create a directory structure to store JSON files and images. Ensure easy access and retrieval for testing purposes.",
+            "status": "done",
+            "testStrategy": "Verify that all files are correctly named and stored in the appropriate directories."
+          },
+          {
+            "id": 5,
+            "title": "Document Test Cases for Sample Data",
+            "description": "Write documentation for testing the sample data.",
+            "dependencies": [
+              4
+            ],
+            "details": "Create a document outlining test cases for verifying the accuracy of JSON and image data. Include steps for manual verification and expected outcomes.",
+            "status": "done",
+            "testStrategy": "Review documentation for completeness and clarity."
+          }
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Implement Core Algorithm: Parse Line Segments",
+        "description": "Develop functionality to parse line segments from JSON input.",
+        "status": "in-progress",
+        "dependencies": [
+          1
+        ],
+        "priority": "medium",
+        "details": "Use Python to read JSON input and extract line segment data. Ensure data is structured for further processing. Implement robust error handling for invalid JSON and edge cases.",
+        "testStrategy": "Create pytest unit tests to cover valid JSON parsing, invalid JSON handling, edge cases (empty arrays, malformed data), and verify correct data structure output. Include at least 5-7 test cases to ensure comprehensive coverage of the parsing logic.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Write unit test for valid JSON parsing",
+            "description": "Ensure that valid JSON input is correctly parsed into line segment data structures.",
+            "dependencies": [],
+            "details": "Use pytest to write a test case that checks the parsing of a well-formed JSON input.",
+            "status": "pending",
+            "testStrategy": "Verify that the parsed output matches the expected data structure."
+          },
+          {
+            "id": 2,
+            "title": "Write unit test for invalid JSON handling",
+            "description": "Test the parser's response to invalid JSON input.",
+            "dependencies": [],
+            "details": "Use pytest to write a test case that checks how the parser handles malformed JSON.",
+            "status": "pending",
+            "testStrategy": "Ensure that appropriate exceptions are raised for invalid JSON."
+          },
+          {
+            "id": 3,
+            "title": "Write unit test for edge cases",
+            "description": "Test the parser with edge cases such as empty arrays and malformed data.",
+            "dependencies": [],
+            "details": "Use pytest to write test cases for edge scenarios.",
+            "status": "pending",
+            "testStrategy": "Verify that the parser handles edge cases gracefully without crashing."
+          },
+          {
+            "id": 4,
+            "title": "Verify correct data structure output",
+            "description": "Ensure that the parsed data is structured correctly for further processing.",
+            "dependencies": [],
+            "details": "Use pytest to write test cases that validate the structure of the parsed data.",
+            "status": "pending",
+            "testStrategy": "Check that the output data structure matches the expected format."
+          },
+          {
+            "id": 5,
+            "title": "Create Python Module Structure",
+            "description": "Set up the Python module structure for the line segment parser",
+            "details": "Create a new Python module file (e.g., `parser.py`) with proper structure and imports. Set up the basic function skeleton for parsing line segments.",
+            "status": "in-progress",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 6,
+            "title": "Implement JSON Parsing Function",
+            "description": "Implement the core function to parse JSON and extract line segment data",
+            "details": "Write a function that reads JSON input, validates the structure, and extracts line segment data (start, end coordinates, type, is_load_bearing).",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 7,
+            "title": "Implement Data Validation",
+            "description": "Add validation for line segment data structure",
+            "details": "Validate that each line segment has required fields (type, start, end) and that coordinates are valid numbers within expected ranges.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          },
+          {
+            "id": 8,
+            "title": "Implement Error Handling",
+            "description": "Add robust error handling for invalid JSON and edge cases",
+            "details": "Handle cases like malformed JSON, missing fields, invalid data types, and empty arrays. Return meaningful error messages.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 3
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "Implement Core Algorithm: Snap Endpoints",
+        "description": "Snap endpoints within a tolerance to form a wall adjacency graph.",
+        "status": "pending",
+        "dependencies": [
+          3
+        ],
+        "priority": "medium",
+        "details": "Utilize networkx to create a graph from line segments, snapping endpoints within a specified tolerance to connect walls. Implement pytest unit tests to ensure comprehensive coverage.",
+        "testStrategy": "Create pytest unit tests covering: endpoint snapping with various tolerance levels, graph construction correctness, edge cases (overlapping endpoints, isolated segments), and verify graph structure. Include at least 5-7 test cases for good coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Develop Unit Tests for Endpoint Snapping",
+            "description": "Create pytest unit tests for snapping endpoints with various tolerance levels.",
+            "dependencies": [],
+            "details": "Ensure tests cover different tolerance values to verify snapping accuracy.",
+            "status": "pending",
+            "testStrategy": "Use pytest to validate endpoint snapping across multiple tolerance settings."
+          },
+          {
+            "id": 2,
+            "title": "Test Graph Construction Correctness",
+            "description": "Develop tests to ensure the graph is constructed correctly from snapped endpoints.",
+            "dependencies": [],
+            "details": "Verify that the graph accurately represents the adjacency of walls.",
+            "status": "pending",
+            "testStrategy": "Check graph structure and connections using pytest."
+          },
+          {
+            "id": 3,
+            "title": "Handle Edge Cases in Graph Construction",
+            "description": "Create tests for edge cases such as overlapping endpoints and isolated segments.",
+            "dependencies": [],
+            "details": "Ensure edge cases are handled correctly in the graph construction process.",
+            "status": "pending",
+            "testStrategy": "Use pytest to test edge cases and verify graph integrity."
+          },
+          {
+            "id": 4,
+            "title": "Verify Overall Graph Structure",
+            "description": "Ensure the final graph structure is as expected with all connections intact.",
+            "dependencies": [],
+            "details": "Check the overall integrity and correctness of the graph structure.",
+            "status": "pending",
+            "testStrategy": "Conduct comprehensive tests to validate the final graph structure."
+          },
+          {
+            "id": 5,
+            "title": "Implement Endpoint Snapping Algorithm",
+            "description": "Create the algorithm to snap endpoints within tolerance",
+            "details": "Implement logic to find endpoints that are within a specified tolerance distance and group them together for graph construction.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 6,
+            "title": "Create NetworkX Graph Structure",
+            "description": "Build the graph using networkx from snapped endpoints",
+            "details": "Use networkx to create a graph where nodes represent endpoints and edges represent wall segments. Connect nodes based on snapped endpoint groups.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 7,
+            "title": "Implement Tolerance-Based Connection Logic",
+            "description": "Implement the logic to connect walls based on tolerance",
+            "details": "Create a function that determines which wall endpoints should be connected based on distance tolerance, ensuring walls are properly linked in the graph.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          },
+          {
+            "id": 8,
+            "title": "Integrate with Parsed Line Segments",
+            "description": "Connect the snapping algorithm with the parser from task 3",
+            "details": "Ensure the endpoint snapping function accepts the parsed line segment data structure and processes it correctly.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 4
+          }
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Implement Core Algorithm: Detect Closed Loops",
+        "description": "Detect closed loops (cycles) in the wall adjacency graph.",
+        "status": "pending",
+        "dependencies": [
+          4
+        ],
+        "priority": "medium",
+        "details": "Use networkx to identify cycles in the graph, representing potential room boundaries. Implement pytest unit tests to ensure comprehensive coverage of cycle detection.",
+        "testStrategy": "Create pytest unit tests covering: cycle detection in simple and complex graphs, handling of graphs with no cycles, multiple cycles, nested cycles, and verify all closed loops are identified. Include at least 5-7 test cases with good coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Develop Unit Tests for Cycle Detection",
+            "description": "Create pytest unit tests for cycle detection in various graph scenarios.",
+            "dependencies": [],
+            "details": "Develop tests for simple graphs, complex graphs, graphs with no cycles, multiple cycles, and nested cycles.",
+            "status": "pending",
+            "testStrategy": "Ensure all test cases are executed and validate the correct identification of closed loops."
+          },
+          {
+            "id": 2,
+            "title": "Implement Cycle Detection Algorithm",
+            "description": "Use networkx to detect cycles in the graph",
+            "details": "Implement a function that uses networkx cycle detection algorithms to find all closed loops in the wall adjacency graph.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 5
+          },
+          {
+            "id": 3,
+            "title": "Filter Duplicate Cycles",
+            "description": "Remove duplicate and redundant cycles",
+            "details": "Implement logic to filter out duplicate cycles (same nodes in different order) and ensure each unique cycle is only returned once.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 5
+          },
+          {
+            "id": 4,
+            "title": "Structure Cycle Data for Processing",
+            "description": "Format detected cycles for further processing",
+            "details": "Convert networkx cycle data into a structured format (list of node sequences) that can be used by subsequent algorithm steps.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 5
+          }
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Implement Core Algorithm: Filter Cycles",
+        "description": "Filter detected cycles by size and shape to ignore invalid polygons.",
+        "status": "pending",
+        "dependencies": [
+          5
+        ],
+        "priority": "medium",
+        "details": "Apply filtering criteria to remove small or irregular cycles that do not represent valid rooms. Implement pytest unit tests to ensure the filtering criteria are correctly applied.",
+        "testStrategy": "Create pytest unit tests covering: filtering small cycles, filtering irregular shapes, keeping valid room-sized cycles, and edge cases (boundary conditions). Include at least 5-7 test cases for comprehensive coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create pytest unit tests for filtering small cycles",
+            "description": "Develop unit tests to ensure small cycles are filtered out correctly.",
+            "dependencies": [],
+            "details": "Write tests that check if cycles below a certain size threshold are removed.",
+            "status": "pending",
+            "testStrategy": "Verify small cycles are consistently filtered out across different configurations."
+          },
+          {
+            "id": 2,
+            "title": "Create pytest unit tests for filtering irregular shapes",
+            "description": "Develop unit tests to ensure irregular shapes are filtered out correctly.",
+            "dependencies": [],
+            "details": "Write tests that check if cycles with irregular shapes are removed.",
+            "status": "pending",
+            "testStrategy": "Verify irregular shapes are consistently filtered out across different configurations."
+          },
+          {
+            "id": 3,
+            "title": "Create pytest unit tests for keeping valid room-sized cycles",
+            "description": "Develop unit tests to ensure valid room-sized cycles are retained.",
+            "dependencies": [],
+            "details": "Write tests that check if cycles representing valid rooms are kept.",
+            "status": "pending",
+            "testStrategy": "Verify valid room-sized cycles are consistently retained across different configurations."
+          },
+          {
+            "id": 4,
+            "title": "Create pytest unit tests for edge cases",
+            "description": "Develop unit tests to cover edge cases in filtering criteria.",
+            "dependencies": [],
+            "details": "Write tests for boundary conditions and unusual scenarios.",
+            "status": "pending",
+            "testStrategy": "Ensure edge cases are handled correctly without false positives or negatives."
+          },
+          {
+            "id": 5,
+            "title": "Verify filtering criteria with comprehensive test coverage",
+            "description": "Ensure the filtering criteria work correctly with a variety of test cases.",
+            "dependencies": [],
+            "details": "Review and refine test cases to ensure all aspects of filtering are covered.",
+            "status": "pending",
+            "testStrategy": "Ensure all test cases pass and provide good coverage of the filtering logic."
+          },
+          {
+            "id": 6,
+            "title": "Implement Size-Based Filtering",
+            "description": "Filter cycles based on size thresholds",
+            "details": "Implement logic to calculate cycle area/perimeter and filter out cycles that are too small to represent valid rooms (e.g., closets, hall fragments).",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 7,
+            "title": "Implement Shape-Based Filtering",
+            "description": "Filter cycles based on shape characteristics",
+            "details": "Implement logic to identify and filter out irregular shapes (e.g., extremely elongated, non-convex) that don't represent typical rooms.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 8,
+            "title": "Define Filtering Criteria and Thresholds",
+            "description": "Establish the filtering parameters",
+            "details": "Define minimum size thresholds, aspect ratio limits, and other criteria for determining valid room cycles. Make these configurable.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 6
+          },
+          {
+            "id": 9,
+            "title": "Apply Filters to Detected Cycles",
+            "description": "Apply all filtering criteria to the cycle list",
+            "details": "Create a function that applies size and shape filters to the list of detected cycles, returning only valid room candidates.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 6
+          }
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Implement Core Algorithm: Convert Polygon to Bounding Box",
+        "description": "Convert detected polygons into axis-aligned bounding boxes.",
+        "status": "pending",
+        "dependencies": [
+          6
+        ],
+        "priority": "medium",
+        "details": "Use shapely to convert polygon cycles into bounding boxes, ensuring they are axis-aligned for simplicity. Implement pytest unit tests to cover bounding box calculation accuracy, axis-aligned conversion, and edge cases such as degenerate polygons and single points.",
+        "testStrategy": "Create pytest unit tests to verify bounding boxes accurately encompass the detected polygons. Include at least 5-7 test cases to ensure good coverage, focusing on accuracy, axis alignment, and handling of edge cases.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Develop Unit Tests for Bounding Box Calculation",
+            "description": "Create pytest unit tests to verify the accuracy of bounding box calculations.",
+            "dependencies": [],
+            "details": "Ensure tests cover various polygon shapes and sizes.",
+            "status": "pending",
+            "testStrategy": "Use pytest to validate bounding box dimensions against expected results."
+          },
+          {
+            "id": 2,
+            "title": "Test Axis-Aligned Conversion",
+            "description": "Ensure bounding boxes are axis-aligned.",
+            "dependencies": [],
+            "details": "Test with polygons that have non-axis-aligned edges to confirm conversion.",
+            "status": "pending",
+            "testStrategy": "Verify that all bounding boxes are axis-aligned post-conversion."
+          },
+          {
+            "id": 3,
+            "title": "Handle Edge Cases",
+            "description": "Test edge cases such as degenerate polygons and single points.",
+            "dependencies": [],
+            "details": "Include tests for polygons that collapse into lines or points.",
+            "status": "pending",
+            "testStrategy": "Ensure bounding boxes are correctly calculated for edge cases."
+          },
+          {
+            "id": 4,
+            "title": "Verify Encompassment of Polygons",
+            "description": "Ensure bounding boxes correctly encompass the original polygons.",
+            "dependencies": [],
+            "details": "Test with complex polygons to ensure full coverage.",
+            "status": "pending",
+            "testStrategy": "Check that bounding boxes fully contain the polygons without excess space."
+          },
+          {
+            "id": 5,
+            "title": "Implement Polygon to Bounding Box Conversion",
+            "description": "Use shapely to convert cycles to bounding boxes",
+            "details": "Implement a function that takes a cycle (list of nodes) and uses shapely to create a polygon, then extract its axis-aligned bounding box.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 7
+          },
+          {
+            "id": 6,
+            "title": "Ensure Axis-Alignment",
+            "description": "Verify bounding boxes are axis-aligned",
+            "details": "Ensure all bounding boxes are axis-aligned (aligned with x and y axes) as required by the MVP specification.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 7
+          },
+          {
+            "id": 7,
+            "title": "Calculate Bounding Box Coordinates",
+            "description": "Extract min/max coordinates for each bounding box",
+            "details": "Calculate and return the bounding box coordinates in the format [min_x, min_y, max_x, max_y] for each detected room.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 7
+          }
+        ]
+      },
+      {
+        "id": 8,
+        "title": "Normalize Bounding Box Coordinates",
+        "description": "Normalize bounding box coordinates to a 0–1000 scale.",
+        "status": "pending",
+        "dependencies": [
+          7
+        ],
+        "priority": "medium",
+        "details": "Scale bounding box coordinates to fit within a 0–1000 coordinate system, maintaining aspect ratio. Implement pytest unit tests to ensure correctness.",
+        "testStrategy": "Create pytest unit tests to cover normalization to 0-1000 range, aspect ratio preservation, edge cases (already normalized, extreme coordinates), and verify all coordinates are within bounds. Include at least 5-7 test cases with good coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Develop Unit Tests for Normalization",
+            "description": "Create pytest unit tests for bounding box normalization.",
+            "dependencies": [],
+            "details": "Develop tests to ensure bounding boxes are normalized to a 0-1000 range, maintaining aspect ratio.",
+            "status": "pending",
+            "testStrategy": "Verify that bounding boxes are correctly normalized across various test cases, including edge cases."
+          },
+          {
+            "id": 2,
+            "title": "Test Aspect Ratio Preservation",
+            "description": "Ensure aspect ratio is preserved during normalization.",
+            "dependencies": [
+              1
+            ],
+            "details": "Write tests to confirm aspect ratio is maintained after normalization.",
+            "status": "pending",
+            "testStrategy": "Check aspect ratio consistency across different bounding box dimensions."
+          },
+          {
+            "id": 3,
+            "title": "Handle Edge Cases",
+            "description": "Test edge cases for bounding box normalization.",
+            "dependencies": [
+              1
+            ],
+            "details": "Include tests for already normalized boxes and extreme coordinates.",
+            "status": "pending",
+            "testStrategy": "Ensure edge cases are handled correctly, with coordinates remaining within bounds."
+          },
+          {
+            "id": 4,
+            "title": "Implement Normalization Algorithm",
+            "description": "Create the normalization function to scale coordinates",
+            "details": "Implement a function that scales bounding box coordinates to fit within the 0-1000 coordinate system while maintaining the original aspect ratio.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 5,
+            "title": "Preserve Aspect Ratio During Scaling",
+            "description": "Ensure aspect ratio is maintained during normalization",
+            "details": "Calculate the scaling factor that maintains the original aspect ratio while fitting coordinates within the 0-1000 range.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          },
+          {
+            "id": 6,
+            "title": "Ensure Coordinates Within 0-1000 Range",
+            "description": "Validate all coordinates are within bounds",
+            "details": "Add validation to ensure all normalized coordinates fall within the 0-1000 range, handling edge cases like already-normalized or extreme coordinates.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 8
+          }
+        ]
+      },
+      {
+        "id": 9,
+        "title": "Develop Local Backend API",
+        "description": "Create a REST API endpoint for room detection using Express.js or FastAPI. This API will work in conjunction with the UI component in task 11 to display detected room bounding boxes.",
+        "status": "pending",
+        "dependencies": [
+          3,
+          8
+        ],
+        "priority": "medium",
+        "details": "Set up a local server with an endpoint that accepts wall-line JSON and returns detected room bounding boxes. This API will enable manual testing through the React UI developed in task 11. Implement integration tests to ensure the API handles various scenarios effectively.",
+        "testStrategy": "Use Postman to test API endpoint, ensuring correct input/output handling. Additionally, verify integration with the React UI in task 11 for manual testing. Create integration tests using pytest (for FastAPI) or Jest/Supertest (for Express) to cover: valid JSON acceptance, correct room detection results, invalid input handling, error handling, and response format validation. Include 5-7 integration test cases for comprehensive coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up API Endpoint",
+            "description": "Develop the API endpoint using Express.js or FastAPI to handle room detection requests.",
+            "dependencies": [],
+            "details": "Ensure the endpoint accepts wall-line JSON and returns room bounding boxes.",
+            "status": "pending",
+            "testStrategy": "Use Postman to verify endpoint functionality."
+          },
+          {
+            "id": 2,
+            "title": "Create Integration Tests",
+            "description": "Develop integration tests for the API endpoint.",
+            "dependencies": [],
+            "details": "Use pytest for FastAPI or Jest/Supertest for Express to create tests covering valid JSON acceptance, correct room detection results, invalid input handling, error handling, and response format validation.",
+            "status": "pending",
+            "testStrategy": "Ensure tests cover all specified scenarios with 5-7 test cases."
+          }
+        ]
+      },
+      {
+        "id": 10,
+        "title": "Build React Frontend with Material UI",
+        "description": "Set up the React project with Material UI and create a basic UI component to visualize wall line segments from JSON.",
+        "status": "pending",
+        "dependencies": [
+          1
+        ],
+        "priority": "medium",
+        "details": "Initialize a React project and integrate Material UI. Implement a basic file upload feature for JSON files and create a canvas or SVG component to draw wall line segments based on the JSON data. Include component tests using Jest and React Testing Library for each part.",
+        "testStrategy": "Perform manual testing to ensure the React project initializes correctly, Material UI components are styled properly, and the canvas/SVG component accurately visualizes wall line segments from uploaded JSON files. Additionally, implement Jest and React Testing Library tests for each component to ensure functionality and integration.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Initialize React Project with Material UI",
+            "description": "Set up a new React project and integrate Material UI for styling.",
+            "dependencies": [],
+            "details": "Use Create React App to initialize the project and add Material UI dependencies.",
+            "status": "pending",
+            "testStrategy": "Ensure the project runs without errors and Material UI components render correctly. Implement Jest and React Testing Library tests to verify Material UI integration."
+          },
+          {
+            "id": 2,
+            "title": "Implement JSON File Upload",
+            "description": "Create a component to allow users to upload JSON files containing wall line data.",
+            "dependencies": [],
+            "details": "Develop a file input component that accepts JSON files and reads their content.",
+            "status": "pending",
+            "testStrategy": "Test file upload functionality with sample JSON files to ensure data is read correctly. Include Jest and React Testing Library tests with at least 3-5 test cases to verify component rendering and file handling."
+          },
+          {
+            "id": 3,
+            "title": "Create Canvas/SVG Component for Visualization",
+            "description": "Develop a component to draw wall line segments on a canvas or SVG based on JSON input.",
+            "dependencies": [],
+            "details": "Use HTML5 Canvas or SVG to render lines representing wall segments from the JSON data.",
+            "status": "pending",
+            "testStrategy": "Verify that the visual representation matches the data in the JSON files. Implement Jest and React Testing Library tests with at least 3-5 test cases to ensure accurate rendering of wall lines."
+          }
+        ]
+      },
+      {
+        "id": 11,
+        "title": "Integrate Frontend with Backend API",
+        "description": "Create the UI component to display detected room bounding boxes using the React frontend, integrating with the local backend API for room detection. Additionally, implement comprehensive component tests using Jest and React Testing Library.",
+        "status": "pending",
+        "dependencies": [
+          9,
+          10
+        ],
+        "priority": "medium",
+        "details": "Use Material UI components to overlay bounding boxes on the blueprint image, display room IDs, and allow basic interaction. This will serve as the main testing interface for the room detection algorithm. Ensure that the UI is robust and handles various user interactions and API responses effectively.",
+        "testStrategy": "Test the UI by uploading test data, verifying that bounding boxes are correctly displayed and interactive, and ensuring room IDs are shown accurately. Implement component tests to cover bounding box overlay rendering, room ID display, user interactions (clicking rooms), API integration, error handling, and Material UI component behavior. Include at least 5-7 test cases for comprehensive coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Component Tests",
+            "description": "Develop component tests using Jest and React Testing Library.",
+            "dependencies": [],
+            "details": "Write tests to cover bounding box overlay rendering, room ID display, user interactions (clicking rooms), API integration, error handling, and Material UI component behavior. Ensure at least 5-7 test cases are implemented.",
+            "status": "pending",
+            "testStrategy": "Verify that all test cases pass and cover the specified scenarios effectively."
+          },
+          {
+            "id": 2,
+            "title": "Create Bounding Box Overlay Component",
+            "description": "Build React component to overlay bounding boxes on blueprint",
+            "details": "Create a React component that renders bounding boxes as overlays on top of the blueprint image using Material UI components.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 3,
+            "title": "Implement Room ID Display",
+            "description": "Display room IDs on or near each bounding box",
+            "details": "Add text labels showing room IDs (e.g., \"room_001\") on or near each detected room's bounding box.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 4,
+            "title": "Add Click Interaction Handlers",
+            "description": "Implement click handlers for room selection",
+            "details": "Add event handlers to detect clicks on bounding boxes and provide visual feedback (e.g., highlighting) when a room is selected.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          },
+          {
+            "id": 5,
+            "title": "Integrate API Calls with Error Handling",
+            "description": "Connect frontend to backend API with proper error handling",
+            "details": "Implement API calls to the backend endpoint (from task 9) to fetch room detection results, with proper error handling for network issues and invalid responses.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 11
+          }
+        ]
+      },
+      {
+        "id": 12,
+        "title": "Implement Observability Features",
+        "description": "Add UI elements to display processing metrics such as detection time and confidence score.",
+        "status": "pending",
+        "dependencies": [
+          11
+        ],
+        "priority": "medium",
+        "details": "Enhance the UI to show metrics like rooms detected, processing time, and confidence score using Material UI components. Ensure integration with React components for real-time updates.",
+        "testStrategy": "Verify that metrics are accurately displayed and updated in real-time during processing. Implement component tests using Jest and React Testing Library to cover metrics display rendering, real-time updates, Material UI component integration, and accurate calculation and display of metrics.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Create Jest and React Testing Library tests",
+            "description": "Develop component tests for metrics display rendering, real-time updates, and Material UI integration.",
+            "dependencies": [],
+            "details": "Include at least 3-5 test cases to ensure good coverage of the observability features.",
+            "status": "pending",
+            "testStrategy": "Ensure tests cover rendering, updates, and integration aspects."
+          },
+          {
+            "id": 2,
+            "title": "Create Metrics Display Component",
+            "description": "Build Material UI component to display metrics",
+            "details": "Create a React component using Material UI (e.g., Card, Typography) to display metrics like rooms detected count, processing time, and confidence score.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 3,
+            "title": "Implement Processing Time Calculation",
+            "description": "Calculate and display processing time",
+            "details": "Track the time from when room detection starts until results are received, and display it in a user-friendly format (e.g., \"2.34 seconds\").",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 4,
+            "title": "Implement Confidence Score Calculation",
+            "description": "Calculate confidence score for detections",
+            "details": "Implement logic to calculate a confidence score (0.00-1.00) based on factors like cycle size, shape regularity, and detection quality.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          },
+          {
+            "id": 5,
+            "title": "Add Real-Time Updates",
+            "description": "Update metrics in real-time during processing",
+            "details": "Implement real-time updates to the metrics display as processing progresses, using React state management and potentially WebSocket or polling.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 12
+          }
+        ]
+      },
+      {
+        "id": 13,
+        "title": "Implement Human-in-the-Loop UX",
+        "description": "Allow users to interact with detected rooms, such as highlighting and renaming.",
+        "status": "pending",
+        "dependencies": [
+          11
+        ],
+        "priority": "medium",
+        "details": "Add functionality for users to click on rooms to highlight them, rename, or remove incorrect detections. Implement React components for these interactions using Material UI.",
+        "testStrategy": "Conduct usability testing to ensure interactions are intuitive and responsive. Additionally, implement component tests using Jest and React Testing Library to cover room highlighting on click, room renaming functionality, room removal functionality, user interaction handling, and Material UI component behavior. Include at least 5-7 component test cases with good coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Test Room Highlighting",
+            "description": "Create a test case for room highlighting on click using Jest and React Testing Library.",
+            "dependencies": [],
+            "details": "Ensure the room is highlighted correctly when clicked.",
+            "status": "pending",
+            "testStrategy": "Verify the room's visual state changes upon interaction."
+          },
+          {
+            "id": 2,
+            "title": "Test Room Renaming",
+            "description": "Create a test case for room renaming functionality using Jest and React Testing Library.",
+            "dependencies": [],
+            "details": "Ensure the room can be renamed and the change is reflected in the UI.",
+            "status": "pending",
+            "testStrategy": "Check that the new name is displayed correctly after renaming."
+          },
+          {
+            "id": 3,
+            "title": "Test Room Removal",
+            "description": "Create a test case for room removal functionality using Jest and React Testing Library.",
+            "dependencies": [],
+            "details": "Ensure the room can be removed and the UI updates accordingly.",
+            "status": "pending",
+            "testStrategy": "Verify the room is no longer visible after removal."
+          },
+          {
+            "id": 4,
+            "title": "Test User Interaction Handling",
+            "description": "Create a test case for handling user interactions using Jest and React Testing Library.",
+            "dependencies": [],
+            "details": "Ensure all user interactions are handled smoothly without errors.",
+            "status": "pending",
+            "testStrategy": "Simulate user interactions and check for errors or unexpected behavior."
+          },
+          {
+            "id": 5,
+            "title": "Test Material UI Component Behavior",
+            "description": "Create a test case for Material UI component behavior using Jest and React Testing Library.",
+            "dependencies": [],
+            "details": "Ensure Material UI components behave as expected during interactions.",
+            "status": "pending",
+            "testStrategy": "Verify component behavior aligns with Material UI specifications."
+          },
+          {
+            "id": 6,
+            "title": "Implement Room Highlighting on Click",
+            "description": "Add visual highlighting when a room is clicked",
+            "details": "Implement click handlers that change the visual appearance (e.g., border color, background opacity) of a room's bounding box when clicked.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 7,
+            "title": "Implement Room Renaming UI and Logic",
+            "description": "Create UI for renaming rooms with Material UI components",
+            "details": "Add a dialog or inline editing component using Material UI (e.g., TextField, Dialog) that allows users to rename detected rooms.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 8,
+            "title": "Implement Room Removal Functionality",
+            "description": "Add ability to remove incorrect room detections",
+            "details": "Implement a delete/remove button or action that allows users to remove incorrectly detected rooms from the display and results.",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          },
+          {
+            "id": 9,
+            "title": "Add Material UI Components for Interactions",
+            "description": "Integrate Material UI components for user interactions",
+            "details": "Use Material UI components (e.g., IconButton, Menu, Dialog) to provide intuitive UI controls for room interactions (highlight, rename, remove).",
+            "status": "pending",
+            "dependencies": [],
+            "parentTaskId": 13
+          }
+        ]
+      },
+      {
+        "id": 14,
+        "title": "Create Demo Video",
+        "description": "Produce a video demonstrating the workflow and user experience.",
+        "details": "Record a video showcasing the process from uploading a blueprint to interacting with detected rooms, highlighting key features and benefits.",
+        "testStrategy": "Review video for clarity, completeness, and alignment with product goals.",
+        "priority": "medium",
+        "dependencies": [
+          13
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 15,
+        "title": "Prepare README Documentation",
+        "description": "Write comprehensive documentation including value story, architecture, and roadmap.",
+        "details": "Draft a README file that provides an overview of the project, setup instructions, and future development plans.",
+        "testStrategy": "Ensure documentation is clear, accurate, and helpful for new developers.",
+        "priority": "medium",
+        "dependencies": [
+          14
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 16,
+        "title": "Conduct Performance Testing",
+        "description": "Evaluate system performance against success criteria metrics.",
+        "details": "Test the system with various blueprint sizes to measure detection accuracy, false positives, and processing latency.",
+        "testStrategy": "Analyze results to confirm compliance with performance targets.",
+        "priority": "medium",
+        "dependencies": [
+          11
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 17,
+        "title": "Optimize Core Algorithm for Performance",
+        "description": "Enhance the core algorithm to meet latency and accuracy targets.",
+        "details": "Refine the algorithm to improve efficiency, possibly exploring parallel processing or algorithmic optimizations.",
+        "testStrategy": "Re-test performance metrics post-optimization to ensure improvements.",
+        "priority": "medium",
+        "dependencies": [
+          16
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 18,
+        "title": "Prepare for Phase 2 Transition",
+        "description": "Plan for the transition to AWS infrastructure post-MVP.",
+        "details": "Outline steps for migrating to AWS, including setting up S3, API Gateway, Lambda, and other services.",
+        "testStrategy": "Develop a detailed roadmap for Phase 2 implementation, ensuring alignment with MVP learnings.",
+        "priority": "medium",
+        "dependencies": [
+          17
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 19,
+        "title": "Create React UI Component for Wall Adjacency Graph Visualization",
+        "description": "Develop a React component using Material UI to visualize the wall adjacency graph and highlight detected cycles.",
+        "status": "pending",
+        "dependencies": [
+          4,
+          5,
+          10
+        ],
+        "priority": "medium",
+        "details": "Set up a new React component within the existing project structure. Use Material UI for styling and layout. Implement a canvas or SVG element to render the graph nodes and edges. Integrate with the backend to fetch graph data, including nodes, edges, and detected cycles. Highlight cycles using distinct colors or styles for easy identification. Ensure the component is responsive and can handle dynamic data updates. Provide controls for zooming and panning to navigate large graphs.",
+        "testStrategy": "Test the component by integrating it with the backend endpoints from tasks 4 and 5. Use sample data to verify that the graph is rendered correctly and cycles are highlighted. Perform manual testing to ensure the UI is responsive and interactive. Validate that the component updates correctly when new data is received. Additionally, implement automated tests using Jest and React Testing Library to cover graph visualization rendering, cycle highlighting, node and edge display, zoom/pan controls, data updates, and Material UI integration. Include at least 5-7 component test cases with good coverage.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up React Component Structure",
+            "description": "Create the initial structure for the React component using Material UI.",
+            "dependencies": [],
+            "details": "Initialize a new React component file within the existing project. Use Material UI components for basic layout.",
+            "status": "pending",
+            "testStrategy": "Ensure the component renders without errors."
+          },
+          {
+            "id": 2,
+            "title": "Implement Node and Edge Rendering",
+            "description": "Render graph nodes and edges using canvas or SVG.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use a canvas or SVG element to draw nodes and edges. Ensure nodes are positioned correctly and edges connect nodes.",
+            "status": "pending",
+            "testStrategy": "Verify nodes and edges are rendered correctly with sample data."
+          },
+          {
+            "id": 3,
+            "title": "Highlight Detected Cycles",
+            "description": "Implement cycle highlighting using distinct colors or styles.",
+            "dependencies": [
+              2
+            ],
+            "details": "Identify cycles in the graph data and apply distinct colors or styles to highlight them.",
+            "status": "pending",
+            "testStrategy": "Check that cycles are highlighted correctly with test data."
+          },
+          {
+            "id": 4,
+            "title": "Add Zoom and Pan Controls",
+            "description": "Implement controls for zooming and panning the graph.",
+            "dependencies": [
+              2
+            ],
+            "details": "Add interactive controls to allow users to zoom in/out and pan across the graph visualization.",
+            "status": "pending",
+            "testStrategy": "Test zoom and pan functionality for smooth interaction."
+          },
+          {
+            "id": 5,
+            "title": "Integrate with Backend API",
+            "description": "Fetch graph data from the backend and update the component.",
+            "dependencies": [
+              1,
+              2,
+              3,
+              4
+            ],
+            "details": "Connect to the backend API to retrieve nodes, edges, and cycle data. Update the component to reflect dynamic data changes.",
+            "status": "pending",
+            "testStrategy": "Ensure data is fetched and rendered correctly by simulating API responses."
+          }
+        ]
+      }
+    ],
+    "metadata": {
+      "created": "2025-11-08T20:18:15.982Z",
+      "updated": "2025-11-08T20:50:25.558Z",
+      "description": "Tasks for master context"
+    }
+  }
+}

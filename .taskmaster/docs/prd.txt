@@ -1,0 +1,194 @@
+# Location Detection AI — Product Requirements Document (PRD)
+
+## 1. Overview
+
+### 1.1 Goal
+Enable automatic detection of **room boundaries** in architectural floorplans. The system should identify closed interior spaces (rooms) from a set of wall line segments and return normalized bounding boxes that can be displayed in the UI.
+
+### 1.2 MVP Scope
+For the MVP, the blueprint’s wall geometry will be **provided explicitly** as a JSON list of normalized line segments. The system will **not** perform PDF parsing, raster wall detection, or OCR in this phase.
+
+This allows us to focus on the **core spatial reasoning** component:
+> Detecting closed shapes (rooms) from wall line connections.
+
+## 2. Problem Statement
+
+Users currently draw room boundaries manually by clicking along wall edges. This is:
+- Time-consuming
+- Error-prone
+- A poor onboarding experience
+
+Automating boundary detection:
+- Reduces blueprint setup time by **80–95%**
+- Increases confidence and consistency
+- Makes demos dramatically more compelling
+
+## 3. Success Criteria
+
+| Metric | Target |
+|-------|--------|
+| Detection accuracy | ≥ 90% correct rooms on clean inputs |
+| False positives | < 10% incorrect room detections |
+| Processing latency | < **30 seconds** per blueprint |
+| User correction effort | Minimal (adjust shapes, not draw from scratch) |
+
+## 4. Input & Output Specification
+
+### 4.1 Input Format (Walls JSON)
+Coordinates are normalized to a **0–1000** coordinate system.
+
+```json
+[
+  {
+    "type": "line",
+    "start": [100, 100],
+    "end": [500, 100],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [100, 100],
+    "end": [100, 400],
+    "is_load_bearing": false
+  }
+]
+```
+
+A **raster blueprint image** (PNG/JPG) is also provided for visual display only.
+
+### 4.2 Output Format (Detected Rooms)
+
+```json
+[
+  {
+    "id": "room_001",
+    "bounding_box": [50, 50, 200, 300],
+    "name_hint": "Entry Hall"
+  },
+  {
+    "id": "room_002",
+    "bounding_box": [250, 50, 700, 500],
+    "name_hint": "Main Office"
+  }
+]
+```
+
+Bounding boxes remain axis-aligned for MVP simplicity.
+
+## 5. System Flow (High-Level)
+
+### 5.1 MVP (Local Prototype)
+User → React Frontend (Material UI) → Uploads (image + wall-lines JSON)
+React → Local Backend API (Express/FastAPI)
+Backend → Detects closed polygon spaces (rooms) using Python `networkx` + `shapely`
+Backend → Returns bounding box list (normalized 0–1000)
+React → Draws boundary overlays on the image using Material UI components
+
+### 5.2 Phase 2 (AWS Infrastructure - Post-MVP)
+User → React Frontend → Uploads (image + wall-lines JSON)
+React → AWS Location Detection Service
+Service → Detects closed polygon spaces (rooms)
+Service → Returns bounding box list (normalized 0–1000)
+React → Draws boundary overlays on the image
+
+## 6. Technical Architecture
+
+### 6.1 MVP (Local Prototype)
+| Component | Purpose | Technology |
+|---|---|---|
+| React Frontend | Renders blueprint and overlays detected rooms | React + Material UI |
+| Local Backend API | REST API for room detection | Express.js or FastAPI |
+| Core Algorithm | Graph-based polygon + bounding box detection | Python: `networkx`, `shapely` |
+| Sample Test Data | Blueprint images and wall-line JSON for testing | JSON files + PNG/JPG images |
+
+**Development Approach**: Build local prototype first. Each backend task must have a corresponding React UI task for manual testing as we go.
+
+**UI Library**: Material UI (MUI) for all React components.
+
+### 6.2 Phase 2 (AWS Infrastructure - Post-MVP)
+| Component | Purpose |
+|---|---|
+| React Frontend | Renders blueprint and overlays detected rooms |
+| S3 | Stores input + generated room JSON |
+| API Gateway + Lambda | Job creation + status API |
+| DynamoDB | Job state and metadata |
+| SQS Queue | Decoupled room-detection job processing |
+| ECS Fargate Worker | Runs room detection graph algorithm |
+| Python: `networkx`, `shapely` | Geometry + cycle detection core |
+
+Latency target: **< 30s** from job submit → response availability.
+
+## 7. Core Algorithm Requirements
+
+1. Parse line segments
+2. Snap endpoints within tolerance to form a wall adjacency graph
+3. Detect **closed loops** (cycles) in the graph
+4. Filter cycles by size/shape (ignore closets, hall fragments, invalid polygons)
+5. Convert polygon → bounding box
+6. Normalize bounding box into 0–1000 coordinate space
+
+## 8. Demo & UX Differentiation Requirements
+
+### 8.1 Observability (must display in UI)
+```
+Rooms Detected: N
+Processing Time: X.XX seconds
+Confidence Score: 0.00–1.00
+```
+
+### 8.2 Human-in-the-Loop UX
+- User can click a detected room to highlight it
+- Optional: user can rename room
+- Optional: user can remove incorrect detection
+
+### 8.3 Product Value Story (Demo Script Required)
+> “Manual tracing takes 5–15 minutes of clicking.  
+> With Location Detection AI, rooms appear automatically in under 3 seconds.  
+> The user now **reviews**, not **draws**.”
+
+### 8.4 Before / After Comparison Slide (Required)
+| Manual Workflow | With Detection AI |
+|---|---|
+| 40–100 clicks | Zero drawing |
+| Requires CAD skill | No training needed |
+| 5–15 min setup | < 5 sec |
+| Inconsistent result | Deterministic + repeatable |
+
+## 9. Phase 2 (Post-MVP Roadmap)
+
+| Phase | Addition | Description |
+|---|---|---|
+| 2A | PDF Vector Extraction | Automatically detect wall lines from PDFs |
+| 2B | Raster Wall Detection | OpenCV-based wall parsing for scanned plans |
+| 2C | Room Label OCR | Textract → auto populate `name_hint` |
+| 2D | Polygon Output | Replace bounding boxes with true room polygons |
+
+## 10. Deliverables
+
+| Deliverable | Description |
+|---|---|
+| `detect_rooms()` core implementation | Graph-based polygon + bounding box detection (Python) |
+| Local Backend API | REST API endpoint for room detection (Express/FastAPI) |
+| React UI with Material UI | Display detected room boundaries interactively |
+| Sample Test Data | Blueprint images and wall-line JSON files for testing |
+| Demo video | 1–3 minutes showing workflow & review UX |
+| README | Includes value story, architecture, and roadmap |
+
+## 11. Development Workflow Requirements
+
+### 11.1 Task Pairing
+- **Every backend task must have a corresponding React UI task**
+- Backend and UI tasks should be developed in parallel for manual testing
+- UI tasks should use Material UI components consistently
+
+### 11.2 Testing Strategy
+- Build sample test data (blueprint images + wall-line JSON) early
+- Manual testing after each backend/UI task pair completion
+- Test with progressively complex floorplans
+
+### 11.3 Priority Order
+1. Core `detect_rooms()` algorithm (Python)
+2. Sample test data creation
+3. Local backend API endpoint
+4. React UI with Material UI for visualization
+5. AWS infrastructure (Phase 2)

@@ -1,0 +1,61 @@
+# Task ID: 4
+# Title: Implement Core Algorithm: Snap Endpoints
+# Status: pending
+# Dependencies: 3
+# Priority: medium
+# Description: Snap endpoints within a tolerance to form a wall adjacency graph.
+# Details:
+Utilize networkx to create a graph from line segments, snapping endpoints within a specified tolerance to connect walls. Implement pytest unit tests to ensure comprehensive coverage.
+
+# Test Strategy:
+Create pytest unit tests covering: endpoint snapping with various tolerance levels, graph construction correctness, edge cases (overlapping endpoints, isolated segments), and verify graph structure. Include at least 5-7 test cases for good coverage.
+
+# Subtasks:
+## 1. Develop Unit Tests for Endpoint Snapping [pending]
+### Dependencies: None
+### Description: Create pytest unit tests for snapping endpoints with various tolerance levels.
+### Details:
+Ensure tests cover different tolerance values to verify snapping accuracy.
+
+## 2. Test Graph Construction Correctness [pending]
+### Dependencies: None
+### Description: Develop tests to ensure the graph is constructed correctly from snapped endpoints.
+### Details:
+Verify that the graph accurately represents the adjacency of walls.
+
+## 3. Handle Edge Cases in Graph Construction [pending]
+### Dependencies: None
+### Description: Create tests for edge cases such as overlapping endpoints and isolated segments.
+### Details:
+Ensure edge cases are handled correctly in the graph construction process.
+
+## 4. Verify Overall Graph Structure [pending]
+### Dependencies: None
+### Description: Ensure the final graph structure is as expected with all connections intact.
+### Details:
+Check the overall integrity and correctness of the graph structure.
+
+## 5. Implement Endpoint Snapping Algorithm [pending]
+### Dependencies: None
+### Description: Create the algorithm to snap endpoints within tolerance
+### Details:
+Implement logic to find endpoints that are within a specified tolerance distance and group them together for graph construction.
+
+## 6. Create NetworkX Graph Structure [pending]
+### Dependencies: None
+### Description: Build the graph using networkx from snapped endpoints
+### Details:
+Use networkx to create a graph where nodes represent endpoints and edges represent wall segments. Connect nodes based on snapped endpoint groups.
+
+## 7. Implement Tolerance-Based Connection Logic [pending]
+### Dependencies: None
+### Description: Implement the logic to connect walls based on tolerance
+### Details:
+Create a function that determines which wall endpoints should be connected based on distance tolerance, ensuring walls are properly linked in the graph.
+
+## 8. Integrate with Parsed Line Segments [pending]
+### Dependencies: None
+### Description: Connect the snapping algorithm with the parser from task 3
+### Details:
+Ensure the endpoint snapping function accepts the parsed line segment data structure and processes it correctly.
+

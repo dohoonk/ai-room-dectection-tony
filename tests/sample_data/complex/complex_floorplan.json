@@ -1,0 +1,51 @@
+[
+  {
+    "type": "line",
+    "start": [50, 50],
+    "end": [450, 50],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [450, 50],
+    "end": [450, 350],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [450, 350],
+    "end": [50, 350],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [50, 350],
+    "end": [50, 50],
+    "is_load_bearing": true
+  },
+  {
+    "type": "line",
+    "start": [250, 50],
+    "end": [250, 200],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [250, 200],
+    "end": [450, 200],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [250, 200],
+    "end": [250, 350],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [50, 200],
+    "end": [250, 200],
+    "is_load_bearing": false
+  }
+]
+

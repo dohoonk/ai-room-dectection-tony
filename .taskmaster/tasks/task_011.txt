@@ -1,0 +1,43 @@
+# Task ID: 11
+# Title: Integrate Frontend with Backend API
+# Status: pending
+# Dependencies: 9, 10
+# Priority: medium
+# Description: Create the UI component to display detected room bounding boxes using the React frontend, integrating with the local backend API for room detection. Additionally, implement comprehensive component tests using Jest and React Testing Library.
+# Details:
+Use Material UI components to overlay bounding boxes on the blueprint image, display room IDs, and allow basic interaction. This will serve as the main testing interface for the room detection algorithm. Ensure that the UI is robust and handles various user interactions and API responses effectively.
+
+# Test Strategy:
+Test the UI by uploading test data, verifying that bounding boxes are correctly displayed and interactive, and ensuring room IDs are shown accurately. Implement component tests to cover bounding box overlay rendering, room ID display, user interactions (clicking rooms), API integration, error handling, and Material UI component behavior. Include at least 5-7 test cases for comprehensive coverage.
+
+# Subtasks:
+## 1. Create Component Tests [pending]
+### Dependencies: None
+### Description: Develop component tests using Jest and React Testing Library.
+### Details:
+Write tests to cover bounding box overlay rendering, room ID display, user interactions (clicking rooms), API integration, error handling, and Material UI component behavior. Ensure at least 5-7 test cases are implemented.
+
+## 2. Create Bounding Box Overlay Component [pending]
+### Dependencies: None
+### Description: Build React component to overlay bounding boxes on blueprint
+### Details:
+Create a React component that renders bounding boxes as overlays on top of the blueprint image using Material UI components.
+
+## 3. Implement Room ID Display [pending]
+### Dependencies: None
+### Description: Display room IDs on or near each bounding box
+### Details:
+Add text labels showing room IDs (e.g., "room_001") on or near each detected room's bounding box.
+
+## 4. Add Click Interaction Handlers [pending]
+### Dependencies: None
+### Description: Implement click handlers for room selection
+### Details:
+Add event handlers to detect clicks on bounding boxes and provide visual feedback (e.g., highlighting) when a room is selected.
+
+## 5. Integrate API Calls with Error Handling [pending]
+### Dependencies: None
+### Description: Connect frontend to backend API with proper error handling
+### Details:
+Implement API calls to the backend endpoint (from task 9) to fetch room detection results, with proper error handling for network issues and invalid responses.
+

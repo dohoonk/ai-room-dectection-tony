@@ -1,0 +1,11 @@
+# Task ID: 14
+# Title: Create Demo Video
+# Status: pending
+# Dependencies: 13
+# Priority: medium
+# Description: Produce a video demonstrating the workflow and user experience.
+# Details:
+Record a video showcasing the process from uploading a blueprint to interacting with detected rooms, highlighting key features and benefits.
+
+# Test Strategy:
+Review video for clarity, completeness, and alignment with product goals.

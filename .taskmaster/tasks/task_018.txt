@@ -1,0 +1,11 @@
+# Task ID: 18
+# Title: Prepare for Phase 2 Transition
+# Status: pending
+# Dependencies: 17
+# Priority: medium
+# Description: Plan for the transition to AWS infrastructure post-MVP.
+# Details:
+Outline steps for migrating to AWS, including setting up S3, API Gateway, Lambda, and other services.
+
+# Test Strategy:
+Develop a detailed roadmap for Phase 2 implementation, ensuring alignment with MVP learnings.

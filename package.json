@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "express": "^5.1.0",
+    "task-master-ai": "^0.31.2"
+  }
+}

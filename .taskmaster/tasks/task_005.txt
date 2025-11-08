@@ -1,0 +1,37 @@
+# Task ID: 5
+# Title: Implement Core Algorithm: Detect Closed Loops
+# Status: pending
+# Dependencies: 4
+# Priority: medium
+# Description: Detect closed loops (cycles) in the wall adjacency graph.
+# Details:
+Use networkx to identify cycles in the graph, representing potential room boundaries. Implement pytest unit tests to ensure comprehensive coverage of cycle detection.
+
+# Test Strategy:
+Create pytest unit tests covering: cycle detection in simple and complex graphs, handling of graphs with no cycles, multiple cycles, nested cycles, and verify all closed loops are identified. Include at least 5-7 test cases with good coverage.
+
+# Subtasks:
+## 1. Develop Unit Tests for Cycle Detection [pending]
+### Dependencies: None
+### Description: Create pytest unit tests for cycle detection in various graph scenarios.
+### Details:
+Develop tests for simple graphs, complex graphs, graphs with no cycles, multiple cycles, and nested cycles.
+
+## 2. Implement Cycle Detection Algorithm [pending]
+### Dependencies: None
+### Description: Use networkx to detect cycles in the graph
+### Details:
+Implement a function that uses networkx cycle detection algorithms to find all closed loops in the wall adjacency graph.
+
+## 3. Filter Duplicate Cycles [pending]
+### Dependencies: None
+### Description: Remove duplicate and redundant cycles
+### Details:
+Implement logic to filter out duplicate cycles (same nodes in different order) and ensure each unique cycle is only returned once.
+
+## 4. Structure Cycle Data for Processing [pending]
+### Dependencies: None
+### Description: Format detected cycles for further processing
+### Details:
+Convert networkx cycle data into a structured format (list of node sequences) that can be used by subsequent algorithm steps.
+

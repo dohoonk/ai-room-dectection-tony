@@ -1,0 +1,27 @@
+[
+  {
+    "type": "line",
+    "start": [100, 100],
+    "end": [400, 100],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [400, 100],
+    "end": [400, 300],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [400, 300],
+    "end": [100, 300],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [100, 300],
+    "end": [100, 100],
+    "is_load_bearing": false
+  }
+]
+
