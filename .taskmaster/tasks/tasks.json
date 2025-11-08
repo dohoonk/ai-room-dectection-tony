@@ -524,7 +524,7 @@
         "id": 8,
         "title": "Normalize Bounding Box Coordinates",
         "description": "Normalize bounding box coordinates to a 0–1000 scale.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           7
         ],
@@ -538,7 +538,7 @@
             "description": "Create pytest unit tests for bounding box normalization.",
             "dependencies": [],
             "details": "Develop tests to ensure bounding boxes are normalized to a 0-1000 range, maintaining aspect ratio.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify that bounding boxes are correctly normalized across various test cases, including edge cases."
           },
           {
@@ -549,7 +549,7 @@
               1
             ],
             "details": "Write tests to confirm aspect ratio is maintained after normalization.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Check aspect ratio consistency across different bounding box dimensions."
           },
           {
@@ -560,7 +560,7 @@
               1
             ],
             "details": "Include tests for already normalized boxes and extreme coordinates.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure edge cases are handled correctly, with coordinates remaining within bounds."
           },
           {
@@ -568,7 +568,7 @@
             "title": "Implement Normalization Algorithm",
             "description": "Create the normalization function to scale coordinates",
             "details": "Implement a function that scales bounding box coordinates to fit within the 0-1000 coordinate system while maintaining the original aspect ratio.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -577,7 +577,7 @@
             "title": "Preserve Aspect Ratio During Scaling",
             "description": "Ensure aspect ratio is maintained during normalization",
             "details": "Calculate the scaling factor that maintains the original aspect ratio while fitting coordinates within the 0-1000 range.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           },
@@ -586,7 +586,7 @@
             "title": "Ensure Coordinates Within 0-1000 Range",
             "description": "Validate all coordinates are within bounds",
             "details": "Add validation to ensure all normalized coordinates fall within the 0-1000 range, handling edge cases like already-normalized or extreme coordinates.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 8
           }
@@ -1020,7 +1020,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T21:09:31.134Z",
+      "updated": "2025-11-08T21:11:07.775Z",
       "description": "Tasks for master context"
     }
   }
