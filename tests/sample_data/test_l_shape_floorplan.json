@@ -1,0 +1,39 @@
+[
+  {
+    "type": "line",
+    "start": [100, 100],
+    "end": [300, 100],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [300, 100],
+    "end": [300, 200],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [300, 200],
+    "end": [500, 200],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [500, 200],
+    "end": [500, 400],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [500, 400],
+    "end": [100, 400],
+    "is_load_bearing": false
+  },
+  {
+    "type": "line",
+    "start": [100, 400],
+    "end": [100, 100],
+    "is_load_bearing": false
+  }
+]
+

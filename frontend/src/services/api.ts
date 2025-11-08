@@ -1,0 +1,66 @@
+/**
+ * API service for room detection
+ */
+
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8000';
+
+export interface WallSegment {
+  type: string;
+  start: [number, number];
+  end: [number, number];
+  is_load_bearing?: boolean;
+}
+
+export interface Room {
+  id: string;
+  bounding_box: [number, number, number, number]; // [min_x, min_y, max_x, max_y]
+  name_hint: string;
+}
+
+export interface RoomDetectionRequest {
+  walls: WallSegment[];
+}
+
+/**
+ * Detect rooms from wall segments
+ */
+export async function detectRooms(walls: WallSegment[]): Promise<Room[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/detect-rooms`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ walls }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+    }
+
+    const rooms: Room[] = await response.json();
+    return rooms;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Network error: Failed to connect to the API');
+  }
+}
+
+/**
+ * Health check endpoint
+ */
+export async function checkHealth(): Promise<{ status: string }> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/health`);
+    if (!response.ok) {
+      throw new Error(`Health check failed: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    throw new Error('Backend server is not available');
+  }
+}
+

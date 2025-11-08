@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import { Room } from '../services/api';
 
 interface WallSegment {
   type: string;
@@ -11,9 +12,17 @@ interface WallSegment {
 
 interface WallVisualizationProps {
   walls: WallSegment[];
+  rooms?: Room[];
+  selectedRoomId?: string | null;
+  onRoomClick?: (roomId: string) => void;
 }
 
-const WallVisualization: React.FC<WallVisualizationProps> = ({ walls }) => {
+const WallVisualization: React.FC<WallVisualizationProps> = ({ 
+  walls, 
+  rooms = [], 
+  selectedRoomId = null,
+  onRoomClick 
+}) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [dimensions, setDimensions] = React.useState({ width: 800, height: 600 });
@@ -119,7 +128,99 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({ walls }) => {
       ctx.arc(endX, endY, 4, 0, 2 * Math.PI);
       ctx.fill();
     });
-  }, [walls, dimensions]);
+
+    // Draw room bounding boxes
+    if (rooms.length > 0) {
+      rooms.forEach(room => {
+        const [roomMinX, roomMinY, roomMaxX, roomMaxY] = room.bounding_box;
+        const isSelected = selectedRoomId === room.id;
+
+        // Transform bounding box coordinates
+        const boxMinX = padding + (roomMinX - minX) * scale;
+        const boxMinY = padding + (roomMinY - minY) * scale;
+        const boxMaxX = padding + (roomMaxX - minX) * scale;
+        const boxMaxY = padding + (roomMaxY - minY) * scale;
+
+        const boxWidth = boxMaxX - boxMinX;
+        const boxHeight = boxMaxY - boxMinY;
+
+        // Draw bounding box
+        ctx.strokeStyle = isSelected ? '#ff9800' : '#4caf50';
+        ctx.lineWidth = isSelected ? 3 : 2;
+        ctx.setLineDash(isSelected ? [] : [5, 5]);
+        ctx.strokeRect(boxMinX, boxMinY, boxWidth, boxHeight);
+        ctx.setLineDash([]);
+
+        // Fill with semi-transparent color
+        ctx.fillStyle = isSelected ? 'rgba(255, 152, 0, 0.2)' : 'rgba(76, 175, 80, 0.1)';
+        ctx.fillRect(boxMinX, boxMinY, boxWidth, boxHeight);
+
+        // Draw room ID label
+        ctx.fillStyle = isSelected ? '#ff9800' : '#4caf50';
+        ctx.font = 'bold 14px Arial';
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        const labelX = boxMinX + 5;
+        const labelY = boxMinY + 5;
+        
+        // Draw background for text
+        const textMetrics = ctx.measureText(room.id);
+        const textWidth = textMetrics.width;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.9)';
+        ctx.fillRect(labelX - 2, labelY - 2, textWidth + 4, 18);
+        
+        // Draw text
+        ctx.fillStyle = isSelected ? '#ff9800' : '#4caf50';
+        ctx.fillText(room.id, labelX, labelY);
+      });
+    }
+  }, [walls, dimensions, rooms, selectedRoomId]);
+
+  // Handle canvas clicks for room selection
+  const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    if (!onRoomClick || rooms.length === 0) return;
+
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const x = event.clientX - rect.left;
+    const y = event.clientY - rect.top;
+
+    // Calculate bounds for scaling
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    walls.forEach(wall => {
+      const [x1, y1] = wall.start;
+      const [x2, y2] = wall.end;
+      minX = Math.min(minX, x1, x2);
+      minY = Math.min(minY, y1, y2);
+      maxX = Math.max(maxX, x1, x2);
+      maxY = Math.max(maxY, y1, y2);
+    });
+
+    const padding = 50;
+    const scaleX = (canvas.width - padding * 2) / (maxX - minX || 1);
+    const scaleY = (canvas.height - padding * 2) / (maxY - minY || 1);
+    const scale = Math.min(scaleX, scaleY);
+
+    // Convert click coordinates back to original coordinate system
+    const originalX = (x - padding) / scale + minX;
+    const originalY = (y - padding) / scale + minY;
+
+    // Check if click is inside any room bounding box
+    for (const room of rooms) {
+      const [boxMinX, boxMinY, boxMaxX, boxMaxY] = room.bounding_box;
+      if (
+        originalX >= boxMinX &&
+        originalX <= boxMaxX &&
+        originalY >= boxMinY &&
+        originalY <= boxMaxY
+      ) {
+        onRoomClick(room.id);
+        break;
+      }
+    }
+  };
 
   if (walls.length === 0) {
     return (
@@ -133,13 +234,16 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({ walls }) => {
     <Box ref={containerRef} sx={{ overflow: 'auto', border: '1px solid #e0e0e0', borderRadius: 1 }}>
       <canvas
         ref={canvasRef}
+        onClick={handleCanvasClick}
         style={{
           display: 'block',
           maxWidth: '100%',
+          cursor: rooms.length > 0 ? 'pointer' : 'default',
         }}
       />
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1, px: 1 }}>
         Walls: {walls.length} | Blue: Regular walls | Red: Load-bearing walls
+        {rooms.length > 0 && ` | Green: Rooms (${rooms.length} detected) | Click to select`}
       </Typography>
     </Box>
   );
