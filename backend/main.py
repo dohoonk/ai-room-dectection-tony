@@ -59,7 +59,7 @@ async def detect_rooms_endpoint(request: RoomDetectionRequest):
         import json
         import tempfile
         
-        walls_data = [wall.dict() for wall in request.walls]
+        walls_data = [wall.model_dump() for wall in request.walls]
         
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             json.dump(walls_data, f)

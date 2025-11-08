@@ -596,7 +596,7 @@
         "id": 9,
         "title": "Develop Local Backend API",
         "description": "Create a REST API endpoint for room detection using Express.js or FastAPI. This API will work in conjunction with the UI component in task 11 to display detected room bounding boxes.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           3,
           8
@@ -611,7 +611,7 @@
             "description": "Develop the API endpoint using Express.js or FastAPI to handle room detection requests.",
             "dependencies": [],
             "details": "Ensure the endpoint accepts wall-line JSON and returns room bounding boxes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Use Postman to verify endpoint functionality."
           },
           {
@@ -620,7 +620,7 @@
             "description": "Develop integration tests for the API endpoint.",
             "dependencies": [],
             "details": "Use pytest for FastAPI or Jest/Supertest for Express to create tests covering valid JSON acceptance, correct room detection results, invalid input handling, error handling, and response format validation.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure tests cover all specified scenarios with 5-7 test cases."
           }
         ]
@@ -1020,7 +1020,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T21:13:05.353Z",
+      "updated": "2025-11-08T21:18:41.835Z",
       "description": "Tasks for master context"
     }
   }
