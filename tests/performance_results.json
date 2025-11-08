@@ -1,0 +1,987 @@
+[
+  {
+    "file": "simple/simple_floorplan.json",
+    "description": "Simple rectangular room",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          100.0,
+          100.0,
+          400.0,
+          300.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "complex/complex_floorplan.json",
+    "description": "Complex layout with internal walls",
+    "detected_rooms": 4,
+    "expected_rooms": 4,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          50.0,
+          50.0,
+          250.0,
+          200.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_002",
+        "bounding_box": [
+          250.0,
+          50.0,
+          450.0,
+          200.0
+        ],
+        "name_hint": "Room 2",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_003",
+        "bounding_box": [
+          250.0,
+          200.0,
+          450.0,
+          350.0
+        ],
+        "name_hint": "Room 3",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_004",
+        "bounding_box": [
+          50.0,
+          200.0,
+          250.0,
+          350.0
+        ],
+        "name_hint": "Room 4",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "20_connected_rooms/20_connected_rooms_floorplan.json",
+    "description": "20 connected rooms in grid",
+    "detected_rooms": 20,
+    "expected_rooms": 20,
+    "processing_time": 0.003,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          190.0,
+          190.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_002",
+        "bounding_box": [
+          190.0,
+          0.0,
+          380.0,
+          190.0
+        ],
+        "name_hint": "Room 2",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_003",
+        "bounding_box": [
+          380.0,
+          0.0,
+          570.0,
+          190.0
+        ],
+        "name_hint": "Room 3",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_004",
+        "bounding_box": [
+          570.0,
+          0.0,
+          760.0,
+          190.0
+        ],
+        "name_hint": "Room 4",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_005",
+        "bounding_box": [
+          760.0,
+          0.0,
+          950.0,
+          190.0
+        ],
+        "name_hint": "Room 5",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_006",
+        "bounding_box": [
+          760.0,
+          190.0,
+          950.0,
+          380.0
+        ],
+        "name_hint": "Room 6",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_007",
+        "bounding_box": [
+          760.0,
+          380.0,
+          950.0,
+          570.0
+        ],
+        "name_hint": "Room 7",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_008",
+        "bounding_box": [
+          760.0,
+          570.0,
+          950.0,
+          760.0
+        ],
+        "name_hint": "Room 8",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_009",
+        "bounding_box": [
+          570.0,
+          570.0,
+          760.0,
+          760.0
+        ],
+        "name_hint": "Room 9",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_010",
+        "bounding_box": [
+          380.0,
+          570.0,
+          570.0,
+          760.0
+        ],
+        "name_hint": "Room 10",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_011",
+        "bounding_box": [
+          190.0,
+          570.0,
+          380.0,
+          760.0
+        ],
+        "name_hint": "Room 11",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_012",
+        "bounding_box": [
+          0.0,
+          570.0,
+          190.0,
+          760.0
+        ],
+        "name_hint": "Room 12",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_013",
+        "bounding_box": [
+          0.0,
+          380.0,
+          190.0,
+          570.0
+        ],
+        "name_hint": "Room 13",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_014",
+        "bounding_box": [
+          0.0,
+          190.0,
+          190.0,
+          380.0
+        ],
+        "name_hint": "Room 14",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_015",
+        "bounding_box": [
+          190.0,
+          190.0,
+          380.0,
+          380.0
+        ],
+        "name_hint": "Room 15",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_016",
+        "bounding_box": [
+          190.0,
+          380.0,
+          380.0,
+          570.0
+        ],
+        "name_hint": "Room 16",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_017",
+        "bounding_box": [
+          380.0,
+          190.0,
+          570.0,
+          380.0
+        ],
+        "name_hint": "Room 17",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_018",
+        "bounding_box": [
+          380.0,
+          380.0,
+          570.0,
+          570.0
+        ],
+        "name_hint": "Room 18",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_019",
+        "bounding_box": [
+          570.0,
+          190.0,
+          760.0,
+          380.0
+        ],
+        "name_hint": "Room 19",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_020",
+        "bounding_box": [
+          570.0,
+          380.0,
+          760.0,
+          570.0
+        ],
+        "name_hint": "Room 20",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "50_rooms/50_rooms_floorplan.json",
+    "description": "50 rooms in grid layout",
+    "detected_rooms": 50,
+    "expected_rooms": 50,
+    "processing_time": 0.174,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          77.55,
+          77.55
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_002",
+        "bounding_box": [
+          96.94,
+          0.0,
+          174.49,
+          77.55
+        ],
+        "name_hint": "Room 2",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_003",
+        "bounding_box": [
+          193.88,
+          0.0,
+          271.43,
+          77.55
+        ],
+        "name_hint": "Room 3",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_004",
+        "bounding_box": [
+          290.82,
+          0.0,
+          368.37,
+          77.55
+        ],
+        "name_hint": "Room 4",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_005",
+        "bounding_box": [
+          387.76,
+          0.0,
+          465.31,
+          77.55
+        ],
+        "name_hint": "Room 5",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_006",
+        "bounding_box": [
+          484.69,
+          0.0,
+          562.24,
+          77.55
+        ],
+        "name_hint": "Room 6",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_007",
+        "bounding_box": [
+          581.63,
+          0.0,
+          659.18,
+          77.55
+        ],
+        "name_hint": "Room 7",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_008",
+        "bounding_box": [
+          678.57,
+          0.0,
+          756.12,
+          77.55
+        ],
+        "name_hint": "Room 8",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_009",
+        "bounding_box": [
+          775.51,
+          0.0,
+          853.06,
+          77.55
+        ],
+        "name_hint": "Room 9",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_010",
+        "bounding_box": [
+          872.45,
+          0.0,
+          950.0,
+          77.55
+        ],
+        "name_hint": "Room 10",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_011",
+        "bounding_box": [
+          0.0,
+          96.94,
+          77.55,
+          174.49
+        ],
+        "name_hint": "Room 11",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_012",
+        "bounding_box": [
+          96.94,
+          96.94,
+          174.49,
+          174.49
+        ],
+        "name_hint": "Room 12",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_013",
+        "bounding_box": [
+          193.88,
+          96.94,
+          271.43,
+          174.49
+        ],
+        "name_hint": "Room 13",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_014",
+        "bounding_box": [
+          290.82,
+          96.94,
+          368.37,
+          174.49
+        ],
+        "name_hint": "Room 14",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_015",
+        "bounding_box": [
+          387.76,
+          96.94,
+          465.31,
+          174.49
+        ],
+        "name_hint": "Room 15",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_016",
+        "bounding_box": [
+          484.69,
+          96.94,
+          562.24,
+          174.49
+        ],
+        "name_hint": "Room 16",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_017",
+        "bounding_box": [
+          581.63,
+          96.94,
+          659.18,
+          174.49
+        ],
+        "name_hint": "Room 17",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_018",
+        "bounding_box": [
+          678.57,
+          96.94,
+          756.12,
+          174.49
+        ],
+        "name_hint": "Room 18",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_019",
+        "bounding_box": [
+          775.51,
+          96.94,
+          853.06,
+          174.49
+        ],
+        "name_hint": "Room 19",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_020",
+        "bounding_box": [
+          872.45,
+          96.94,
+          950.0,
+          174.49
+        ],
+        "name_hint": "Room 20",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_021",
+        "bounding_box": [
+          0.0,
+          193.88,
+          77.55,
+          271.43
+        ],
+        "name_hint": "Room 21",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_022",
+        "bounding_box": [
+          96.94,
+          193.88,
+          174.49,
+          271.43
+        ],
+        "name_hint": "Room 22",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_023",
+        "bounding_box": [
+          193.88,
+          193.88,
+          271.43,
+          271.43
+        ],
+        "name_hint": "Room 23",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_024",
+        "bounding_box": [
+          290.82,
+          193.88,
+          368.37,
+          271.43
+        ],
+        "name_hint": "Room 24",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_025",
+        "bounding_box": [
+          387.76,
+          193.88,
+          465.31,
+          271.43
+        ],
+        "name_hint": "Room 25",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_026",
+        "bounding_box": [
+          484.69,
+          193.88,
+          562.24,
+          271.43
+        ],
+        "name_hint": "Room 26",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_027",
+        "bounding_box": [
+          581.63,
+          193.88,
+          659.18,
+          271.43
+        ],
+        "name_hint": "Room 27",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_028",
+        "bounding_box": [
+          678.57,
+          193.88,
+          756.12,
+          271.43
+        ],
+        "name_hint": "Room 28",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_029",
+        "bounding_box": [
+          775.51,
+          193.88,
+          853.06,
+          271.43
+        ],
+        "name_hint": "Room 29",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_030",
+        "bounding_box": [
+          872.45,
+          193.88,
+          950.0,
+          271.43
+        ],
+        "name_hint": "Room 30",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_031",
+        "bounding_box": [
+          0.0,
+          290.82,
+          77.55,
+          368.37
+        ],
+        "name_hint": "Room 31",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_032",
+        "bounding_box": [
+          96.94,
+          290.82,
+          174.49,
+          368.37
+        ],
+        "name_hint": "Room 32",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_033",
+        "bounding_box": [
+          193.88,
+          290.82,
+          271.43,
+          368.37
+        ],
+        "name_hint": "Room 33",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_034",
+        "bounding_box": [
+          290.82,
+          290.82,
+          368.37,
+          368.37
+        ],
+        "name_hint": "Room 34",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_035",
+        "bounding_box": [
+          387.76,
+          290.82,
+          465.31,
+          368.37
+        ],
+        "name_hint": "Room 35",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_036",
+        "bounding_box": [
+          484.69,
+          290.82,
+          562.24,
+          368.37
+        ],
+        "name_hint": "Room 36",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_037",
+        "bounding_box": [
+          581.63,
+          290.82,
+          659.18,
+          368.37
+        ],
+        "name_hint": "Room 37",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_038",
+        "bounding_box": [
+          678.57,
+          290.82,
+          756.12,
+          368.37
+        ],
+        "name_hint": "Room 38",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_039",
+        "bounding_box": [
+          775.51,
+          290.82,
+          853.06,
+          368.37
+        ],
+        "name_hint": "Room 39",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_040",
+        "bounding_box": [
+          872.45,
+          290.82,
+          950.0,
+          368.37
+        ],
+        "name_hint": "Room 40",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_041",
+        "bounding_box": [
+          0.0,
+          387.76,
+          77.55,
+          465.31
+        ],
+        "name_hint": "Room 41",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_042",
+        "bounding_box": [
+          96.94,
+          387.76,
+          174.49,
+          465.31
+        ],
+        "name_hint": "Room 42",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_043",
+        "bounding_box": [
+          193.88,
+          387.76,
+          271.43,
+          465.31
+        ],
+        "name_hint": "Room 43",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_044",
+        "bounding_box": [
+          290.82,
+          387.76,
+          368.37,
+          465.31
+        ],
+        "name_hint": "Room 44",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_045",
+        "bounding_box": [
+          387.76,
+          387.76,
+          465.31,
+          465.31
+        ],
+        "name_hint": "Room 45",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_046",
+        "bounding_box": [
+          484.69,
+          387.76,
+          562.24,
+          465.31
+        ],
+        "name_hint": "Room 46",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_047",
+        "bounding_box": [
+          581.63,
+          387.76,
+          659.18,
+          465.31
+        ],
+        "name_hint": "Room 47",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_048",
+        "bounding_box": [
+          678.57,
+          387.76,
+          756.12,
+          465.31
+        ],
+        "name_hint": "Room 48",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_049",
+        "bounding_box": [
+          775.51,
+          387.76,
+          853.06,
+          465.31
+        ],
+        "name_hint": "Room 49",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_050",
+        "bounding_box": [
+          872.45,
+          387.76,
+          950.0,
+          465.31
+        ],
+        "name_hint": "Room 50",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "test_multiroom_floorplan.json",
+    "description": "Multi-room floorplan",
+    "detected_rooms": 3,
+    "expected_rooms": 3,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          50.0,
+          50.0,
+          250.0,
+          350.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_002",
+        "bounding_box": [
+          250.0,
+          50.0,
+          450.0,
+          200.0
+        ],
+        "name_hint": "Room 2",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_003",
+        "bounding_box": [
+          250.0,
+          200.0,
+          450.0,
+          350.0
+        ],
+        "name_hint": "Room 3",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "test_floorplan.json",
+    "description": "Simple test floorplan",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.0,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          100.0,
+          100.0,
+          400.0,
+          300.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "test_l_shape_floorplan.json",
+    "description": "L-shaped room",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          100.0,
+          100.0,
+          500.0,
+          400.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  }
+]
