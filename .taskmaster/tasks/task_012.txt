@@ -1,6 +1,6 @@
 # Task ID: 12
 # Title: Implement Observability Features
-# Status: pending
+# Status: done
 # Dependencies: 11
 # Priority: medium
 # Description: Add UI elements to display processing metrics such as detection time and confidence score.
@@ -11,31 +11,31 @@ Enhance the UI to show metrics like rooms detected, processing time, and confide
 Verify that metrics are accurately displayed and updated in real-time during processing. Implement component tests using Jest and React Testing Library to cover metrics display rendering, real-time updates, Material UI component integration, and accurate calculation and display of metrics.
 
 # Subtasks:
-## 1. Create Jest and React Testing Library tests [pending]
+## 1. Create Jest and React Testing Library tests [done]
 ### Dependencies: None
 ### Description: Develop component tests for metrics display rendering, real-time updates, and Material UI integration.
 ### Details:
 Include at least 3-5 test cases to ensure good coverage of the observability features.
 
-## 2. Create Metrics Display Component [pending]
+## 2. Create Metrics Display Component [done]
 ### Dependencies: None
 ### Description: Build Material UI component to display metrics
 ### Details:
 Create a React component using Material UI (e.g., Card, Typography) to display metrics like rooms detected count, processing time, and confidence score.
 
-## 3. Implement Processing Time Calculation [pending]
+## 3. Implement Processing Time Calculation [done]
 ### Dependencies: None
 ### Description: Calculate and display processing time
 ### Details:
 Track the time from when room detection starts until results are received, and display it in a user-friendly format (e.g., "2.34 seconds").
 
-## 4. Implement Confidence Score Calculation [pending]
+## 4. Implement Confidence Score Calculation [done]
 ### Dependencies: None
 ### Description: Calculate confidence score for detections
 ### Details:
 Implement logic to calculate a confidence score (0.00-1.00) based on factors like cycle size, shape regularity, and detection quality.
 
-## 5. Add Real-Time Updates [pending]
+## 5. Add Real-Time Updates [done]
 ### Dependencies: None
 ### Description: Update metrics in real-time during processing
 ### Details:

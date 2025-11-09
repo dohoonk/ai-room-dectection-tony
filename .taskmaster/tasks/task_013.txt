@@ -1,6 +1,6 @@
 # Task ID: 13
 # Title: Implement Human-in-the-Loop UX
-# Status: pending
+# Status: done
 # Dependencies: 11
 # Priority: medium
 # Description: Allow users to interact with detected rooms, such as highlighting and renaming.
@@ -11,55 +11,55 @@ Add functionality for users to click on rooms to highlight them, rename, or remo
 Conduct usability testing to ensure interactions are intuitive and responsive. Additionally, implement component tests using Jest and React Testing Library to cover room highlighting on click, room renaming functionality, room removal functionality, user interaction handling, and Material UI component behavior. Include at least 5-7 component test cases with good coverage.
 
 # Subtasks:
-## 1. Test Room Highlighting [pending]
+## 1. Test Room Highlighting [done]
 ### Dependencies: None
 ### Description: Create a test case for room highlighting on click using Jest and React Testing Library.
 ### Details:
 Ensure the room is highlighted correctly when clicked.
 
-## 2. Test Room Renaming [pending]
+## 2. Test Room Renaming [done]
 ### Dependencies: None
 ### Description: Create a test case for room renaming functionality using Jest and React Testing Library.
 ### Details:
 Ensure the room can be renamed and the change is reflected in the UI.
 
-## 3. Test Room Removal [pending]
+## 3. Test Room Removal [done]
 ### Dependencies: None
 ### Description: Create a test case for room removal functionality using Jest and React Testing Library.
 ### Details:
 Ensure the room can be removed and the UI updates accordingly.
 
-## 4. Test User Interaction Handling [pending]
+## 4. Test User Interaction Handling [done]
 ### Dependencies: None
 ### Description: Create a test case for handling user interactions using Jest and React Testing Library.
 ### Details:
 Ensure all user interactions are handled smoothly without errors.
 
-## 5. Test Material UI Component Behavior [pending]
+## 5. Test Material UI Component Behavior [done]
 ### Dependencies: None
 ### Description: Create a test case for Material UI component behavior using Jest and React Testing Library.
 ### Details:
 Ensure Material UI components behave as expected during interactions.
 
-## 6. Implement Room Highlighting on Click [pending]
+## 6. Implement Room Highlighting on Click [done]
 ### Dependencies: None
 ### Description: Add visual highlighting when a room is clicked
 ### Details:
 Implement click handlers that change the visual appearance (e.g., border color, background opacity) of a room's bounding box when clicked.
 
-## 7. Implement Room Renaming UI and Logic [pending]
+## 7. Implement Room Renaming UI and Logic [done]
 ### Dependencies: None
 ### Description: Create UI for renaming rooms with Material UI components
 ### Details:
 Add a dialog or inline editing component using Material UI (e.g., TextField, Dialog) that allows users to rename detected rooms.
 
-## 8. Implement Room Removal Functionality [pending]
+## 8. Implement Room Removal Functionality [done]
 ### Dependencies: None
 ### Description: Add ability to remove incorrect room detections
 ### Details:
 Implement a delete/remove button or action that allows users to remove incorrectly detected rooms from the display and results.
 
-## 9. Add Material UI Components for Interactions [pending]
+## 9. Add Material UI Components for Interactions [done]
 ### Dependencies: None
 ### Description: Integrate Material UI components for user interactions
 ### Details:

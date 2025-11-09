@@ -1,0 +1,67 @@
+# Task ID: 20
+# Title: Implement PDF Vector Extraction (Phase 2A)
+# Status: pending
+# Dependencies: 9
+# Priority: high
+# Description: Enable automatic extraction of wall line segments from PDF blueprint files, eliminating the need for manual JSON input.
+# Details:
+Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files and returns room detection results in the same format as /detect-rooms.
+
+# Test Strategy:
+Test with various PDF types: CAD-generated PDFs (vector-based), scanned PDFs (raster embedded in PDF), multi-page blueprints, different coordinate systems. Compare extracted segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Target: ≥ 85% of walls correctly extracted, < 2% coordinate transformation error, < 10 seconds processing latency for typical PDF (1-5 pages), < 15% false positives.
+
+# Subtasks:
+## 1. Set Up PDF Parsing Library [pending]
+### Dependencies: None
+### Description: Integrate PyMuPDF or pdfplumber for PDF parsing.
+### Details:
+Install and configure PyMuPDF or pdfplumber to extract vector graphics from PDF files.
+
+## 2. Extract Vector Paths from PDFs [pending]
+### Dependencies: 20.1
+### Description: Implement extraction of vector paths from PDF files.
+### Details:
+Develop functionality to extract vector paths representing wall line segments from PDFs.
+
+## 3. Coordinate Transformation Implementation [pending]
+### Dependencies: 20.2
+### Description: Normalize PDF coordinates to a 0-1000 range.
+### Details:
+Transform extracted vector coordinates to a standardized 0-1000 range for consistency.
+
+## 4. Line Filtering and Segment Conversion [pending]
+### Dependencies: 20.3
+### Description: Filter lines and convert to wall segment format.
+### Details:
+Filter extracted lines based on thickness, style, and layer, then convert to wall segment format.
+
+## 5. Create API Endpoint for Room Detection [pending]
+### Dependencies: 20.4
+### Description: Develop POST /detect-rooms-from-pdf endpoint.
+### Details:
+Implement API endpoint to accept PDFs and return room detection results in the specified format.
+
+## 6. Validate Extracted Segments [pending]
+### Dependencies: 20.4
+### Description: Implement validation logic to ensure extracted segments form valid wall connections.
+### Details:
+Validate that extracted segments form a connected graph, verify minimum segment length, and check for reasonable wall density. Ensure segments can be processed by the existing room detection algorithm.
+
+## 7. Create Frontend PDF Upload Component [pending]
+### Dependencies: 20.5
+### Description: Build React component for PDF file upload using Material UI.
+### Details:
+Create a FileUpload component specifically for PDF files that integrates with the existing UI. Allow users to upload PDF files and display processing status. Use Material UI components for consistency.
+
+## 8. Integrate PDF Upload with Room Detection [pending]
+### Dependencies: 20.6
+### Description: Connect PDF upload component to the new API endpoint and display results.
+### Details:
+Update App.tsx to handle PDF uploads, call the /detect-rooms-from-pdf endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time).
+
+## 9. Write Comprehensive Tests for PDF Extraction [pending]
+### Dependencies: 20.5
+### Description: Create unit and integration tests for PDF extraction functionality.
+### Details:
+Test PDF parsing with various PDF types (CAD-generated, scanned, multi-page), coordinate transformation accuracy, line filtering effectiveness, and API endpoint integration. Compare results with ground truth JSON data.
+

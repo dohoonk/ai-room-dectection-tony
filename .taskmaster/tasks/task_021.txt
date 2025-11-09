@@ -1,0 +1,79 @@
+# Task ID: 21
+# Title: Implement Raster Image Processing (Phase 2B)
+# Status: pending
+# Dependencies: 20
+# Priority: high
+# Description: Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans using computer vision techniques.
+# Details:
+Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.
+
+# Test Strategy:
+Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI.
+
+# Subtasks:
+## 1. Set Up OpenCV Environment [pending]
+### Dependencies: None
+### Description: Install and configure OpenCV for image processing tasks.
+### Details:
+Ensure OpenCV is installed and configured in the development environment. Verify compatibility with existing libraries and tools.
+
+## 2. Implement Image Preprocessing [pending]
+### Dependencies: 21.1
+### Description: Develop functions for grayscale conversion, noise reduction, and contrast enhancement.
+### Details:
+Use OpenCV to convert images to grayscale, apply Gaussian blur for noise reduction, and enhance contrast using histogram equalization.
+
+## 3. Develop Edge and Line Detection [pending]
+### Dependencies: 21.2
+### Description: Implement edge detection using Canny and line detection using Hough transforms.
+### Details:
+Apply Canny edge detection with adaptive thresholds. Use Probabilistic Hough Line Transform for detecting lines.
+
+## 4. Create API Endpoint for Image Processing [pending]
+### Dependencies: 21.3
+### Description: Develop the POST /detect-rooms-from-image API endpoint.
+### Details:
+Implement an API endpoint that accepts image files, processes them, and returns detected room segments.
+
+## 5. Design Frontend UI for Image Upload [pending]
+### Dependencies: 21.4
+### Description: Create a user interface for uploading images and displaying results.
+### Details:
+Develop a React component for image upload and display processing results using Material UI.
+
+## 6. Implement Line Filtering and Segment Conversion [pending]
+### Dependencies: 21.3
+### Description: Filter detected lines and convert to wall segment format.
+### Details:
+Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.
+
+## 7. Validate Extracted Segments from Images [pending]
+### Dependencies: 21.4
+### Description: Implement validation logic for image-extracted segments.
+### Details:
+Ensure extracted segments form a connected graph, verify minimum segment count, and check for reasonable wall density. Validate that segments can be processed by the existing room detection algorithm.
+
+## 8. Create Frontend Image Upload Component [pending]
+### Dependencies: 21.4
+### Description: Build React component for image file upload (PNG, JPG, JPEG) using Material UI.
+### Details:
+Create a FileUpload component specifically for image files that integrates with the existing UI. Allow users to upload image files and display processing status. Use Material UI components for consistency.
+
+## 9. Integrate Image Upload with Room Detection [pending]
+### Dependencies: 21.7
+### Description: Connect image upload component to the new API endpoint and display results.
+### Details:
+Update App.tsx to handle image uploads, call the /detect-rooms-from-image endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time, image_dimensions).
+
+## 10. Implement Parameter Tuning Interface [pending]
+### Dependencies: 21.7
+### Description: Create UI controls for adjusting image processing parameters.
+### Details:
+Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameters, and minimum line length. Allow users to fine-tune detection for different image qualities. Store user preferences.
+
+## 11. Write Comprehensive Tests for Image Processing [pending]
+### Dependencies: 21.4
+### Description: Create unit and integration tests for raster image processing functionality.
+### Details:
+Test image preprocessing, edge detection, line detection with various image types (high-res scanned, low-res photos, different lighting, various styles). Compare results with ground truth JSON data. Test parameter tuning effectiveness.
+
