@@ -1223,7 +1223,7 @@
               2
             ],
             "details": "Apply Canny edge detection with adaptive thresholds. Use Probabilistic Hough Line Transform for detecting lines.\n<info added on 2025-11-09T03:13:13.421Z>\nCompleted edge and line detection implementation:\n\n1. Created LineDetector class (backend/src/line_detector.py):\n   - EdgeDetectionConfig dataclass for Canny edge detection parameters\n   - LineDetectionConfig dataclass for Hough line transform parameters\n   - LineDetectionParams dataclass combining both configs\n   - detect_edges(): Applies Canny edge detection with configurable thresholds\n   - detect_lines(): Uses Probabilistic Hough Line Transform (HoughLinesP)\n   - detect_lines_from_image(): Complete pipeline (edges → lines)\n   - get_edge_statistics(): Edge pixel count, density, etc.\n   - get_line_statistics(): Line count, lengths, averages, etc.\n\n2. Features:\n   - Canny edge detection with configurable low/high thresholds\n   - Automatic aperture size validation (ensures 3, 5, or 7)\n   - Probabilistic Hough Line Transform for line detection\n   - Configurable parameters: rho, theta, threshold, min_line_length, max_line_gap\n   - Returns lines as (x1, y1, x2, y2) tuples\n   - Statistics utilities for debugging and analysis\n\n3. Created comprehensive tests (18 tests, all passing):\n   - Configuration dataclass tests\n   - Edge detection tests (with and without edges)\n   - Line detection tests (various scenarios)\n   - Statistics calculation tests\n   - Invalid input handling\n   - Convenience function tests\n\n4. All tests passing ✅\n\nReady for next subtask: Line Filtering and Segment Conversion (21.6).\n</info added on 2025-11-09T03:13:13.421Z>",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Validate edge and line detection accuracy against known patterns in test images."
           },
           {
@@ -1247,8 +1247,8 @@
             "dependencies": [
               4
             ],
-            "details": "Develop a React component for image upload and display processing results using Material UI.",
-            "status": "pending",
+            "details": "Develop a React component for image upload and display processing results using Material UI.\n<info added on 2025-11-09T03:19:48.625Z>\nCompleted frontend UI design for image upload:\n\n1. Updated FileUpload component:\n   - Added onImageUpload prop to handle image file uploads\n   - Extended file type validation to accept image formats (PNG, JPG, JPEG, BMP, TIFF, TIF)\n   - Updated file input accept attribute to include image extensions\n   - Updated button text to \"Upload JSON, PDF, or Image File\"\n   - Added image file detection logic (checks file extension)\n   - Calls onImageUpload callback when image file is selected\n\n2. Added detectRoomsFromImage API function:\n   - Created new function in api.ts matching detectRoomsFromPdf pattern\n   - Supports optional Textract and Rekognition parameters\n   - Calls POST /detect-rooms-from-image endpoint\n   - Returns PRD-compliant array of rooms\n\n3. Added handleImageUpload handler in App.tsx:\n   - Handles image file uploads similar to PDF handler\n   - Calls detectRoomsFromImage API\n   - Sets wallData to null (images don't have raw wall data)\n   - Calculates metrics client-side\n   - Handles errors gracefully\n   - Updates UI state (loading, rooms, metrics, error)\n\n4. Updated App.tsx:\n   - Imported detectRoomsFromImage from api service\n   - Passed onImageUpload prop to FileUpload component\n   - Updated description text to mention image file support\n\n5. UI Features:\n   - Single unified upload button for JSON, PDF, and images\n   - File type validation with clear error messages\n   - Consistent UI/UX with existing PDF upload functionality\n   - Material UI components for consistency\n   - Loading states and error handling\n\n6. Build Status:\n   - Frontend compiles successfully\n   - Minor warnings (unused imports) - non-blocking\n   - Ready for testing\n\nThe UI now supports all three input types (JSON, PDF, images) with a unified, intuitive interface.\n</info added on 2025-11-09T03:19:48.625Z>",
+            "status": "done",
             "testStrategy": "Perform manual testing to ensure the UI is intuitive and responsive."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:18:28.176Z",
+      "updated": "2025-11-09T03:19:49.158Z",
       "description": "Tasks for master context"
     }
   }

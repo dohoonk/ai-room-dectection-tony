@@ -28,7 +28,7 @@ import FileUpload from './components/FileUpload';
 import WallVisualization from './components/WallVisualization';
 import MetricsDisplay from './components/MetricsDisplay';
 import GraphVisualization from './components/GraphVisualization';
-import { detectRooms, detectRoomsFromPdf, getGraphData, WallSegment, Room, DetectionMetrics, GraphData } from './services/api';
+import { detectRooms, detectRoomsFromPdf, detectRoomsFromImage, getGraphData, WallSegment, Room, DetectionMetrics, GraphData } from './services/api';
 import './App.css';
 
 const theme = createTheme({
@@ -106,6 +106,48 @@ function App() {
       });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to detect rooms');
+    } finally {
+      setLoading(false);
+      setProcessingStartTime(null);
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setWallData(null); // Images don't have raw wall data for visualization
+    setRooms(null);
+    setSelectedRoomId(null);
+    setError(null);
+    setMetrics(null);
+    setGraphData(null);
+    setLoading(true);
+    
+    // Track processing start time for client-side measurement
+    const startTime = performance.now();
+    setProcessingStartTime(startTime);
+
+    try {
+      // Call image detection API (without AWS services for now, can be added later)
+      const roomsArray = await detectRoomsFromImage(file, false, false);
+      
+      // PRD-compliant response is now just an array of rooms
+      setRooms(roomsArray);
+      
+      // Calculate metrics client-side
+      const clientProcessingTime = (performance.now() - startTime) / 1000;
+      const estimatedConfidence = roomsArray.length > 0 ? 1.0 : 0.0;
+      
+      setMetrics({
+        processing_time: clientProcessingTime,
+        confidence_score: estimatedConfidence,
+        rooms_count: roomsArray.length,
+      });
+      
+      setError(null);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Unknown error occurred';
+      setError(errorMessage);
+      setRooms(null);
+      setMetrics(null);
     } finally {
       setLoading(false);
       setProcessingStartTime(null);
@@ -213,7 +255,11 @@ function App() {
           </Typography>
           
           <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-              <FileUpload onFileUpload={handleFileUpload} onPdfUpload={handlePdfUpload} />
+              <FileUpload 
+                onFileUpload={handleFileUpload} 
+                onPdfUpload={handlePdfUpload}
+                onImageUpload={handleImageUpload}
+              />
           </Paper>
 
           {loading && (

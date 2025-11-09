@@ -8,9 +8,10 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 interface FileUploadProps {
   onFileUpload: (data: any[]) => void;
   onPdfUpload?: (file: File) => void;
+  onImageUpload?: (file: File) => void;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, onPdfUpload }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, onPdfUpload, onImageUpload }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [fileName, setFileName] = React.useState<string | null>(null);
@@ -32,9 +33,21 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, onPdfUpload }) =>
       return;
     }
 
+    // Check if it's an image file
+    const imageExtensions = ['.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.tif'];
+    const fileExt = file.name.toLowerCase().substring(file.name.lastIndexOf('.'));
+    if (imageExtensions.includes(fileExt)) {
+      if (onImageUpload) {
+        onImageUpload(file);
+      } else {
+        setError('Image upload not configured. Please use JSON file or enable image support.');
+      }
+      return;
+    }
+
     // Validate file type for JSON
     if (!file.name.endsWith('.json')) {
-      setError('Please upload a JSON or PDF file');
+      setError('Please upload a JSON, PDF, or image file (PNG, JPG, JPEG, BMP, TIFF)');
       return;
     }
 
@@ -81,7 +94,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, onPdfUpload }) =>
       <input
         ref={fileInputRef}
         type="file"
-        accept=".json,.pdf"
+        accept=".json,.pdf,.png,.jpg,.jpeg,.bmp,.tiff,.tif"
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
@@ -92,7 +105,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, onPdfUpload }) =>
         onClick={handleButtonClick}
         size="large"
       >
-        Upload JSON or PDF File
+        Upload JSON, PDF, or Image File
       </Button>
       {fileName && (
         <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
