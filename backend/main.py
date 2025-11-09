@@ -27,6 +27,7 @@ from src.aws_rekognition import RekognitionClient
 from src.image_preprocessor import ImagePreprocessor, PreprocessingConfig
 from src.line_detector import LineDetector, EdgeDetectionConfig, LineDetectionConfig, LineDetectionParams
 from src.line_filter import LineFilter, LineFilterConfig
+from src.ml_room_detector import MLRoomDetector
 import cv2
 import numpy as np
 
@@ -623,6 +624,140 @@ async def test_complex():
             "name_hint": room["name_hint"]
         })
     return prd_compliant_rooms
+
+
+@app.post("/detect-rooms-ml", response_model=List[Dict[str, Any]])
+async def detect_rooms_ml(
+    file: UploadFile = File(...),
+    confidence: float = Form(0.05),
+    model_path: Optional[str] = Form(None)
+):
+    """
+    Detect rooms from an image using ML (YOLOv8) model.
+    
+    This endpoint uses a trained YOLOv8 segmentation model to detect rooms
+    directly from floor plan images, without needing to extract wall lines first.
+    
+    Args:
+        file: Image file upload (PNG, JPG, etc.)
+        confidence: Confidence threshold for detections (default: 0.05)
+        model_path: Optional path to model file. If not provided, uses default.
+        
+    Returns:
+        List of detected rooms in PRD-compliant format:
+        - id: Unique identifier (e.g., "room_001")
+        - bounding_box: Normalized coordinates [x_min, y_min, x_max, y_max] (0-1000 range)
+        - name_hint: Optional name hint (e.g., "Room 1")
+    """
+    temp_file_path = None
+    
+    try:
+        # Validate file type
+        allowed_extensions = ['.png', '.jpg', '.jpeg', '.bmp', '.tiff', '.tif']
+        file_ext = os.path.splitext(file.filename.lower())[1]
+        if file_ext not in allowed_extensions:
+            raise HTTPException(
+                status_code=400, 
+                detail=f"File must be an image ({', '.join(allowed_extensions)})"
+            )
+        
+        # Save uploaded file temporarily
+        with tempfile.NamedTemporaryFile(delete=False, suffix=file_ext) as temp_file:
+            content = await file.read()
+            temp_file.write(content)
+            temp_file_path = temp_file.name
+        
+        # Initialize ML detector
+        print("🤖 Initializing ML room detector...")
+        try:
+            detector = MLRoomDetector(model_path=model_path)
+        except FileNotFoundError as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Model not found: {str(e)}. Please ensure model is available."
+            )
+        except Exception as e:
+            raise HTTPException(
+                status_code=500,
+                detail=f"Failed to load model: {str(e)}"
+            )
+        
+        # Load image
+        print(f"🖼️  Loading image: {file.filename}")
+        image = cv2.imread(temp_file_path)
+        if image is None:
+            raise HTTPException(status_code=400, detail="Could not load image. Ensure file is a valid image.")
+        
+        image_height, image_width = image.shape[:2]
+        print(f"✅ Loaded image: {image_width}x{image_height}")
+        
+        # Detect rooms using ML model
+        print(f"🔍 Detecting rooms with confidence threshold: {confidence}")
+        rooms = detector.detect_rooms(image, confidence_threshold=confidence)
+        print(f"✅ Detected {len(rooms)} rooms")
+        
+        if not rooms:
+            # Return empty list instead of error - model might need lower confidence
+            print("⚠️  No rooms detected. Try lowering confidence threshold.")
+            return []
+        
+        # Convert polygons to bounding boxes and normalize
+        print("🔄 Converting to bounding boxes...")
+        converted_rooms = []
+        for i, room in enumerate(rooms):
+            polygon = room['polygon']
+            
+            if len(polygon) < 3:
+                continue
+            
+            # Calculate bounding box from polygon
+            x_coords = [p[0] for p in polygon]
+            y_coords = [p[1] for p in polygon]
+            
+            min_x = min(x_coords)
+            min_y = min(y_coords)
+            max_x = max(x_coords)
+            max_y = max(y_coords)
+            
+            # Normalize to 0-1000 range (preserving aspect ratio)
+            # Use the larger dimension to determine scale to ensure everything fits
+            scale = min(1000.0 / image_width, 1000.0 / image_height) if image_width > 0 and image_height > 0 else 1.0
+            
+            normalized_bbox = [
+                min_x * scale,
+                min_y * scale,
+                max_x * scale,
+                max_y * scale
+            ]
+            
+            # Ensure values are within 0-1000 range
+            normalized_bbox = [
+                max(0, min(1000, normalized_bbox[0])),
+                max(0, min(1000, normalized_bbox[1])),
+                max(0, min(1000, normalized_bbox[2])),
+                max(0, min(1000, normalized_bbox[3]))
+            ]
+            
+            converted_rooms.append({
+                "id": f"room_{i+1:03d}",
+                "bounding_box": normalized_bbox,
+                "name_hint": f"Room {i+1}"
+            })
+        
+        print(f"✅ Converted {len(converted_rooms)} rooms to PRD format")
+        return converted_rooms
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"❌ Error processing image with ML: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=500, detail=f"Error processing image: {str(e)}")
+    finally:
+        # Cleanup temporary file
+        if temp_file_path and os.path.exists(temp_file_path):
+            os.unlink(temp_file_path)
 
 
 @app.post("/graph-data", response_model=Dict[str, Any])
