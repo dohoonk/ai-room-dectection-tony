@@ -1086,7 +1086,10 @@
             "title": "Create API Endpoint for Room Detection",
             "description": "Develop POST /detect-rooms-from-pdf endpoint.",
             "dependencies": [
-              4
+              4,
+              11,
+              12,
+              13
             ],
             "details": "Implement API endpoint to accept PDFs, upload to S3, call AWS services in parallel, and return room detection results in the specified format.\n<info added on 2025-11-09T01:43:02.598Z>\nAccept PDF file uploads using multipart/form-data. Upload the PDF to S3 and call AWS services in parallel: Textract for OCR and Rekognition for object detection. Process the PDF using PyMuPDF/pdfplumber to apply our algorithm. Combine responses from AWS services with extracted wall segments and use the existing room detection algorithm. Return room detection results in PRD format. Implement error handling for AWS service failures and use our algorithms as a fallback if AWS services are unavailable.\n</info added on 2025-11-09T01:43:02.598Z>",
             "status": "pending",
@@ -1153,9 +1156,7 @@
             "description": "Configure Amazon S3 for PDF file storage (AWS requirement).",
             "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.",
             "status": "pending",
-            "dependencies": [
-              null
-            ],
+            "dependencies": [],
             "parentTaskId": 20
           },
           {
@@ -1165,7 +1166,7 @@
             "details": "Set up Textract client, implement document text detection, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.",
             "status": "pending",
             "dependencies": [
-              1
+              11
             ],
             "parentTaskId": 20
           },
@@ -1176,7 +1177,7 @@
             "details": "Set up Rekognition client, implement label detection for architectural elements, filter results for doors, windows, and other relevant objects, and use results to enhance or filter wall detection. This is optional but recommended for compliance and enhancement.",
             "status": "pending",
             "dependencies": [
-              1
+              11
             ],
             "parentTaskId": 20
           }
@@ -1230,7 +1231,10 @@
             "title": "Create API Endpoint for Image Processing",
             "description": "Develop the POST /detect-rooms-from-image API endpoint.",
             "dependencies": [
-              3
+              3,
+              12,
+              13,
+              14
             ],
             "details": "Implement an API endpoint that accepts image files, uploads them to S3, calls AWS services in parallel, processes responses, and returns detected room segments.\n<info added on 2025-11-09T01:43:04.785Z>\nThe API endpoint should:\n\n1. Accept image file uploads using multipart/form-data.\n2. Upload images to S3.\n3. Call AWS Textract for OCR and Rekognition for object detection in parallel.\n4. Process images using OpenCV for line detection.\n5. Use Rekognition results to filter out non-wall elements.\n6. Combine AWS service responses with extracted wall segments.\n7. Apply the existing room detection algorithm.\n8. Return room detection results in PRD format.\n\nInclude error handling for AWS service failures and implement a fallback to our algorithms if AWS services are unavailable.\n</info added on 2025-11-09T01:43:04.785Z>",
             "status": "pending",
@@ -1319,9 +1323,7 @@
             "description": "Configure Amazon S3 for image file storage (AWS requirement).",
             "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.",
             "status": "pending",
-            "dependencies": [
-              null
-            ],
+            "dependencies": [],
             "parentTaskId": 21
           },
           {
@@ -1331,7 +1333,7 @@
             "details": "Set up Textract client, implement document text detection for images, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.",
             "status": "pending",
             "dependencies": [
-              1
+              12
             ],
             "parentTaskId": 21
           },
@@ -1342,7 +1344,7 @@
             "details": "Set up Rekognition client, implement label detection for architectural elements (doors, windows, stairs), filter results for relevant objects, and use Rekognition results to filter out non-wall elements from line detection (e.g., dimensions, annotations). This helps improve line detection accuracy.",
             "status": "pending",
             "dependencies": [
-              1
+              12
             ],
             "parentTaskId": 21
           }

@@ -3,12 +3,12 @@
 # Status: pending
 # Dependencies: 20
 # Priority: high
-# Description: Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans using computer vision techniques.
+# Description: Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans using computer vision techniques. Integrate AWS services for enhanced processing.
 # Details:
-Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.
+Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files, uploads them to S3, calls AWS services (Textract for OCR, Rekognition for object detection) in parallel, processes responses, and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.
 
 # Test Strategy:
-Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI.
+Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI. Include tests for AWS service integration and response handling.
 
 # Subtasks:
 ## 1. Set Up OpenCV Environment [pending]
@@ -30,10 +30,24 @@ Use OpenCV to convert images to grayscale, apply Gaussian blur for noise reducti
 Apply Canny edge detection with adaptive thresholds. Use Probabilistic Hough Line Transform for detecting lines.
 
 ## 4. Create API Endpoint for Image Processing [pending]
-### Dependencies: 21.3
+### Dependencies: 21.3, 21.12, 21.13, 21.14
 ### Description: Develop the POST /detect-rooms-from-image API endpoint.
 ### Details:
-Implement an API endpoint that accepts image files, processes them, and returns detected room segments.
+Implement an API endpoint that accepts image files, uploads them to S3, calls AWS services in parallel, processes responses, and returns detected room segments.
+<info added on 2025-11-09T01:43:04.785Z>
+The API endpoint should:
+
+1. Accept image file uploads using multipart/form-data.
+2. Upload images to S3.
+3. Call AWS Textract for OCR and Rekognition for object detection in parallel.
+4. Process images using OpenCV for line detection.
+5. Use Rekognition results to filter out non-wall elements.
+6. Combine AWS service responses with extracted wall segments.
+7. Apply the existing room detection algorithm.
+8. Return room detection results in PRD format.
+
+Include error handling for AWS service failures and implement a fallback to our algorithms if AWS services are unavailable.
+</info added on 2025-11-09T01:43:04.785Z>
 
 ## 5. Design Frontend UI for Image Upload [pending]
 ### Dependencies: 21.4
@@ -46,6 +60,9 @@ Develop a React component for image upload and display processing results using 
 ### Description: Filter detected lines and convert to wall segment format.
 ### Details:
 Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.
+<info added on 2025-11-09T01:43:06.588Z>
+Incorporate AWS Rekognition object detection results to filter out lines corresponding to non-wall elements such as doors, windows, and stairs. Use these results to enhance the accuracy of wall line detection by excluding lines associated with identified non-wall objects.
+</info added on 2025-11-09T01:43:06.588Z>
 
 ## 7. Validate Extracted Segments from Images [pending]
 ### Dependencies: 21.4
@@ -75,5 +92,23 @@ Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameter
 ### Dependencies: 21.4
 ### Description: Create unit and integration tests for raster image processing functionality.
 ### Details:
-Test image preprocessing, edge detection, line detection with various image types (high-res scanned, low-res photos, different lighting, various styles). Compare results with ground truth JSON data. Test parameter tuning effectiveness.
+Test image preprocessing, edge detection, line detection with various image types (high-res scanned, low-res photos, different lighting, various styles). Compare results with ground truth JSON data. Test parameter tuning effectiveness. Include tests for AWS service integration.
+
+## 12. Set Up AWS S3 Integration [pending]
+### Dependencies: None
+### Description: Configure Amazon S3 for image file storage (AWS requirement).
+### Details:
+Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.
+
+## 13. Integrate Amazon Textract for OCR [pending]
+### Dependencies: 21.12
+### Description: Integrate Amazon Textract to extract text labels and dimensions from images.
+### Details:
+Set up Textract client, implement document text detection for images, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.
+
+## 14. Integrate Amazon Rekognition for Object Detection [pending]
+### Dependencies: 21.12
+### Description: Integrate Amazon Rekognition to detect architectural elements and filter non-wall lines.
+### Details:
+Set up Rekognition client, implement label detection for architectural elements (doors, windows, stairs), filter results for relevant objects, and use Rekognition results to filter out non-wall elements from line detection (e.g., dimensions, annotations). This helps improve line detection accuracy.
 

@@ -5,7 +5,7 @@
 # Priority: high
 # Description: Enable automatic extraction of wall line segments from PDF blueprint files, eliminating the need for manual JSON input.
 # Details:
-Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files and returns room detection results in the same format as /detect-rooms.
+Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files, uploads them to S3, calls AWS services in parallel, processes responses, and returns room detection results. This approach uses pre-built AWS services (Textract, Rekognition) combined with our proven algorithms, as documented in PRD Section 9.0.
 
 # Test Strategy:
 Test with various PDF types: CAD-generated PDFs (vector-based), scanned PDFs (raster embedded in PDF), multi-page blueprints, different coordinate systems. Compare extracted segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Target: ≥ 85% of walls correctly extracted, < 2% coordinate transformation error, < 10 seconds processing latency for typical PDF (1-5 pages), < 15% false positives.
@@ -36,10 +36,13 @@ Transform extracted vector coordinates to a standardized 0-1000 range for consis
 Filter extracted lines based on thickness, style, and layer, then convert to wall segment format.
 
 ## 5. Create API Endpoint for Room Detection [pending]
-### Dependencies: 20.4
+### Dependencies: 20.4, 20.11, 20.12, 20.13
 ### Description: Develop POST /detect-rooms-from-pdf endpoint.
 ### Details:
-Implement API endpoint to accept PDFs and return room detection results in the specified format.
+Implement API endpoint to accept PDFs, upload to S3, call AWS services in parallel, and return room detection results in the specified format.
+<info added on 2025-11-09T01:43:02.598Z>
+Accept PDF file uploads using multipart/form-data. Upload the PDF to S3 and call AWS services in parallel: Textract for OCR and Rekognition for object detection. Process the PDF using PyMuPDF/pdfplumber to apply our algorithm. Combine responses from AWS services with extracted wall segments and use the existing room detection algorithm. Return room detection results in PRD format. Implement error handling for AWS service failures and use our algorithms as a fallback if AWS services are unavailable.
+</info added on 2025-11-09T01:43:02.598Z>
 
 ## 6. Validate Extracted Segments [pending]
 ### Dependencies: 20.4
@@ -64,4 +67,28 @@ Update App.tsx to handle PDF uploads, call the /detect-rooms-from-pdf endpoint, 
 ### Description: Create unit and integration tests for PDF extraction functionality.
 ### Details:
 Test PDF parsing with various PDF types (CAD-generated, scanned, multi-page), coordinate transformation accuracy, line filtering effectiveness, and API endpoint integration. Compare results with ground truth JSON data.
+
+## 10. Integrate AWS Services [pending]
+### Dependencies: 20.5
+### Description: Implement integration with AWS Textract and Rekognition for enhanced detection.
+### Details:
+Integrate Amazon Textract for OCR (room labels, dimensions) and Amazon Rekognition for object detection (doors, windows) as optional enhancements. Ensure parallel processing with our existing algorithms.
+
+## 11. Set Up AWS S3 Integration [pending]
+### Dependencies: None
+### Description: Configure Amazon S3 for PDF file storage (AWS requirement).
+### Details:
+Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.
+
+## 12. Integrate Amazon Textract for OCR [pending]
+### Dependencies: 20.11
+### Description: Integrate Amazon Textract to extract text labels and dimensions from PDFs.
+### Details:
+Set up Textract client, implement document text detection, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.
+
+## 13. Integrate Amazon Rekognition for Object Detection [pending]
+### Dependencies: 20.11
+### Description: Integrate Amazon Rekognition to detect architectural elements (doors, windows).
+### Details:
+Set up Rekognition client, implement label detection for architectural elements, filter results for doors, windows, and other relevant objects, and use results to enhance or filter wall detection. This is optional but recommended for compliance and enhancement.
 
