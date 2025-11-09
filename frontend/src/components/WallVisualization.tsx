@@ -11,7 +11,7 @@ interface WallSegment {
 }
 
 interface WallVisualizationProps {
-  walls: WallSegment[];
+  walls: WallSegment[] | null;
   rooms?: Room[];
   selectedRoomId?: string | null;
   onRoomClick?: (roomId: string) => void;
@@ -28,8 +28,25 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
   const [dimensions, setDimensions] = React.useState({ width: 800, height: 600 });
 
   useEffect(() => {
-    // Calculate canvas dimensions based on wall coordinates
-    if (walls.length === 0) return;
+    // Calculate canvas dimensions based on wall coordinates or room bounding boxes
+    if (!walls || walls.length === 0) {
+      // If no walls, use room bounding boxes to determine canvas size
+      if (rooms && rooms.length > 0) {
+        let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+        rooms.forEach(room => {
+          const [x1, y1, x2, y2] = room.bounding_box;
+          minX = Math.min(minX, x1, x2);
+          minY = Math.min(minY, y1, y2);
+          maxX = Math.max(maxX, x1, x2);
+          maxY = Math.max(maxY, y1, y2);
+        });
+        const padding = 50;
+        const width = maxX - minX + padding * 2;
+        const height = maxY - minY + padding * 2;
+        setDimensions({ width: Math.max(800, width), height: Math.max(600, height) });
+      }
+      return;
+    }
 
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
 
@@ -52,7 +69,7 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas || walls.length === 0) return;
+    if (!canvas || !walls || walls.length === 0) return;
 
     const ctx = canvas.getContext('2d');
     if (!ctx) {
@@ -100,8 +117,9 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
       ctx.stroke();
     }
 
-    // Draw walls
-    walls.forEach(wall => {
+    // Draw walls (if available)
+    if (walls && walls.length > 0) {
+      walls.forEach(wall => {
       const [x1, y1] = wall.start;
       const [x2, y2] = wall.end;
 
@@ -127,7 +145,8 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
       ctx.beginPath();
       ctx.arc(endX, endY, 4, 0, 2 * Math.PI);
       ctx.fill();
-    });
+      });
+    }
 
     // Draw room bounding boxes
     if (rooms.length > 0) {
@@ -175,7 +194,7 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
         ctx.fillText(roomLabel, labelX, labelY);
       });
     }
-  }, [walls, dimensions, rooms, selectedRoomId]);
+  }, [walls, dimensions, rooms, selectedRoomId, onRoomClick]);
 
   // Handle canvas clicks for room selection
   const handleCanvasClick = (event: React.MouseEvent<HTMLCanvasElement>) => {
@@ -190,14 +209,28 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
 
     // Calculate bounds for scaling
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-    walls.forEach(wall => {
-      const [x1, y1] = wall.start;
-      const [x2, y2] = wall.end;
-      minX = Math.min(minX, x1, x2);
-      minY = Math.min(minY, y1, y2);
-      maxX = Math.max(maxX, x1, x2);
-      maxY = Math.max(maxY, y1, y2);
-    });
+    
+    if (walls && walls.length > 0) {
+      walls.forEach(wall => {
+        const [x1, y1] = wall.start;
+        const [x2, y2] = wall.end;
+        minX = Math.min(minX, x1, x2);
+        minY = Math.min(minY, y1, y2);
+        maxX = Math.max(maxX, x1, x2);
+        maxY = Math.max(maxY, y1, y2);
+      });
+    } else if (rooms && rooms.length > 0) {
+      // Use room bounding boxes if no walls
+      rooms.forEach(room => {
+        const [x1, y1, x2, y2] = room.bounding_box;
+        minX = Math.min(minX, x1, x2);
+        minY = Math.min(minY, y1, y2);
+        maxX = Math.max(maxX, x1, x2);
+        maxY = Math.max(maxY, y1, y2);
+      });
+    } else {
+      return; // No data
+    }
 
     const padding = 50;
     const scaleX = (canvas.width - padding * 2) / (maxX - minX || 1);
@@ -223,10 +256,10 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
     }
   };
 
-  if (walls.length === 0) {
+  if ((!walls || walls.length === 0) && (!rooms || rooms.length === 0)) {
     return (
       <Typography variant="body2" color="text.secondary">
-        No wall data to visualize
+        No data to visualize
       </Typography>
     );
   }
@@ -243,7 +276,7 @@ const WallVisualization: React.FC<WallVisualizationProps> = ({
         }}
       />
       <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mt: 1, px: 1 }}>
-        Walls: {walls.length} | Blue: Regular walls | Red: Load-bearing walls
+        {walls && walls.length > 0 && `Walls: ${walls.length} | `}Blue: Regular walls | Red: Load-bearing walls
         {rooms.length > 0 && ` | Green: Rooms (${rooms.length} detected) | Click to select`}
       </Typography>
     </Box>
