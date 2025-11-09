@@ -1066,8 +1066,8 @@
             "dependencies": [
               2
             ],
-            "details": "Transform extracted vector coordinates to a standardized 0-1000 range for consistency.",
-            "status": "pending",
+            "details": "Transform extracted vector coordinates to a standardized 0-1000 range for consistency.\n<info added on 2025-11-09T01:52:00.640Z>\nCompleted coordinate transformation implementation:\n\n1. Implemented `transform_coordinates()` method:\n   - Finds bounding box of all extracted PDF lines\n   - Calculates scale factor to fit in 0-1000 range (preserving aspect ratio)\n   - Transforms all line coordinates using scale and offset\n   - Handles edge cases (empty list, degenerate cases, zero width/height)\n   - Clamps coordinates to target range as safety check\n\n2. Enhanced `convert_to_wall_segments()` method:\n   - Added `normalize` parameter to validate coordinates are in 0-1000 range\n   - Raises ValueError if coordinates are outside range when normalize=True\n   - Preserves PDF metadata (thickness, color, page_number)\n\n3. Created comprehensive tests (9 tests, all passing):\n   - Test simple line transformation\n   - Test aspect ratio preservation\n   - Test empty list handling\n   - Test degenerate cases (single point)\n   - Test large coordinates (2000x1500 → 0-1000)\n   - Test small coordinates (10x10 → 0-1000)\n   - Test conversion with normalized lines\n   - Test validation of invalid coordinates\n   - Test metadata preservation\n\n4. Updated test script:\n   - Added coordinate transformation step to `test_extraction_with_pdf()`\n   - Shows normalized coordinates in output\n\nStatus: Coordinate transformation is fully implemented and tested. Ready for line filtering (subtask 20.4).\n</info added on 2025-11-09T01:52:00.640Z>",
+            "status": "done",
             "testStrategy": "Validate coordinate transformation by comparing transformed coordinates against expected values."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T01:49:51.591Z",
+      "updated": "2025-11-09T01:52:00.973Z",
       "description": "Tasks for master context"
     }
   }

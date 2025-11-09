@@ -9,6 +9,7 @@ import fitz  # PyMuPDF
 from typing import List, Tuple, Optional, Dict, Any
 from dataclasses import dataclass
 import math
+import os
 
 
 @dataclass
@@ -208,22 +209,127 @@ class PDFParser:
             doc.close()
 
 
-    def convert_to_wall_segments(self, pdf_lines: List[PDFLineSegment]) -> List[Dict[str, Any]]:
+    def transform_coordinates(self, pdf_lines: List[PDFLineSegment], 
+                            pdf_info: Optional[Dict[str, Any]] = None,
+                            target_range: Tuple[int, int] = (0, 1000)) -> List[PDFLineSegment]:
+        """
+        Transform PDF coordinates to normalized 0-1000 range.
+        
+        This function:
+        1. Finds the bounding box of all extracted lines
+        2. Calculates scale factor to fit in target range (preserving aspect ratio)
+        3. Transforms all coordinates to normalized range
+        
+        Args:
+            pdf_lines: List of PDFLineSegment objects with PDF coordinates
+            pdf_info: Optional PDF info dictionary (for page dimensions)
+            target_range: Target coordinate range (min, max), default (0, 1000)
+            
+        Returns:
+            List of PDFLineSegment objects with normalized coordinates
+        """
+        if not pdf_lines:
+            return []
+        
+        # Find bounding box of all lines
+        all_x = []
+        all_y = []
+        
+        for line in pdf_lines:
+            all_x.extend([line.start[0], line.end[0]])
+            all_y.extend([line.start[1], line.end[1]])
+        
+        if not all_x or not all_y:
+            return pdf_lines
+        
+        min_x = min(all_x)
+        max_x = max(all_x)
+        min_y = min(all_y)
+        max_y = max(all_y)
+        
+        # Calculate dimensions
+        width = max_x - min_x
+        height = max_y - min_y
+        
+        if width == 0 or height == 0:
+            # Degenerate case - return lines as-is
+            return pdf_lines
+        
+        # Calculate scale factor to fit in target range (preserve aspect ratio)
+        min_val, max_val = target_range
+        target_size = max_val - min_val
+        
+        scale_x = target_size / width if width > 0 else 1.0
+        scale_y = target_size / height if height > 0 else 1.0
+        scale = min(scale_x, scale_y)  # Preserve aspect ratio
+        
+        # Calculate offset to center in target range
+        scaled_width = width * scale
+        scaled_height = height * scale
+        
+        offset_x = min_val - (min_x * scale) + (target_size - scaled_width) / 2
+        offset_y = min_val - (min_y * scale) + (target_size - scaled_height) / 2
+        
+        # Transform all lines
+        normalized_lines = []
+        for line in pdf_lines:
+            # Transform start and end coordinates
+            normalized_start = (
+                line.start[0] * scale + offset_x,
+                line.start[1] * scale + offset_y
+            )
+            normalized_end = (
+                line.end[0] * scale + offset_y,
+                line.end[1] * scale + offset_y
+            )
+            
+            # Clamp to target range (safety check)
+            normalized_start = (
+                max(min_val, min(max_val, normalized_start[0])),
+                max(min_val, min(max_val, normalized_start[1]))
+            )
+            normalized_end = (
+                max(min_val, min(max_val, normalized_end[0])),
+                max(min_val, min(max_val, normalized_end[1]))
+            )
+            
+            normalized_lines.append(PDFLineSegment(
+                start=normalized_start,
+                end=normalized_end,
+                thickness=line.thickness,
+                color=line.color,
+                page_number=line.page_number
+            ))
+        
+        return normalized_lines
+    
+    def convert_to_wall_segments(self, pdf_lines: List[PDFLineSegment], 
+                                normalize: bool = True) -> List[Dict[str, Any]]:
         """
         Convert PDFLineSegment objects to wall segment format.
         
         This converts the extracted PDF lines to a format compatible with
-        our existing wall segment parser (for use before coordinate transformation).
+        our existing wall segment parser. Optionally normalizes coordinates.
         
         Args:
-            pdf_lines: List of PDFLineSegment objects
+            pdf_lines: List of PDFLineSegment objects (normalized if normalize=True)
+            normalize: If True, assumes coordinates are already normalized to 0-1000
             
         Returns:
-            List of dictionaries in wall segment format (with PDF coordinates)
+            List of dictionaries in wall segment format
         """
         wall_segments = []
         
         for line in pdf_lines:
+            # Validate coordinates are in 0-1000 range if normalized
+            if normalize:
+                for coord in [line.start[0], line.start[1], line.end[0], line.end[1]]:
+                    if not (0 <= coord <= 1000):
+                        raise ValueError(
+                            f"Coordinate {coord} is outside 0-1000 range. "
+                            "Ensure coordinates are normalized before conversion."
+                        )
+            
             wall_segments.append({
                 "type": "line",
                 "start": [line.start[0], line.start[1]],
@@ -297,9 +403,20 @@ def test_extraction_with_pdf(pdf_path: str):
             for i, line in enumerate(lines[:5]):
                 print(f"     {i+1}. ({line.start[0]:.1f}, {line.start[1]:.1f}) -> ({line.end[0]:.1f}, {line.end[1]:.1f}), thickness: {line.thickness:.1f}")
         
-        # Convert to wall segments
-        wall_segments = parser.convert_to_wall_segments(lines)
-        print(f"\n🏗️  Wall Segments:")
+        # Transform coordinates to 0-1000 range
+        print(f"\n🔄 Coordinate Transformation:")
+        normalized_lines = parser.transform_coordinates(lines, pdf_info=info)
+        print(f"   Normalized {len(normalized_lines)} lines to 0-1000 range")
+        
+        if normalized_lines:
+            # Show sample normalized coordinates
+            print(f"   Sample normalized coordinates (first 3):")
+            for i, line in enumerate(normalized_lines[:3]):
+                print(f"     {i+1}. ({line.start[0]:.1f}, {line.start[1]:.1f}) -> ({line.end[0]:.1f}, {line.end[1]:.1f})")
+        
+        # Convert to wall segments (with normalized coordinates)
+        wall_segments = parser.convert_to_wall_segments(normalized_lines, normalize=True)
+        print(f"\n🏗️  Wall Segments (Normalized):")
         print(f"   Total segments: {len(wall_segments)}")
         
         if wall_segments:
@@ -307,7 +424,7 @@ def test_extraction_with_pdf(pdf_path: str):
             print(f"   Load-bearing: {load_bearing}")
             print(f"   Regular: {len(wall_segments) - load_bearing}")
         
-        print("\n✅ PDF extraction test completed!")
+        print("\n✅ PDF extraction and transformation test completed!")
         
     except Exception as e:
         print(f"\n❌ Error during extraction: {str(e)}")
