@@ -1,5 +1,8 @@
 # Location Detection AI — Product Requirements Document (PRD)
 
+**Last Updated:** 2025-11-09  
+**Version:** 2.0 (Updated with AWS AI/ML Services Strategy)
+
 ## 1. Overview
 
 ### 1.1 Goal
