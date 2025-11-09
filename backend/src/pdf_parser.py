@@ -303,6 +303,93 @@ class PDFParser:
         
         return normalized_lines
     
+    def filter_wall_lines(self, pdf_lines: List[PDFLineSegment],
+                         min_thickness: Optional[float] = None,
+                         max_thickness: Optional[float] = None,
+                         min_length: float = 10.0,
+                         preferred_colors: Optional[List[Tuple[float, float, float]]] = None,
+                         color_tolerance: float = 0.3) -> List[PDFLineSegment]:
+        """
+        Filter PDF lines to identify wall-like elements.
+        
+        Filters based on:
+        - Line thickness (walls typically thicker than annotations)
+        - Line length (walls typically longer than dimension lines)
+        - Color (walls often black or specific colors)
+        
+        Args:
+            pdf_lines: List of PDFLineSegment objects to filter
+            min_thickness: Minimum line thickness (uses parser default if None)
+            max_thickness: Maximum line thickness (filters out very thick decorative elements)
+            min_length: Minimum line length in points (default: 10.0)
+            preferred_colors: List of RGB tuples (0-1) for preferred wall colors.
+                             If None, color filtering is skipped (all colors allowed).
+                             If not specified in call, defaults to black [(0, 0, 0)]
+            color_tolerance: Maximum distance in RGB space to match preferred colors
+            
+        Returns:
+            Filtered list of PDFLineSegment objects
+        """
+        if not pdf_lines:
+            return []
+        
+        # Use parser's min_thickness if not specified
+        if min_thickness is None:
+            min_thickness = self.min_line_thickness
+        
+        # Default to black color if no preferences specified
+        # If preferred_colors is None (default), use black
+        # If empty list [], skip color filtering (all colors allowed)
+        if preferred_colors is None:
+            preferred_colors = [(0.0, 0.0, 0.0)]  # Black
+            use_color_filter = True
+        elif len(preferred_colors) == 0:
+            use_color_filter = False
+        else:
+            use_color_filter = True
+        
+        filtered_lines = []
+        
+        for line in pdf_lines:
+            # Filter by thickness
+            if line.thickness < min_thickness:
+                continue
+            
+            if max_thickness is not None and line.thickness > max_thickness:
+                continue
+            
+            # Filter by line length
+            length = math.sqrt(
+                (line.end[0] - line.start[0])**2 + 
+                (line.end[1] - line.start[1])**2
+            )
+            if length < min_length:
+                continue
+            
+            # Filter by color (if enabled)
+            if use_color_filter:
+                line_color = line.color
+                matches_color = False
+                
+                for preferred_color in preferred_colors:
+                    # Calculate Euclidean distance in RGB space
+                    color_distance = math.sqrt(
+                        (line_color[0] - preferred_color[0])**2 +
+                        (line_color[1] - preferred_color[1])**2 +
+                        (line_color[2] - preferred_color[2])**2
+                    )
+                    
+                    if color_distance <= color_tolerance:
+                        matches_color = True
+                        break
+                
+                if not matches_color:
+                    continue
+            
+            filtered_lines.append(line)
+        
+        return filtered_lines
+    
     def convert_to_wall_segments(self, pdf_lines: List[PDFLineSegment], 
                                 normalize: bool = True) -> List[Dict[str, Any]]:
         """

@@ -1077,8 +1077,8 @@
             "dependencies": [
               3
             ],
-            "details": "Filter extracted lines based on thickness, style, and layer, then convert to wall segment format.",
-            "status": "pending",
+            "details": "Filter extracted lines based on thickness, style, and layer, then convert to wall segment format.\n<info added on 2025-11-09T01:53:25.838Z>\nCompleted line filtering and segment conversion:\n\n1. Implemented `filter_wall_lines()` method:\n   - Filter by minimum/maximum thickness (walls typically thicker than annotations)\n   - Filter by minimum line length (walls typically longer than dimension lines)\n   - Filter by color (walls often black or specific colors)\n   - Uses Euclidean distance in RGB space for color matching\n   - Supports skipping color filtering by passing empty list\n   - Defaults to black color filtering if not specified\n\n2. Enhanced `convert_to_wall_segments()` method:\n   - Already implemented in previous subtask\n   - Validates normalized coordinates (0-1000 range)\n   - Converts to wall segment format compatible with existing parser\n   - Preserves PDF metadata (thickness, color, page_number)\n   - Includes heuristic for load-bearing detection (thickness >= 3.0)\n\n3. Created comprehensive tests (8 tests, all passing):\n   - Test filtering by thickness (min/max)\n   - Test filtering by line length\n   - Test filtering by color (with tolerance)\n   - Test combining all criteria\n   - Test empty list handling\n   - Test skipping color filtering (empty list)\n   - Test diagonal line length calculation\n\nStatus: Line filtering and segment conversion are fully implemented and tested. Ready for validation (subtask 20.6) or API endpoint (subtask 20.5).\n</info added on 2025-11-09T01:53:25.838Z>",
+            "status": "done",
             "testStrategy": "Ensure filtering criteria correctly identify wall-like elements and conversion is accurate."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T01:52:00.973Z",
+      "updated": "2025-11-09T01:53:26.238Z",
       "description": "Tasks for master context"
     }
   }
