@@ -30,9 +30,16 @@ def graph_to_json(graph: nx.Graph, faces: List[List[Tuple[float, float]]] = None
     
     # Extract edges
     edges = []
-    for (start, end), data in graph.edges(data=True):
+    for edge in graph.edges(data=True):
+        start, end, data = edge
         start_idx = node_index_map[start]
         end_idx = node_index_map[end]
+        
+        # Check if segment exists and has is_load_bearing attribute
+        segment = data.get("segment")
+        is_load_bearing = False
+        if segment and hasattr(segment, "is_load_bearing"):
+            is_load_bearing = segment.is_load_bearing
         
         edge_data = {
             "id": f"e_{start_idx}_{end_idx}",
@@ -40,7 +47,7 @@ def graph_to_json(graph: nx.Graph, faces: List[List[Tuple[float, float]]] = None
             "target": end_idx,
             "sourceCoords": [float(start[0]), float(start[1])],
             "targetCoords": [float(end[0]), float(end[1])],
-            "isLoadBearing": data.get("segment", {}).is_load_bearing if hasattr(data.get("segment", {}), "is_load_bearing") else False
+            "isLoadBearing": is_load_bearing
         }
         edges.append(edge_data)
     

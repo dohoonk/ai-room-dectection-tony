@@ -73,11 +73,22 @@ function App() {
       // Fetch both room detection and graph data in parallel
       const [response, graphResponse] = await Promise.all([
         detectRooms(data),
-        getGraphData(data).catch(() => null) // Graph data is optional
+        getGraphData(data).catch((err) => {
+          // Log error but don't fail the whole operation
+          console.warn('Failed to fetch graph data:', err);
+          return null;
+        })
       ]);
       
       setRooms(response.rooms);
       setGraphData(graphResponse);
+      
+      // Log graph data status for debugging
+      if (graphResponse) {
+        console.log('Graph data loaded:', graphResponse.stats);
+      } else {
+        console.warn('Graph data is null - graph view will be disabled');
+      }
       
       // Use backend metrics if available, otherwise calculate client-side
       if (response.metrics) {
