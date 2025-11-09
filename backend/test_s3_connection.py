@@ -7,6 +7,10 @@ Run this after completing AWS Console setup to verify S3 access.
 from src.aws_s3 import S3Client
 import os
 import sys
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 def main():
     """Test S3 connection."""

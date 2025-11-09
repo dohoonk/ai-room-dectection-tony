@@ -20,6 +20,7 @@ This guide walks you through setting up AWS S3 for PDF and image file storage, w
 
 2. **Create Bucket**:
    - Click **"Create bucket"**
+   #room-detection-blueprints-tony-gauntlet
    - **Bucket name**: `room-detection-blueprints` (or your preferred name)
      - ⚠️ Bucket names must be globally unique across all AWS accounts
      - Use lowercase letters, numbers, hyphens only
@@ -66,6 +67,7 @@ This guide walks you through setting up AWS S3 for PDF and image file storage, w
    - Click **"Create user"**
 
 3. **User Details**:
+#room-detection-service-tony
    - **User name**: `room-detection-service`
    - **AWS credential type**: Select **"Access key - Programmatic access"**
    - Click **"Next"**
