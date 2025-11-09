@@ -1291,8 +1291,8 @@
             "dependencies": [
               7
             ],
-            "details": "Update App.tsx to handle image uploads, call the /detect-rooms-from-image endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time, image_dimensions).",
-            "status": "pending",
+            "details": "Update App.tsx to handle image uploads, call the /detect-rooms-from-image endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time, image_dimensions).\n<info added on 2025-11-09T03:20:57.911Z>\nCompleted integration of image upload with room detection:\n\n1. Image upload integration:\n   - handleImageUpload function calls /detect-rooms-from-image endpoint\n   - Detected rooms are stored in state and displayed\n   - Error handling and loading states implemented\n   - Metrics calculated and displayed (processing_time, rooms_count, confidence_score)\n\n2. Room visualization:\n   - Rooms from image uploads are displayed in WallVisualization component\n   - Component handles null wallData gracefully (for image/PDF uploads)\n   - Room bounding boxes are rendered correctly\n   - Room selection and interaction work as expected\n\n3. Metrics display:\n   - Processing time shown (client-side measurement)\n   - Room count displayed\n   - Confidence score displayed\n   - MetricsDisplay component shows all relevant information\n\n4. Current limitations:\n   - API returns only rooms array per PRD (no extraction metadata)\n   - segments_extracted and image_dimensions not available from API\n   - Processing time is client-side only (includes network latency)\n   - Could be enhanced if API is updated to return metadata\n\n5. Integration status:\n   - Image upload connected to API endpoint\n   - Detected rooms displayed in visualization\n   - Metrics displayed\n   - Error handling implemented\n   - Loading states implemented\n   - Room interactions (select, rename, remove) work\n\nThe core integration is complete. The visualization components work seamlessly with image-uploaded rooms, displaying them alongside JSON-uploaded rooms. The only enhancement would be to show extraction metadata if the API is updated to return it.\n</info added on 2025-11-09T03:20:57.911Z>",
+            "status": "done",
             "testStrategy": null
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:19:49.158Z",
+      "updated": "2025-11-09T03:20:58.433Z",
       "description": "Tasks for master context"
     }
   }
