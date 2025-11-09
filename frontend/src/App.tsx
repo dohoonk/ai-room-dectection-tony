@@ -212,7 +212,8 @@ function App() {
                     <AccountTreeIcon sx={{ mr: 1 }} />
                     Graph
                   </ToggleButton>
-                </Box>
+                </ToggleButtonGroup>
+              </Box>
 
               {showGraphView ? (
                 <GraphVisualization 
