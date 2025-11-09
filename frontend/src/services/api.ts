@@ -121,6 +121,44 @@ export async function detectRooms(walls: WallSegment[]): Promise<RoomDetectionRe
 }
 
 /**
+ * Detect rooms from PDF file
+ */
+export async function detectRoomsFromPdf(
+  file: File,
+  useTextract: boolean = false,
+  useRekognition: boolean = false
+): Promise<RoomDetectionResponse> {
+  try {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const params = new URLSearchParams();
+    if (useTextract) params.append('use_textract', 'true');
+    if (useRekognition) params.append('use_rekognition', 'true');
+
+    const url = `${API_BASE_URL}/detect-rooms-from-pdf${params.toString() ? '?' + params.toString() : ''}`;
+    
+    const response = await fetch(url, {
+      method: 'POST',
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+    }
+
+    const data: RoomDetectionResponse = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Network error: Failed to connect to the API');
+  }
+}
+
+/**
  * Health check endpoint
  */
 export async function checkHealth(): Promise<{ status: string }> {

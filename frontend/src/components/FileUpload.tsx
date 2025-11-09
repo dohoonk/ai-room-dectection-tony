@@ -7,9 +7,10 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 interface FileUploadProps {
   onFileUpload: (data: any[]) => void;
+  onPdfUpload?: (file: File) => void;
 }
 
-const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload, onPdfUpload }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = React.useState<string | null>(null);
   const [fileName, setFileName] = React.useState<string | null>(null);
@@ -21,12 +22,23 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
     setError(null);
     setFileName(file.name);
 
-    // Validate file type
-    if (!file.name.endsWith('.json')) {
-      setError('Please upload a JSON file');
+    // Check if it's a PDF file
+    if (file.name.endsWith('.pdf')) {
+      if (onPdfUpload) {
+        onPdfUpload(file);
+      } else {
+        setError('PDF upload not configured. Please use JSON file or enable PDF support.');
+      }
       return;
     }
 
+    // Validate file type for JSON
+    if (!file.name.endsWith('.json')) {
+      setError('Please upload a JSON or PDF file');
+      return;
+    }
+
+    // Handle JSON file
     const reader = new FileReader();
     reader.onload = (e) => {
       try {
@@ -69,7 +81,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
       <input
         ref={fileInputRef}
         type="file"
-        accept=".json"
+        accept=".json,.pdf"
         style={{ display: 'none' }}
         onChange={handleFileChange}
       />
@@ -80,7 +92,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileUpload }) => {
         onClick={handleButtonClick}
         size="large"
       >
-        Upload JSON File
+        Upload JSON or PDF File
       </Button>
       {fileName && (
         <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>

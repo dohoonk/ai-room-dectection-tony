@@ -28,7 +28,7 @@ import FileUpload from './components/FileUpload';
 import WallVisualization from './components/WallVisualization';
 import MetricsDisplay from './components/MetricsDisplay';
 import GraphVisualization from './components/GraphVisualization';
-import { detectRooms, getGraphData, WallSegment, Room, DetectionMetrics, GraphData } from './services/api';
+import { detectRooms, detectRoomsFromPdf, getGraphData, WallSegment, Room, DetectionMetrics, GraphData } from './services/api';
 import './App.css';
 
 const theme = createTheme({
@@ -112,6 +112,45 @@ function App() {
     }
   };
 
+  const handlePdfUpload = async (file: File) => {
+    setWallData(null); // PDF doesn't provide wall data directly
+    setRooms(null);
+    setSelectedRoomId(null);
+    setError(null);
+    setMetrics(null);
+    setGraphData(null);
+    setLoading(true);
+    
+    // Track processing start time
+    const startTime = performance.now();
+    setProcessingStartTime(startTime);
+
+    try {
+      // Call PDF endpoint (without AWS services for now - can add toggle later)
+      const roomsArray = await detectRoomsFromPdf(file, false, false);
+      
+      setRooms(roomsArray);
+      
+      // Graph data not available for PDF uploads (would need to extract segments first)
+      setGraphData(null);
+      
+      // Calculate metrics client-side
+      const clientProcessingTime = (performance.now() - startTime) / 1000;
+      const estimatedConfidence = roomsArray.length > 0 ? 1.0 : 0.0;
+      
+      setMetrics({
+        processing_time: clientProcessingTime,
+        confidence_score: estimatedConfidence,
+        rooms_count: roomsArray.length
+      });
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to process PDF');
+    } finally {
+      setLoading(false);
+      setProcessingStartTime(null);
+    }
+  };
+
   const handleRoomClick = (roomId: string) => {
     setSelectedRoomId(selectedRoomId === roomId ? null : roomId);
   };
@@ -170,11 +209,11 @@ function App() {
             Room Detection AI
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Upload a JSON file containing wall line segments to visualize the floorplan.
+            Upload a JSON file with wall line segments, or a PDF blueprint file to detect rooms.
           </Typography>
           
           <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-            <FileUpload onFileUpload={handleFileUpload} />
+              <FileUpload onFileUpload={handleFileUpload} onPdfUpload={handlePdfUpload} />
           </Paper>
 
           {loading && (
@@ -202,7 +241,7 @@ function App() {
             </Paper>
           )}
 
-          {wallData && (
+          {(wallData || rooms) && (
             <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6">

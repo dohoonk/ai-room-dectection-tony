@@ -1092,7 +1092,7 @@
               13
             ],
             "details": "Implement API endpoint to accept PDFs, upload to S3, call AWS services in parallel, and return room detection results in the specified format.\n<info added on 2025-11-09T01:43:02.598Z>\nAccept PDF file uploads using multipart/form-data. Upload the PDF to S3 and call AWS services in parallel: Textract for OCR and Rekognition for object detection. Process the PDF using PyMuPDF/pdfplumber to apply our algorithm. Combine responses from AWS services with extracted wall segments and use the existing room detection algorithm. Return room detection results in PRD format. Implement error handling for AWS service failures and use our algorithms as a fallback if AWS services are unavailable.\n</info added on 2025-11-09T01:43:02.598Z>\n<info added on 2025-11-09T02:48:06.481Z>\nCompleted API endpoint implementation:\n\n1. Created `/detect-rooms-from-pdf` endpoint:\n   - Accepts PDF file upload via multipart/form-data\n   - Optional query parameters: `use_textract` and `use_rekognition` (default: false)\n   - Full processing pipeline:\n     - Upload PDF to S3\n     - (Optional) Call Textract and Rekognition in parallel\n     - Extract vector paths from PDF using PDFParser\n     - Transform coordinates to 0-1000 range\n     - Filter wall lines (thickness, length, color)\n     - Convert to wall segments\n     - Validate segments using SegmentValidator\n     - Detect rooms using existing algorithm\n     - Return PRD-compliant array format\n\n2. Integrated all components:\n   - S3Client for file upload\n   - TextractClient for optional OCR\n   - RekognitionClient for optional object detection\n   - PDFParser for vector extraction\n   - PDFValidator for segment validation\n   - Existing room detection algorithm\n\n3. Error handling:\n   - File type validation (PDF only)\n   - S3 upload error handling\n   - PDF parsing error handling\n   - Validation error handling\n   - Room detection error handling\n   - Proper cleanup of temporary files\n\n4. Dependencies:\n   - Added `python-multipart` for file uploads\n   - Added `python-dotenv` for environment variable loading\n\n5. Created manual testing guide:\n   - `PDF_API_MANUAL_TESTING.md` with detailed instructions\n   - curl examples\n   - Python requests examples\n   - Postman/Insomnia instructions\n   - Troubleshooting guide\n\nStatus: API endpoint is ready for manual testing. User can now test with a PDF file.\n</info added on 2025-11-09T02:48:06.481Z>",
-            "status": "in-progress",
+            "status": "done",
             "testStrategy": "Test API with various PDFs to ensure correct room detection and response format."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T02:47:17.139Z",
+      "updated": "2025-11-09T02:48:11.515Z",
       "description": "Tasks for master context"
     }
   }
