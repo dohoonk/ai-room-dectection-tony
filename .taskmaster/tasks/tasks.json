@@ -1031,7 +1031,7 @@
         "id": 20,
         "title": "Implement PDF Vector Extraction (Phase 2A)",
         "description": "Enable automatic extraction of wall line segments from PDF blueprint files, eliminating the need for manual JSON input.",
-        "status": "pending",
+        "status": "in-progress",
         "dependencies": [
           9
         ],
@@ -1044,8 +1044,8 @@
             "title": "Set Up PDF Parsing Library",
             "description": "Integrate PyMuPDF or pdfplumber for PDF parsing.",
             "dependencies": [],
-            "details": "Install and configure PyMuPDF or pdfplumber to extract vector graphics from PDF files.",
-            "status": "pending",
+            "details": "Install and configure PyMuPDF or pdfplumber to extract vector graphics from PDF files.\n<info added on 2025-11-09T01:49:18.347Z>\nCompleted PDF parsing library setup:\n\n1. Installed PyMuPDF (fitz): Added to requirements.txt and installed successfully.\n2. Created PDF parser module (backend/src/pdf_parser.py):\n   - PDFParser class with configurable minimum line thickness.\n   - extract_lines() method to extract vector paths from PDF pages.\n   - extract_all_lines() method for multi-page PDFs.\n   - get_pdf_info() method for PDF metadata.\n   - Proper handling of PyMuPDF's drawing format:\n     - Line commands (\"l\", x1, y1, x2, y2).\n     - Move commands (\"m\", x, y).\n     - Curve commands (\"c\", ...) approximated as lines.\n   - Filtering by line thickness.\n   - Color extraction (RGB values).\n3. Test verification: Module imports and instantiates correctly.\n\nNext steps: Ready to move to subtask 20.2 (Extract Vector Paths) to test with actual PDF samples.\n</info added on 2025-11-09T01:49:18.347Z>",
+            "status": "done",
             "testStrategy": "Verify library setup by parsing sample PDFs and checking for successful extraction of vector data."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T00:24:19.161Z",
+      "updated": "2025-11-09T01:49:18.606Z",
       "description": "Tasks for master context"
     }
   }

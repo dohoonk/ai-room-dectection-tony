@@ -324,7 +324,7 @@
     "description": "50 rooms in grid layout",
     "detected_rooms": 50,
     "expected_rooms": 50,
-    "processing_time": 0.174,
+    "processing_time": 0.177,
     "accuracy": 1.0,
     "false_positives": 0,
     "false_negatives": 0,
@@ -963,7 +963,7 @@
     "description": "L-shaped room",
     "detected_rooms": 1,
     "expected_rooms": 1,
-    "processing_time": 0.001,
+    "processing_time": 0.0,
     "accuracy": 1.0,
     "false_positives": 0,
     "false_negatives": 0,
@@ -977,6 +977,210 @@
           100.0,
           100.0,
           500.0,
+          400.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/l_shaped_room.json",
+    "description": "L-shaped room (irregular)",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.0,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          300.0,
+          400.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/t_shaped_room.json",
+    "description": "T-shaped room",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          500.0,
+          400.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/irregular_pentagon.json",
+    "description": "Irregular pentagon room",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          400.0,
+          400.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/hexagon_room.json",
+    "description": "Regular hexagon room",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.0,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          50.0,
+          76.79491924311228,
+          450.0,
+          423.20508075688775
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/trapezoid_room.json",
+    "description": "Trapezoid room",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.0,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          400.0,
+          300.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/multi_irregular_rooms.json",
+    "description": "Multiple irregular-shaped rooms",
+    "detected_rooms": 3,
+    "expected_rooms": 3,
+    "processing_time": 0.002,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          200.0,
+          300.0
+        ],
+        "name_hint": "Room 1",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_002",
+        "bounding_box": [
+          250.0,
+          0.0,
+          500.0,
+          200.0
+        ],
+        "name_hint": "Room 2",
+        "confidence": 1.0
+      },
+      {
+        "id": "room_003",
+        "bounding_box": [
+          200.0,
+          250.0,
+          450.0,
+          450.0
+        ],
+        "name_hint": "Room 3",
+        "confidence": 1.0
+      }
+    ]
+  },
+  {
+    "file": "irregular_shapes/angled_walls_room.json",
+    "description": "Room with angled walls",
+    "detected_rooms": 1,
+    "expected_rooms": 1,
+    "processing_time": 0.001,
+    "accuracy": 1.0,
+    "false_positives": 0,
+    "false_negatives": 0,
+    "avg_confidence": 1.0,
+    "min_confidence": 1.0,
+    "max_confidence": 1.0,
+    "rooms": [
+      {
+        "id": "room_001",
+        "bounding_box": [
+          0.0,
+          0.0,
+          400.0,
           400.0
         ],
         "name_hint": "Room 1",

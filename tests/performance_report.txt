@@ -4,17 +4,17 @@ ROOM DETECTION AI - PERFORMANCE TEST REPORT
 
 SUMMARY
 --------------------------------------------------------------------------------
-Total Tests: 7
-Successful Tests: 7
+Total Tests: 14
+Successful Tests: 14
 Failed Tests: 0
-Total Processing Time: 0.181 seconds
-Average Processing Time: 0.026 seconds
+Total Processing Time: 0.188 seconds
+Average Processing Time: 0.013 seconds
 
 PRD SUCCESS CRITERIA EVALUATION
 --------------------------------------------------------------------------------
 Detection Accuracy: 100.0% (Target: ≥ 90%) ✅ PASS
 False Positive Rate: 0.0% (Target: < 10%) ✅ PASS
-Max Processing Latency: 0.174s (Target: < 30s) ✅ PASS
+Max Processing Latency: 0.177s (Target: < 30s) ✅ PASS
 
 DETAILED TEST RESULTS
 --------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ Test 4: 50_rooms/50_rooms_floorplan.json
   Accuracy: 100.0%
   False Positives: 0
   False Negatives: 0
-  Processing Time: 0.174s
+  Processing Time: 0.177s
   Avg Confidence: 1.0
   Confidence Range: 1.0 - 1.0
   Status: ✅ PASS
@@ -93,6 +93,90 @@ Test 6: test_floorplan.json
 
 Test 7: test_l_shape_floorplan.json
   Description: L-shaped room
+  Detected Rooms: 1
+  Expected Rooms: 1
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.0s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 8: irregular_shapes/l_shaped_room.json
+  Description: L-shaped room (irregular)
+  Detected Rooms: 1
+  Expected Rooms: 1
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.0s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 9: irregular_shapes/t_shaped_room.json
+  Description: T-shaped room
+  Detected Rooms: 1
+  Expected Rooms: 1
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.001s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 10: irregular_shapes/irregular_pentagon.json
+  Description: Irregular pentagon room
+  Detected Rooms: 1
+  Expected Rooms: 1
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.001s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 11: irregular_shapes/hexagon_room.json
+  Description: Regular hexagon room
+  Detected Rooms: 1
+  Expected Rooms: 1
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.0s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 12: irregular_shapes/trapezoid_room.json
+  Description: Trapezoid room
+  Detected Rooms: 1
+  Expected Rooms: 1
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.0s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 13: irregular_shapes/multi_irregular_rooms.json
+  Description: Multiple irregular-shaped rooms
+  Detected Rooms: 3
+  Expected Rooms: 3
+  Accuracy: 100.0%
+  False Positives: 0
+  False Negatives: 0
+  Processing Time: 0.002s
+  Avg Confidence: 1.0
+  Confidence Range: 1.0 - 1.0
+  Status: ✅ PASS
+
+Test 14: irregular_shapes/angled_walls_room.json
+  Description: Room with angled walls
   Detected Rooms: 1
   Expected Rooms: 1
   Accuracy: 100.0%
