@@ -19,10 +19,15 @@ import MenuItem from '@mui/material/MenuItem';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import AccountTreeIcon from '@mui/icons-material/AccountTree';
+import ViewInArIcon from '@mui/icons-material/ViewInAr';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import FileUpload from './components/FileUpload';
 import WallVisualization from './components/WallVisualization';
 import MetricsDisplay from './components/MetricsDisplay';
-import { detectRooms, WallSegment, Room, DetectionMetrics } from './services/api';
+import GraphVisualization from './components/GraphVisualization';
+import { detectRooms, getGraphData, WallSegment, Room, DetectionMetrics, GraphData } from './services/api';
 import './App.css';
 
 const theme = createTheme({
@@ -48,6 +53,8 @@ function App() {
   const [renamingRoomId, setRenamingRoomId] = React.useState<string | null>(null);
   const [renameDialogOpen, setRenameDialogOpen] = React.useState(false);
   const [newRoomName, setNewRoomName] = React.useState('');
+  const [graphData, setGraphData] = React.useState<GraphData | null>(null);
+  const [showGraphView, setShowGraphView] = React.useState(false);
 
   const handleFileUpload = async (data: WallSegment[]) => {
     setWallData(data);
@@ -55,6 +62,7 @@ function App() {
     setSelectedRoomId(null);
     setError(null);
     setMetrics(null);
+    setGraphData(null);
     setLoading(true);
     
     // Track processing start time for client-side measurement
@@ -62,8 +70,14 @@ function App() {
     setProcessingStartTime(startTime);
 
     try {
-      const response = await detectRooms(data);
+      // Fetch both room detection and graph data in parallel
+      const [response, graphResponse] = await Promise.all([
+        detectRooms(data),
+        getGraphData(data).catch(() => null) // Graph data is optional
+      ]);
+      
       setRooms(response.rooms);
+      setGraphData(graphResponse);
       
       // Use backend metrics if available, otherwise calculate client-side
       if (response.metrics) {
@@ -176,43 +190,74 @@ function App() {
 
           {wallData && (
             <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
-              <Typography variant="h6" gutterBottom>
-                Floorplan Visualization
-              </Typography>
-              {rooms && (
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                  {rooms.length} room{rooms.length !== 1 ? 's' : ''} detected
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+                <Typography variant="h6">
+                  {showGraphView ? 'Graph Visualization' : 'Floorplan Visualization'}
                 </Typography>
-              )}
-              <WallVisualization 
-                walls={wallData} 
-                rooms={rooms || []}
-                selectedRoomId={selectedRoomId}
-                onRoomClick={handleRoomClick}
-              />
-              
-              {selectedRoomId && rooms && (
-                <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <Typography variant="body2" color="text.secondary">
-                    Selected: {rooms.find(r => r.id === selectedRoomId)?.name_hint || selectedRoomId}
-                  </Typography>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleRenameRoom(selectedRoomId)}
-                    color="primary"
-                    title="Rename room"
-                  >
-                    <EditIcon fontSize="small" />
-                  </IconButton>
-                  <IconButton
-                    size="small"
-                    onClick={() => handleRemoveRoom(selectedRoomId)}
-                    color="error"
-                    title="Remove room"
-                  >
-                    <DeleteIcon fontSize="small" />
-                  </IconButton>
+                <ToggleButtonGroup
+                  value={showGraphView ? 'graph' : 'rooms'}
+                  exclusive
+                  onChange={(_, value) => {
+                    if (value !== null) {
+                      setShowGraphView(value === 'graph');
+                    }
+                  }}
+                  size="small"
+                >
+                  <ToggleButton value="rooms" aria-label="room view">
+                    <ViewInArIcon sx={{ mr: 1 }} />
+                    Rooms
+                  </ToggleButton>
+                  <ToggleButton value="graph" aria-label="graph view" disabled={!graphData}>
+                    <AccountTreeIcon sx={{ mr: 1 }} />
+                    Graph
+                  </ToggleButton>
                 </Box>
+
+              {showGraphView ? (
+                <GraphVisualization 
+                  graphData={graphData}
+                  width={800}
+                  height={600}
+                />
+              ) : (
+                <>
+                  {rooms && (
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                      {rooms.length} room{rooms.length !== 1 ? 's' : ''} detected
+                    </Typography>
+                  )}
+                  <WallVisualization 
+                    walls={wallData} 
+                    rooms={rooms || []}
+                    selectedRoomId={selectedRoomId}
+                    onRoomClick={handleRoomClick}
+                  />
+                  
+                  {selectedRoomId && rooms && (
+                    <Box sx={{ mt: 2, display: 'flex', alignItems: 'center', gap: 1 }}>
+                      <Typography variant="body2" color="text.secondary">
+                        Selected: {rooms.find(r => r.id === selectedRoomId)?.name_hint || selectedRoomId}
+                      </Typography>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleRenameRoom(selectedRoomId)}
+                        color="primary"
+                        title="Rename room"
+                      >
+                        <EditIcon fontSize="small" />
+                      </IconButton>
+                      <IconButton
+                        size="small"
+                        onClick={() => handleRemoveRoom(selectedRoomId)}
+                        color="error"
+                        title="Remove room"
+                      >
+                        <DeleteIcon fontSize="small" />
+                      </IconButton>
+                    </Box>
+                  )}
+                </>
               )}
             </Paper>
           )}

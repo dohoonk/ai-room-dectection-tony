@@ -121,3 +121,51 @@ async def test_complex():
         "expected": 3,
         "note": "Cycle detection needs improvement for multi-room floorplans"
     }
+
+
+@app.post("/graph-data", response_model=Dict[str, Any])
+async def get_graph_data(request: RoomDetectionRequest):
+    """
+    Get wall adjacency graph data for visualization.
+    
+    Returns nodes, edges, and detected cycles/faces for graph visualization.
+    """
+    from src.room_detector import build_wall_graph, find_faces_using_polygonize, find_faces_in_planar_graph, filter_cycles
+    from src.parser import parse_line_segments
+    from src.graph_serializer import graph_to_json
+    import tempfile
+    import json
+    
+    try:
+        # Convert request to temporary JSON file for processing
+        walls_data = [wall.model_dump() for wall in request.walls]
+        
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
+            json.dump(walls_data, f)
+            temp_path = f.name
+        
+        try:
+            # Parse segments
+            segments = parse_line_segments(temp_path)
+            
+            # Build graph
+            graph = build_wall_graph(segments, tolerance=1.0)
+            
+            # Find faces (same logic as detect_rooms)
+            faces = find_faces_using_polygonize(segments)
+            if not faces:
+                faces = find_faces_in_planar_graph(graph)
+            
+            # Filter valid faces
+            valid_faces = filter_cycles(faces, min_area=100.0, min_perimeter=40.0)
+            
+            # Serialize graph to JSON
+            graph_data = graph_to_json(graph, valid_faces)
+            
+            return graph_data
+        finally:
+            # Clean up temp file
+            os.unlink(temp_path)
+    
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"Error generating graph data: {str(e)}")

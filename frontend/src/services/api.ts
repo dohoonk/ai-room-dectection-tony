@@ -29,8 +29,69 @@ export interface RoomDetectionResponse {
   metrics: DetectionMetrics;
 }
 
+export interface GraphNode {
+  id: number;
+  x: number;
+  y: number;
+  label: string;
+}
+
+export interface GraphEdge {
+  id: string;
+  source: number;
+  target: number;
+  sourceCoords: [number, number];
+  targetCoords: [number, number];
+  isLoadBearing: boolean;
+}
+
+export interface GraphCycle {
+  id: string;
+  nodes: number[];
+  coords: [number, number][];
+}
+
+export interface GraphData {
+  nodes: GraphNode[];
+  edges: GraphEdge[];
+  cycles: GraphCycle[];
+  stats: {
+    nodeCount: number;
+    edgeCount: number;
+    cycleCount: number;
+  };
+}
+
 export interface RoomDetectionRequest {
   walls: WallSegment[];
+}
+
+/**
+ * Get graph data for visualization
+ */
+export async function getGraphData(walls: WallSegment[]): Promise<GraphData> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/graph-data`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ walls }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({ detail: 'Unknown error' }));
+      throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+    }
+
+    const data: GraphData = await response.json();
+    return data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error;
+    }
+    throw new Error('Network error: Failed to connect to the API');
+  }
 }
 
 /**
