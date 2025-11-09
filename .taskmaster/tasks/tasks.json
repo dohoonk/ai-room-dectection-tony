@@ -1280,8 +1280,8 @@
             "dependencies": [
               4
             ],
-            "details": "Create a FileUpload component specifically for image files that integrates with the existing UI. Allow users to upload image files and display processing status. Use Material UI components for consistency.",
-            "status": "pending",
+            "details": "Create a FileUpload component specifically for image files that integrates with the existing UI. Allow users to upload image files and display processing status. Use Material UI components for consistency.\n<info added on 2025-11-09T03:25:17.717Z>\nThis task was completed as part of Task 21.5. The unified FileUpload component now handles image files (PNG, JPG, JPEG, BMP, TIFF, TIF) alongside JSON and PDF files. It accepts image files via file input, validates file types, calls the onImageUpload callback, displays processing status, and uses Material UI components for consistency. No separate image upload component is needed.\n</info added on 2025-11-09T03:25:17.717Z>",
+            "status": "done",
             "testStrategy": null
           },
           {
@@ -1321,8 +1321,8 @@
             "id": 12,
             "title": "Set Up AWS S3 Integration",
             "description": "Configure Amazon S3 for image file storage (AWS requirement).",
-            "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.",
-            "status": "pending",
+            "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.\n<info added on 2025-11-09T03:25:20.051Z>\nAWS S3 integration was already completed in Task 20.11. The same S3 client and bucket are used for both PDF and image processing. The /detect-rooms-from-image endpoint already uploads images to S3 (folder: 'images/') before processing. No additional S3 setup is needed for image processing.\n</info added on 2025-11-09T03:25:20.051Z>",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 21
           },
@@ -1330,8 +1330,8 @@
             "id": 13,
             "title": "Integrate Amazon Textract for OCR",
             "description": "Integrate Amazon Textract to extract text labels and dimensions from images.",
-            "details": "Set up Textract client, implement document text detection for images, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.",
-            "status": "pending",
+            "details": "Set up Textract client, implement document text detection for images, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.\n<info added on 2025-11-09T03:25:22.769Z>\nThe Amazon Textract integration was completed in Task 20.12, and the same TextractClient is used for both PDF and image processing. The /detect-rooms-from-image endpoint supports optional Textract calls via the use_textract parameter, allowing for text label and dimension extraction from images, which aids in room label auto-population for Phase 2C.\n</info added on 2025-11-09T03:25:22.769Z>",
+            "status": "done",
             "dependencies": [
               12
             ],
@@ -1341,8 +1341,8 @@
             "id": 14,
             "title": "Integrate Amazon Rekognition for Object Detection",
             "description": "Integrate Amazon Rekognition to detect architectural elements and filter non-wall lines.",
-            "details": "Set up Rekognition client, implement label detection for architectural elements (doors, windows, stairs), filter results for relevant objects, and use Rekognition results to filter out non-wall elements from line detection (e.g., dimensions, annotations). This helps improve line detection accuracy.",
-            "status": "pending",
+            "details": "Set up Rekognition client, implement label detection for architectural elements (doors, windows, stairs), filter results for relevant objects, and use Rekognition results to filter out non-wall elements from line detection (e.g., dimensions, annotations). This helps improve line detection accuracy.\n<info added on 2025-11-09T03:25:25.588Z>\nThe Amazon Rekognition integration was completed in Task 20.13, and the same RekognitionClient is used for both PDF and image processing. The /detect-rooms-from-image endpoint supports optional Rekognition calls via the use_rekognition parameter. When enabled, it logs detected architectural elements, enhancing line detection accuracy by filtering out non-wall lines.\n</info added on 2025-11-09T03:25:25.588Z>",
+            "status": "done",
             "dependencies": [
               12
             ],
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:22:45.974Z",
+      "updated": "2025-11-09T03:25:23.270Z",
       "description": "Tasks for master context"
     }
   }
