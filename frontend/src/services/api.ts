@@ -24,10 +24,8 @@ export interface DetectionMetrics {
   rooms_count: number;
 }
 
-export interface RoomDetectionResponse {
-  rooms: Room[];
-  metrics: DetectionMetrics;
-}
+// PRD-compliant response: array of rooms directly
+export type RoomDetectionResponse = Room[];
 
 export interface GraphNode {
   id: number;

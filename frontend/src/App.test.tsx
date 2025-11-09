@@ -59,14 +59,7 @@ describe('App Component', () => {
   });
 
   test('displays loading state when detecting rooms', async () => {
-    const mockResponse: RoomDetectionResponse = {
-      rooms: [],
-      metrics: {
-        processing_time: 0.1,
-        confidence_score: 0.0,
-        rooms_count: 0
-      }
-    };
+    const mockResponse: RoomDetectionResponse = []; // PRD-compliant: array of rooms
     mockDetectRooms.mockImplementation(
       () => new Promise((resolve) => setTimeout(() => resolve(mockResponse), 200))
     );
@@ -141,17 +134,10 @@ describe('App Component', () => {
   });
 
   test('displays room count when rooms are detected', async () => {
-    const mockResponse: RoomDetectionResponse = {
-      rooms: [
-        { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room' },
-        { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room' },
-      ],
-      metrics: {
-        processing_time: 0.5,
-        confidence_score: 0.85,
-        rooms_count: 2
-      }
-    };
+    const mockResponse: RoomDetectionResponse = [
+      { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room' },
+      { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room' },
+    ];
     mockDetectRooms.mockResolvedValueOnce(mockResponse);
 
     render(<App />);
@@ -193,14 +179,7 @@ describe('App Component', () => {
   });
 
   test('calls detectRooms API when file is uploaded', async () => {
-    const mockResponse: RoomDetectionResponse = {
-      rooms: [],
-      metrics: {
-        processing_time: 0.1,
-        confidence_score: 0.0,
-        rooms_count: 0
-      }
-    };
+    const mockResponse: RoomDetectionResponse = [];
     mockDetectRooms.mockResolvedValueOnce(mockResponse);
 
     render(<App />);
@@ -236,16 +215,9 @@ describe('App Component', () => {
   });
 
   test('allows renaming a room', async () => {
-    const mockResponse: RoomDetectionResponse = {
-      rooms: [
-        { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room 1' },
-      ],
-      metrics: {
-        processing_time: 0.5,
-        confidence_score: 0.85,
-        rooms_count: 1
-      }
-    };
+    const mockResponse: RoomDetectionResponse = [
+      { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room 1' },
+    ];
     mockDetectRooms.mockResolvedValueOnce(mockResponse);
 
     render(<App />);
@@ -280,17 +252,10 @@ describe('App Component', () => {
   });
 
   test('allows removing a room', async () => {
-    const mockResponse: RoomDetectionResponse = {
-      rooms: [
-        { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room 1' },
-        { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room 2' },
-      ],
-      metrics: {
-        processing_time: 0.5,
-        confidence_score: 0.85,
-        rooms_count: 2
-      }
-    };
+    const mockResponse: RoomDetectionResponse = [
+      { id: 'room_001', bounding_box: [0, 0, 100, 100] as [number, number, number, number], name_hint: 'Room 1' },
+      { id: 'room_002', bounding_box: [100, 0, 200, 100] as [number, number, number, number], name_hint: 'Room 2' },
+    ];
     mockDetectRooms.mockResolvedValueOnce(mockResponse);
 
     render(<App />);

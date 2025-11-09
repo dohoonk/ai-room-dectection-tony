@@ -47,19 +47,21 @@ async def health():
     return {"status": "healthy"}
 
 
-@app.post("/detect-rooms", response_model=Dict[str, Any])
+@app.post("/detect-rooms", response_model=List[Dict[str, Any]])
 async def detect_rooms_endpoint(request: RoomDetectionRequest):
     """
     Detect rooms from wall line segments.
     
-    Accepts a list of wall segments and returns detected rooms with bounding boxes,
-    along with processing metrics (time and confidence score).
+    Accepts a list of wall segments and returns detected rooms with bounding boxes.
+    Returns a JSON array of rooms per PRD specification.
+    
+    Each room contains:
+    - id: Unique identifier (e.g., "room_001")
+    - bounding_box: Normalized coordinates [x_min, y_min, x_max, y_max] (0-1000 range)
+    - name_hint: Optional name hint (e.g., "Room 1")
     """
-    import time
     import json
     import tempfile
-    
-    start_time = time.time()
     
     try:
         # Convert request to temporary JSON file for processing
@@ -70,26 +72,20 @@ async def detect_rooms_endpoint(request: RoomDetectionRequest):
             temp_path = f.name
         
         try:
-            # Detect rooms
+            # Detect rooms - returns list of rooms with id, bounding_box, name_hint
             rooms = detect_rooms(temp_path, tolerance=1.0)
             
-            # Calculate processing time
-            processing_time = time.time() - start_time
+            # Remove confidence field to match PRD (only id, bounding_box, name_hint)
+            # PRD doesn't specify confidence in the output format
+            prd_compliant_rooms = []
+            for room in rooms:
+                prd_compliant_rooms.append({
+                    "id": room["id"],
+                    "bounding_box": room["bounding_box"],
+                    "name_hint": room["name_hint"]
+                })
             
-            # Calculate overall confidence score (average of all room confidences)
-            if rooms:
-                overall_confidence = sum(room.get('confidence', 0.5) for room in rooms) / len(rooms)
-            else:
-                overall_confidence = 0.0
-            
-            return {
-                "rooms": rooms,
-                "metrics": {
-                    "processing_time": round(processing_time, 3),
-                    "confidence_score": round(overall_confidence, 2),
-                    "rooms_count": len(rooms)
-                }
-            }
+            return prd_compliant_rooms
         finally:
             # Clean up temp file
             os.unlink(temp_path)
@@ -100,27 +96,34 @@ async def detect_rooms_endpoint(request: RoomDetectionRequest):
 
 @app.get("/test/simple")
 async def test_simple():
-    """Test endpoint with simple floorplan."""
+    """Test endpoint with simple floorplan. Returns PRD-compliant array format."""
     json_path = os.path.join(os.path.dirname(__file__), "..", "tests", "sample_data", "simple", "simple_floorplan.json")
     rooms = detect_rooms(json_path, tolerance=1.0)
-    return {
-        "rooms": rooms,
-        "count": len(rooms),
-        "expected": 1
-    }
+    # Return PRD-compliant format (array of rooms)
+    prd_compliant_rooms = []
+    for room in rooms:
+        prd_compliant_rooms.append({
+            "id": room["id"],
+            "bounding_box": room["bounding_box"],
+            "name_hint": room["name_hint"]
+        })
+    return prd_compliant_rooms
 
 
 @app.get("/test/complex")
 async def test_complex():
-    """Test endpoint with complex floorplan."""
+    """Test endpoint with complex floorplan. Returns PRD-compliant array format."""
     json_path = os.path.join(os.path.dirname(__file__), "..", "tests", "sample_data", "complex", "complex_floorplan.json")
     rooms = detect_rooms(json_path, tolerance=1.0)
-    return {
-        "rooms": rooms,
-        "count": len(rooms),
-        "expected": 3,
-        "note": "Cycle detection needs improvement for multi-room floorplans"
-    }
+    # Return PRD-compliant format (array of rooms)
+    prd_compliant_rooms = []
+    for room in rooms:
+        prd_compliant_rooms.append({
+            "id": room["id"],
+            "bounding_box": room["bounding_box"],
+            "name_hint": room["name_hint"]
+        })
+    return prd_compliant_rooms
 
 
 @app.post("/graph-data", response_model=Dict[str, Any])

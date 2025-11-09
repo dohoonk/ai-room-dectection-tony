@@ -19,21 +19,14 @@ describe('API Service', () => {
       { type: 'line', start: [0, 100], end: [0, 0], is_load_bearing: false },
     ];
 
-    it('should successfully detect rooms', async () => {
-      const mockResponse: RoomDetectionResponse = {
-        rooms: [
-          {
-            id: 'room_001',
-            bounding_box: [0, 0, 100, 100] as [number, number, number, number],
-            name_hint: 'Room',
-          },
-        ],
-        metrics: {
-          processing_time: 0.5,
-          confidence_score: 0.85,
-          rooms_count: 1
-        }
-      };
+    it('should successfully detect rooms (PRD-compliant array format)', async () => {
+      const mockResponse: RoomDetectionResponse = [
+        {
+          id: 'room_001',
+          bounding_box: [0, 0, 100, 100] as [number, number, number, number],
+          name_hint: 'Room',
+        },
+      ];
 
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
@@ -42,10 +35,9 @@ describe('API Service', () => {
 
       const result = await detectRooms(mockWalls);
       expect(result).toEqual(mockResponse);
-      expect(result.rooms).toHaveLength(1);
-      expect(result.metrics).toBeDefined();
-      expect(result.metrics.processing_time).toBe(0.5);
-      expect(result.metrics.confidence_score).toBe(0.85);
+      expect(result).toHaveLength(1);
+      expect(result[0].id).toBe('room_001');
+      expect(result[0].bounding_box).toEqual([0, 0, 100, 100]);
       expect(fetch).toHaveBeenCalledWith(
         'http://localhost:8000/detect-rooms',
         expect.objectContaining({

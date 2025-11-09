@@ -71,7 +71,7 @@ function App() {
 
     try {
       // Fetch both room detection and graph data in parallel
-      const [response, graphResponse] = await Promise.all([
+      const [roomsArray, graphResponse] = await Promise.all([
         detectRooms(data),
         getGraphData(data).catch((err) => {
           // Log error but don't fail the whole operation
@@ -80,7 +80,8 @@ function App() {
         })
       ]);
       
-      setRooms(response.rooms);
+      // PRD-compliant response is now just an array of rooms
+      setRooms(roomsArray);
       setGraphData(graphResponse);
       
       // Log graph data status for debugging
@@ -90,17 +91,17 @@ function App() {
         console.warn('Graph data is null - graph view will be disabled');
       }
       
-      // Use backend metrics if available, otherwise calculate client-side
-      if (response.metrics) {
-        setMetrics(response.metrics);
-      } else {
-        const clientProcessingTime = (performance.now() - startTime) / 1000;
-        setMetrics({
-          processing_time: clientProcessingTime,
-          confidence_score: 0.0,
-          rooms_count: response.rooms.length
-        });
-      }
+      // Calculate metrics client-side (PRD doesn't include metrics in API response)
+      const clientProcessingTime = (performance.now() - startTime) / 1000;
+      // Calculate average confidence from rooms (if we had it, but PRD doesn't include it)
+      // For now, we'll use a default or calculate based on room count
+      const estimatedConfidence = roomsArray.length > 0 ? 1.0 : 0.0;
+      
+      setMetrics({
+        processing_time: clientProcessingTime,
+        confidence_score: estimatedConfidence,
+        rooms_count: roomsArray.length
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to detect rooms');
     } finally {

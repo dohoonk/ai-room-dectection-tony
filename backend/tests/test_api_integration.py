@@ -182,26 +182,34 @@ class TestTestEndpoints:
     """Test cases for test endpoints."""
     
     def test_simple_test_endpoint(self):
-        """Test the simple test endpoint."""
+        """Test the simple test endpoint returns PRD-compliant array."""
         response = client.get("/test/simple")
         assert response.status_code == 200
-        data = response.json()
-        assert "rooms" in data
-        assert "count" in data
-        assert "expected" in data
-        assert isinstance(data["rooms"], list)
-        assert data["count"] == len(data["rooms"])
+        rooms = response.json()
+        # Should return array directly (PRD-compliant)
+        assert isinstance(rooms, list)
+        assert len(rooms) >= 0
+        if len(rooms) > 0:
+            # Verify room structure
+            room = rooms[0]
+            assert "id" in room
+            assert "bounding_box" in room
+            assert "name_hint" in room
     
     def test_complex_test_endpoint(self):
-        """Test the complex test endpoint."""
+        """Test the complex test endpoint returns PRD-compliant array."""
         response = client.get("/test/complex")
         assert response.status_code == 200
-        data = response.json()
-        assert "rooms" in data
-        assert "count" in data
-        assert "expected" in data
-        assert isinstance(data["rooms"], list)
-        assert data["count"] == len(data["rooms"])
+        rooms = response.json()
+        # Should return array directly (PRD-compliant)
+        assert isinstance(rooms, list)
+        assert len(rooms) >= 0
+        if len(rooms) > 0:
+            # Verify room structure
+            room = rooms[0]
+            assert "id" in room
+            assert "bounding_box" in room
+            assert "name_hint" in room
 
 
 class TestEdgeCases:
