@@ -1211,8 +1211,8 @@
             "dependencies": [
               1
             ],
-            "details": "Use OpenCV to convert images to grayscale, apply Gaussian blur for noise reduction, and enhance contrast using histogram equalization.",
-            "status": "pending",
+            "details": "Use OpenCV to convert images to grayscale, apply Gaussian blur for noise reduction, and enhance contrast using histogram equalization.\n<info added on 2025-11-09T03:12:22.706Z>\nCompleted image preprocessing implementation:\n\n1. Created ImagePreprocessor class (backend/src/image_preprocessor.py):\n   - PreprocessingConfig dataclass for configurable parameters\n   - to_grayscale(): Converts BGR/RGB/RGBA to grayscale\n   - reduce_noise(): Applies Gaussian blur for noise reduction\n   - enhance_contrast(): Supports both standard histogram equalization and CLAHE (adaptive)\n   - preprocess(): Full pipeline (grayscale → denoise → enhance)\n   - get_image_info(): Utility for image metadata\n\n2. Features:\n   - Handles both color and grayscale input images\n   - Configurable Gaussian blur kernel size and sigma\n   - Optional histogram equalization (standard or adaptive CLAHE)\n   - Automatic kernel size adjustment (ensures odd numbers)\n   - Support for BGR, RGB, BGRA, RGBA formats\n\n3. Created comprehensive tests (16 tests, all passing):\n   - Initialization with default and custom configs\n   - Grayscale conversion from BGR and already grayscale images\n   - Noise reduction with various kernel sizes\n   - Contrast enhancement (standard, adaptive, disabled)\n   - Full preprocessing pipeline\n   - Image info extraction\n   - Convenience function testing\n\n4. All tests passing ✅\n\nReady for next subtask: Edge and Line Detection (21.3).\n</info added on 2025-11-09T03:12:22.706Z>",
+            "status": "done",
             "testStrategy": "Test preprocessing on various image types to ensure clarity and consistency."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:11:34.195Z",
+      "updated": "2025-11-09T03:12:23.245Z",
       "description": "Tasks for master context"
     }
   }
