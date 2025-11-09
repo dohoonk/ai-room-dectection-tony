@@ -1302,8 +1302,8 @@
             "dependencies": [
               7
             ],
-            "details": "Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameters, and minimum line length. Allow users to fine-tune detection for different image qualities. Store user preferences.",
-            "status": "pending",
+            "details": "Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameters, and minimum line length. Allow users to fine-tune detection for different image qualities. Store user preferences.\n<info added on 2025-11-09T03:27:28.295Z>\nCompleted parameter tuning interface implementation:\n\n1. Created ParameterTuning component (frontend/src/components/ParameterTuning.tsx):\n   - Material UI dialog with accordion sections for organized parameter groups\n   - Preprocessing parameters: Gaussian blur kernel size, sigma, histogram equalization toggle\n   - Edge Detection (Canny): Low threshold, high threshold sliders\n   - Line Detection (Hough): Threshold, min line length, max line gap sliders\n   - Line Filtering: Min length, angle tolerance sliders\n   - All parameters have sensible defaults and ranges\n   - Parameters saved to localStorage for persistence\n   - Reset to defaults functionality\n   - Apply/Cancel buttons\n\n2. Updated backend endpoint (/detect-rooms-from-image):\n   - Added optional 'parameters' Form field (JSON string)\n   - Parses parameters and creates config objects for:\n     * PreprocessingConfig (gaussian blur, histogram equalization)\n     * EdgeDetectionConfig (Canny thresholds)\n     * LineDetectionConfig (Hough parameters)\n     * LineFilterConfig (min length, angle tolerance)\n   - Falls back to defaults if parameters are invalid or missing\n   - All processors now use custom configs when provided\n\n3. Updated API service (frontend/src/services/api.ts):\n   - detectRoomsFromImage now accepts optional 'parameters' argument\n   - Parameters sent as JSON string in FormData\n\n4. Updated App.tsx:\n   - Added state for parameter tuning dialog and current parameters\n   - Loads saved parameters from localStorage on mount\n   - Added \"Tune Parameters\" button next to upload section\n   - handleImageUpload now passes current parameters to API\n   - ParameterTuning dialog integrated with apply/cancel handlers\n\n5. Features:\n   - User-friendly sliders for all numeric parameters\n   - Organized by processing stage (preprocessing, edge detection, line detection, filtering)\n   - Parameters persist across sessions (localStorage)\n   - Real-time parameter adjustment for different image qualities\n   - Validation and error handling\n\nThe interface allows users to fine-tune image processing parameters for optimal results with different blueprint image qualities, lighting conditions, and drawing styles.\n</info added on 2025-11-09T03:27:28.295Z>",
+            "status": "done",
             "testStrategy": null
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:25:23.270Z",
+      "updated": "2025-11-09T03:27:28.988Z",
       "description": "Tasks for master context"
     }
   }

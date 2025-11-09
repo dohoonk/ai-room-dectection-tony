@@ -164,19 +164,21 @@ export async function detectRoomsFromPdf(
 export async function detectRoomsFromImage(
   file: File,
   useTextract: boolean = false,
-  useRekognition: boolean = false
+  useRekognition: boolean = false,
+  parameters?: any  // ImageProcessingParameters from ParameterTuning component
 ): Promise<RoomDetectionResponse> {
   try {
     const formData = new FormData();
     formData.append('file', file);
-
-    const params = new URLSearchParams();
-    if (useTextract) params.append('use_textract', 'true');
-    if (useRekognition) params.append('use_rekognition', 'true');
-
-    const url = `${API_BASE_URL}/detect-rooms-from-image${params.toString() ? '?' + params.toString() : ''}`;
+    formData.append('use_textract', useTextract.toString());
+    formData.append('use_rekognition', useRekognition.toString());
     
-    const response = await fetch(url, {
+    // Add parameters as JSON string if provided
+    if (parameters) {
+      formData.append('parameters', JSON.stringify(parameters));
+    }
+
+    const response = await fetch(`${API_BASE_URL}/detect-rooms-from-image`, {
       method: 'POST',
       body: formData,
     });

@@ -22,12 +22,14 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
 import CodeIcon from '@mui/icons-material/Code';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import FileUpload from './components/FileUpload';
 import WallVisualization from './components/WallVisualization';
 import MetricsDisplay from './components/MetricsDisplay';
 import GraphVisualization from './components/GraphVisualization';
+import ParameterTuning, { ImageProcessingParameters, DEFAULT_PARAMETERS, STORAGE_KEY } from './components/ParameterTuning';
 import { detectRooms, detectRoomsFromPdf, detectRoomsFromImage, getGraphData, WallSegment, Room, DetectionMetrics, GraphData } from './services/api';
 import './App.css';
 
@@ -57,6 +59,21 @@ function App() {
   const [graphData, setGraphData] = React.useState<GraphData | null>(null);
   const [showGraphView, setShowGraphView] = React.useState(false);
   const [showJsonView, setShowJsonView] = React.useState(false);
+  const [parameterTuningOpen, setParameterTuningOpen] = React.useState(false);
+  const [imageProcessingParams, setImageProcessingParams] = React.useState<ImageProcessingParameters>(DEFAULT_PARAMETERS);
+
+  // Load saved parameters from localStorage on mount
+  React.useEffect(() => {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        setImageProcessingParams({ ...DEFAULT_PARAMETERS, ...parsed });
+      } catch (e) {
+        console.warn('Failed to parse saved parameters:', e);
+      }
+    }
+  }, []);
 
   const handleFileUpload = async (data: WallSegment[]) => {
     setWallData(data);
@@ -126,8 +143,8 @@ function App() {
     setProcessingStartTime(startTime);
 
     try {
-      // Call image detection API (without AWS services for now, can be added later)
-      const roomsArray = await detectRoomsFromImage(file, false, false);
+      // Call image detection API with current processing parameters
+      const roomsArray = await detectRoomsFromImage(file, false, false, imageProcessingParams);
       
       // PRD-compliant response is now just an array of rooms
       setRooms(roomsArray);
@@ -255,6 +272,19 @@ function App() {
           </Typography>
           
           <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+                <Typography variant="h6" component="h2">
+                  Upload Blueprint
+                </Typography>
+                <Button
+                  variant="outlined"
+                  startIcon={<SettingsIcon />}
+                  onClick={() => setParameterTuningOpen(true)}
+                  size="small"
+                >
+                  Tune Parameters
+                </Button>
+              </Box>
               <FileUpload 
                 onFileUpload={handleFileUpload} 
                 onPdfUpload={handlePdfUpload}

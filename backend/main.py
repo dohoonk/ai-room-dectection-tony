@@ -1,8 +1,9 @@
 """FastAPI backend server for Room Detection AI."""
-from fastapi import FastAPI, HTTPException, UploadFile, File
+from fastapi import FastAPI, HTTPException, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
+import json
 import sys
 import os
 import tempfile
@@ -23,9 +24,9 @@ from src.parser import WallSegment as ParserWallSegment
 from src.aws_s3 import S3Client
 from src.aws_textract import TextractClient
 from src.aws_rekognition import RekognitionClient
-from src.image_preprocessor import ImagePreprocessor
-from src.line_detector import LineDetector
-from src.line_filter import LineFilter
+from src.image_preprocessor import ImagePreprocessor, PreprocessingConfig
+from src.line_detector import LineDetector, EdgeDetectionConfig, LineDetectionConfig, LineDetectionParams
+from src.line_filter import LineFilter, LineFilterConfig
 import cv2
 import numpy as np
 
@@ -274,8 +275,9 @@ async def detect_rooms_from_pdf(
 @app.post("/detect-rooms-from-image", response_model=List[Dict[str, Any]])
 async def detect_rooms_from_image(
     file: UploadFile = File(...),
-    use_textract: bool = False,
-    use_rekognition: bool = False
+    use_textract: bool = Form(False),
+    use_rekognition: bool = Form(False),
+    parameters: Optional[str] = Form(None)  # JSON string of ImageProcessingParameters
 ):
     """
     Detect rooms from a raster image blueprint file (PNG, JPG, etc.).
@@ -382,15 +384,46 @@ async def detect_rooms_from_image(
         image_height, image_width = image.shape[:2]
         print(f"✅ Loaded image: {image_width}x{image_height}")
         
-        # Preprocess image
+        # Parse optional parameters
+        params = None
+        if parameters:
+            try:
+                params = json.loads(parameters)
+            except json.JSONDecodeError:
+                print("⚠️  Invalid parameters JSON, using defaults")
+                params = None
+        
+        # Preprocess image with optional parameters
         print("🔧 Preprocessing image...")
-        preprocessor = ImagePreprocessor()
+        preprocessing_config = None
+        if params:
+            preprocessing_config = PreprocessingConfig(
+                gaussian_blur_kernel_size=params.get('gaussianBlurKernelSize', 5),
+                gaussian_blur_sigma=params.get('gaussianBlurSigma', 1.0),
+                use_histogram_equalization=params.get('useHistogramEqualization', True)
+            )
+        preprocessor = ImagePreprocessor(config=preprocessing_config)
         preprocessed = preprocessor.preprocess(image)
         print(f"✅ Preprocessed image")
         
-        # Detect edges and lines
+        # Detect edges and lines with optional parameters
         print("🔍 Detecting edges and lines...")
-        line_detector = LineDetector()
+        line_detection_params = None
+        if params:
+            edge_config = EdgeDetectionConfig(
+                low_threshold=params.get('cannyLowThreshold', 50),
+                high_threshold=params.get('cannyHighThreshold', 150)
+            )
+            line_config = LineDetectionConfig(
+                threshold=params.get('houghThreshold', 100),
+                min_line_length=params.get('minLineLength', 50.0),
+                max_line_gap=params.get('maxLineGap', 10.0)
+            )
+            line_detection_params = LineDetectionParams(
+                edge_config=edge_config,
+                line_config=line_config
+            )
+        line_detector = LineDetector(params=line_detection_params)
         lines = line_detector.detect_lines_from_image(preprocessed)
         print(f"✅ Detected {len(lines)} lines")
         
@@ -400,9 +433,15 @@ async def detect_rooms_from_image(
                 detail="No lines detected in image. Try adjusting preprocessing or detection parameters."
             )
         
-        # Filter lines
+        # Filter lines with optional parameters
         print("🔍 Filtering lines...")
-        line_filter = LineFilter()
+        filter_config = None
+        if params:
+            filter_config = LineFilterConfig(
+                min_length=params.get('minLength', 20.0),
+                angle_tolerance=params.get('angleTolerance', 5.0)
+            )
+        line_filter = LineFilter(config=filter_config)
         filtered_lines = line_filter.filter_lines(lines)
         print(f"✅ Filtered to {len(filtered_lines)} lines")
         
