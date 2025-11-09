@@ -1036,7 +1036,7 @@
           9
         ],
         "priority": "high",
-        "details": "Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files and returns room detection results in the same format as /detect-rooms.",
+        "details": "Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files, uploads them to S3, calls AWS services in parallel, processes responses, and returns room detection results. This approach uses pre-built AWS services (Textract, Rekognition) combined with our proven algorithms, as documented in PRD Section 9.0.",
         "testStrategy": "Test with various PDF types: CAD-generated PDFs (vector-based), scanned PDFs (raster embedded in PDF), multi-page blueprints, different coordinate systems. Compare extracted segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Target: ≥ 85% of walls correctly extracted, < 2% coordinate transformation error, < 10 seconds processing latency for typical PDF (1-5 pages), < 15% false positives.",
         "subtasks": [
           {
@@ -1088,7 +1088,7 @@
             "dependencies": [
               4
             ],
-            "details": "Implement API endpoint to accept PDFs and return room detection results in the specified format.",
+            "details": "Implement API endpoint to accept PDFs, upload to S3, call AWS services in parallel, and return room detection results in the specified format.\n<info added on 2025-11-09T01:43:02.598Z>\nAccept PDF file uploads using multipart/form-data. Upload the PDF to S3 and call AWS services in parallel: Textract for OCR and Rekognition for object detection. Process the PDF using PyMuPDF/pdfplumber to apply our algorithm. Combine responses from AWS services with extracted wall segments and use the existing room detection algorithm. Return room detection results in PRD format. Implement error handling for AWS service failures and use our algorithms as a fallback if AWS services are unavailable.\n</info added on 2025-11-09T01:43:02.598Z>",
             "status": "pending",
             "testStrategy": "Test API with various PDFs to ensure correct room detection and response format."
           },
@@ -1096,43 +1096,87 @@
             "id": 6,
             "title": "Validate Extracted Segments",
             "description": "Implement validation logic to ensure extracted segments form valid wall connections.",
-            "details": "Validate that extracted segments form a connected graph, verify minimum segment length, and check for reasonable wall density. Ensure segments can be processed by the existing room detection algorithm.",
-            "status": "pending",
             "dependencies": [
               4
             ],
-            "parentTaskId": 20
+            "details": "Validate that extracted segments form a connected graph, verify minimum segment length, and check for reasonable wall density. Ensure segments can be processed by the existing room detection algorithm.",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 7,
             "title": "Create Frontend PDF Upload Component",
             "description": "Build React component for PDF file upload using Material UI.",
-            "details": "Create a FileUpload component specifically for PDF files that integrates with the existing UI. Allow users to upload PDF files and display processing status. Use Material UI components for consistency.",
-            "status": "pending",
             "dependencies": [
               5
             ],
-            "parentTaskId": 20
+            "details": "Create a FileUpload component specifically for PDF files that integrates with the existing UI. Allow users to upload PDF files and display processing status. Use Material UI components for consistency.",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 8,
             "title": "Integrate PDF Upload with Room Detection",
             "description": "Connect PDF upload component to the new API endpoint and display results.",
-            "details": "Update App.tsx to handle PDF uploads, call the /detect-rooms-from-pdf endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time).",
-            "status": "pending",
             "dependencies": [
               6
             ],
-            "parentTaskId": 20
+            "details": "Update App.tsx to handle PDF uploads, call the /detect-rooms-from-pdf endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time).",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 9,
             "title": "Write Comprehensive Tests for PDF Extraction",
             "description": "Create unit and integration tests for PDF extraction functionality.",
-            "details": "Test PDF parsing with various PDF types (CAD-generated, scanned, multi-page), coordinate transformation accuracy, line filtering effectiveness, and API endpoint integration. Compare results with ground truth JSON data.",
-            "status": "pending",
             "dependencies": [
               5
+            ],
+            "details": "Test PDF parsing with various PDF types (CAD-generated, scanned, multi-page), coordinate transformation accuracy, line filtering effectiveness, and API endpoint integration. Compare results with ground truth JSON data.",
+            "status": "pending",
+            "testStrategy": null
+          },
+          {
+            "id": 10,
+            "title": "Integrate AWS Services",
+            "description": "Implement integration with AWS Textract and Rekognition for enhanced detection.",
+            "dependencies": [
+              5
+            ],
+            "details": "Integrate Amazon Textract for OCR (room labels, dimensions) and Amazon Rekognition for object detection (doors, windows) as optional enhancements. Ensure parallel processing with our existing algorithms.",
+            "status": "pending",
+            "testStrategy": "Validate integration by comparing AWS service outputs with expected results and ensuring they enhance room detection accuracy."
+          },
+          {
+            "id": 11,
+            "title": "Set Up AWS S3 Integration",
+            "description": "Configure Amazon S3 for PDF file storage (AWS requirement).",
+            "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.",
+            "status": "pending",
+            "dependencies": [
+              null
+            ],
+            "parentTaskId": 20
+          },
+          {
+            "id": 12,
+            "title": "Integrate Amazon Textract for OCR",
+            "description": "Integrate Amazon Textract to extract text labels and dimensions from PDFs.",
+            "details": "Set up Textract client, implement document text detection, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "parentTaskId": 20
+          },
+          {
+            "id": 13,
+            "title": "Integrate Amazon Rekognition for Object Detection",
+            "description": "Integrate Amazon Rekognition to detect architectural elements (doors, windows).",
+            "details": "Set up Rekognition client, implement label detection for architectural elements, filter results for doors, windows, and other relevant objects, and use results to enhance or filter wall detection. This is optional but recommended for compliance and enhancement.",
+            "status": "pending",
+            "dependencies": [
+              1
             ],
             "parentTaskId": 20
           }
@@ -1141,14 +1185,14 @@
       {
         "id": 21,
         "title": "Implement Raster Image Processing (Phase 2B)",
-        "description": "Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans using computer vision techniques.",
+        "description": "Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans using computer vision techniques. Integrate AWS services for enhanced processing.",
         "status": "pending",
         "dependencies": [
           20
         ],
         "priority": "high",
-        "details": "Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.",
-        "testStrategy": "Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI.",
+        "details": "Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files, uploads them to S3, calls AWS services (Textract for OCR, Rekognition for object detection) in parallel, processes responses, and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.",
+        "testStrategy": "Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI. Include tests for AWS service integration and response handling.",
         "subtasks": [
           {
             "id": 1,
@@ -1188,9 +1232,9 @@
             "dependencies": [
               3
             ],
-            "details": "Implement an API endpoint that accepts image files, processes them, and returns detected room segments.",
+            "details": "Implement an API endpoint that accepts image files, uploads them to S3, calls AWS services in parallel, processes responses, and returns detected room segments.\n<info added on 2025-11-09T01:43:04.785Z>\nThe API endpoint should:\n\n1. Accept image file uploads using multipart/form-data.\n2. Upload images to S3.\n3. Call AWS Textract for OCR and Rekognition for object detection in parallel.\n4. Process images using OpenCV for line detection.\n5. Use Rekognition results to filter out non-wall elements.\n6. Combine AWS service responses with extracted wall segments.\n7. Apply the existing room detection algorithm.\n8. Return room detection results in PRD format.\n\nInclude error handling for AWS service failures and implement a fallback to our algorithms if AWS services are unavailable.\n</info added on 2025-11-09T01:43:04.785Z>",
             "status": "pending",
-            "testStrategy": "Test API with various image inputs and verify response accuracy."
+            "testStrategy": "Test API with various image inputs and verify response accuracy, including AWS service integration."
           },
           {
             "id": 5,
@@ -1207,65 +1251,98 @@
             "id": 6,
             "title": "Implement Line Filtering and Segment Conversion",
             "description": "Filter detected lines and convert to wall segment format.",
-            "details": "Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.",
-            "status": "pending",
             "dependencies": [
               3
             ],
-            "parentTaskId": 21
+            "details": "Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.\n<info added on 2025-11-09T01:43:06.588Z>\nIncorporate AWS Rekognition object detection results to filter out lines corresponding to non-wall elements such as doors, windows, and stairs. Use these results to enhance the accuracy of wall line detection by excluding lines associated with identified non-wall objects.\n</info added on 2025-11-09T01:43:06.588Z>",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 7,
             "title": "Validate Extracted Segments from Images",
             "description": "Implement validation logic for image-extracted segments.",
-            "details": "Ensure extracted segments form a connected graph, verify minimum segment count, and check for reasonable wall density. Validate that segments can be processed by the existing room detection algorithm.",
-            "status": "pending",
             "dependencies": [
               4
             ],
-            "parentTaskId": 21
+            "details": "Ensure extracted segments form a connected graph, verify minimum segment count, and check for reasonable wall density. Validate that segments can be processed by the existing room detection algorithm.",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 8,
             "title": "Create Frontend Image Upload Component",
             "description": "Build React component for image file upload (PNG, JPG, JPEG) using Material UI.",
-            "details": "Create a FileUpload component specifically for image files that integrates with the existing UI. Allow users to upload image files and display processing status. Use Material UI components for consistency.",
-            "status": "pending",
             "dependencies": [
               4
             ],
-            "parentTaskId": 21
+            "details": "Create a FileUpload component specifically for image files that integrates with the existing UI. Allow users to upload image files and display processing status. Use Material UI components for consistency.",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 9,
             "title": "Integrate Image Upload with Room Detection",
             "description": "Connect image upload component to the new API endpoint and display results.",
-            "details": "Update App.tsx to handle image uploads, call the /detect-rooms-from-image endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time, image_dimensions).",
-            "status": "pending",
             "dependencies": [
               7
             ],
-            "parentTaskId": 21
+            "details": "Update App.tsx to handle image uploads, call the /detect-rooms-from-image endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time, image_dimensions).",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 10,
             "title": "Implement Parameter Tuning Interface",
             "description": "Create UI controls for adjusting image processing parameters.",
-            "details": "Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameters, and minimum line length. Allow users to fine-tune detection for different image qualities. Store user preferences.",
-            "status": "pending",
             "dependencies": [
               7
             ],
-            "parentTaskId": 21
+            "details": "Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameters, and minimum line length. Allow users to fine-tune detection for different image qualities. Store user preferences.",
+            "status": "pending",
+            "testStrategy": null
           },
           {
             "id": 11,
             "title": "Write Comprehensive Tests for Image Processing",
             "description": "Create unit and integration tests for raster image processing functionality.",
-            "details": "Test image preprocessing, edge detection, line detection with various image types (high-res scanned, low-res photos, different lighting, various styles). Compare results with ground truth JSON data. Test parameter tuning effectiveness.",
-            "status": "pending",
             "dependencies": [
               4
+            ],
+            "details": "Test image preprocessing, edge detection, line detection with various image types (high-res scanned, low-res photos, different lighting, various styles). Compare results with ground truth JSON data. Test parameter tuning effectiveness. Include tests for AWS service integration.",
+            "status": "pending",
+            "testStrategy": null
+          },
+          {
+            "id": 12,
+            "title": "Set Up AWS S3 Integration",
+            "description": "Configure Amazon S3 for image file storage (AWS requirement).",
+            "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.",
+            "status": "pending",
+            "dependencies": [
+              null
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 13,
+            "title": "Integrate Amazon Textract for OCR",
+            "description": "Integrate Amazon Textract to extract text labels and dimensions from images.",
+            "details": "Set up Textract client, implement document text detection for images, extract room labels and dimension numbers, parse Textract response to extract relevant text blocks, and prepare for Phase 2C (room label auto-population). This is optional but recommended for compliance and future Phase 2C functionality.",
+            "status": "pending",
+            "dependencies": [
+              1
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 14,
+            "title": "Integrate Amazon Rekognition for Object Detection",
+            "description": "Integrate Amazon Rekognition to detect architectural elements and filter non-wall lines.",
+            "details": "Set up Rekognition client, implement label detection for architectural elements (doors, windows, stairs), filter results for relevant objects, and use Rekognition results to filter out non-wall elements from line detection (e.g., dimensions, annotations). This helps improve line detection accuracy.",
+            "status": "pending",
+            "dependencies": [
+              1
             ],
             "parentTaskId": 21
           }
