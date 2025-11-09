@@ -21,6 +21,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AccountTreeIcon from '@mui/icons-material/AccountTree';
 import ViewInArIcon from '@mui/icons-material/ViewInAr';
+import CodeIcon from '@mui/icons-material/Code';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import FileUpload from './components/FileUpload';
@@ -55,6 +56,7 @@ function App() {
   const [newRoomName, setNewRoomName] = React.useState('');
   const [graphData, setGraphData] = React.useState<GraphData | null>(null);
   const [showGraphView, setShowGraphView] = React.useState(false);
+  const [showJsonView, setShowJsonView] = React.useState(false);
 
   const handleFileUpload = async (data: WallSegment[]) => {
     setWallData(data);
