@@ -1222,8 +1222,8 @@
             "dependencies": [
               2
             ],
-            "details": "Apply Canny edge detection with adaptive thresholds. Use Probabilistic Hough Line Transform for detecting lines.",
-            "status": "done",
+            "details": "Apply Canny edge detection with adaptive thresholds. Use Probabilistic Hough Line Transform for detecting lines.\n<info added on 2025-11-09T03:13:13.421Z>\nCompleted edge and line detection implementation:\n\n1. Created LineDetector class (backend/src/line_detector.py):\n   - EdgeDetectionConfig dataclass for Canny edge detection parameters\n   - LineDetectionConfig dataclass for Hough line transform parameters\n   - LineDetectionParams dataclass combining both configs\n   - detect_edges(): Applies Canny edge detection with configurable thresholds\n   - detect_lines(): Uses Probabilistic Hough Line Transform (HoughLinesP)\n   - detect_lines_from_image(): Complete pipeline (edges → lines)\n   - get_edge_statistics(): Edge pixel count, density, etc.\n   - get_line_statistics(): Line count, lengths, averages, etc.\n\n2. Features:\n   - Canny edge detection with configurable low/high thresholds\n   - Automatic aperture size validation (ensures 3, 5, or 7)\n   - Probabilistic Hough Line Transform for line detection\n   - Configurable parameters: rho, theta, threshold, min_line_length, max_line_gap\n   - Returns lines as (x1, y1, x2, y2) tuples\n   - Statistics utilities for debugging and analysis\n\n3. Created comprehensive tests (18 tests, all passing):\n   - Configuration dataclass tests\n   - Edge detection tests (with and without edges)\n   - Line detection tests (various scenarios)\n   - Statistics calculation tests\n   - Invalid input handling\n   - Convenience function tests\n\n4. All tests passing ✅\n\nReady for next subtask: Line Filtering and Segment Conversion (21.6).\n</info added on 2025-11-09T03:13:13.421Z>",
+            "status": "in-progress",
             "testStrategy": "Validate edge and line detection accuracy against known patterns in test images."
           },
           {
@@ -1258,8 +1258,8 @@
             "dependencies": [
               3
             ],
-            "details": "Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.\n<info added on 2025-11-09T01:43:06.588Z>\nIncorporate AWS Rekognition object detection results to filter out lines corresponding to non-wall elements such as doors, windows, and stairs. Use these results to enhance the accuracy of wall line detection by excluding lines associated with identified non-wall objects.\n</info added on 2025-11-09T01:43:06.588Z>",
-            "status": "pending",
+            "details": "Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.\n<info added on 2025-11-09T01:43:06.588Z>\nIncorporate AWS Rekognition object detection results to filter out lines corresponding to non-wall elements such as doors, windows, and stairs. Use these results to enhance the accuracy of wall line detection by excluding lines associated with identified non-wall objects.\n</info added on 2025-11-09T01:43:06.588Z>\n<info added on 2025-11-09T03:14:22.567Z>\nCompleted the implementation of line filtering and segment conversion:\n\n1. Developed the LineFilter class in backend/src/line_filter.py, featuring a LineFilterConfig dataclass for configurable filtering parameters.\n2. Implemented methods for filtering lines by length, orientation, grouping parallel lines, removing duplicates, and converting lines to wall segment format.\n3. Added support for coordinate normalization to a 0-1000 range based on image dimensions.\n4. Created comprehensive tests covering configuration, filtering, grouping, duplicate removal, and segment conversion, all of which are passing.\n5. AWS Rekognition integration for filtering non-wall elements will be addressed in Task 21.14.\n</info added on 2025-11-09T03:14:22.567Z>",
+            "status": "done",
             "testStrategy": null
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:13:11.728Z",
+      "updated": "2025-11-09T03:14:23.146Z",
       "description": "Tasks for master context"
     }
   }
