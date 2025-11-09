@@ -16,9 +16,12 @@ import {
   FormControlLabel,
   Stack,
   Divider,
+  Tooltip,
+  IconButton,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import SettingsIcon from '@mui/icons-material/Settings';
+import InfoIcon from '@mui/icons-material/Info';
 
 export interface ImageProcessingParameters {
   // Preprocessing
@@ -145,9 +148,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
             <AccordionDetails>
               <Stack spacing={3}>
                 <Box>
-                  <Typography gutterBottom>
-                    Gaussian Blur Kernel Size: {params.gaussianBlurKernelSize}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Gaussian Blur Kernel Size: {params.gaussianBlurKernelSize}
+                    </Typography>
+                    <Tooltip title="Controls the size of the blur filter applied to reduce image noise. Larger values (9-21) create more blur and remove more noise but may blur important details. Smaller values (3-5) preserve more detail but may keep noise. Must be an odd number. Recommended: 5 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.gaussianBlurKernelSize}
                     onChange={(_, value) => {
@@ -169,9 +179,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
                   />
                 </Box>
                 <Box>
-                  <Typography gutterBottom>
-                    Gaussian Blur Sigma: {params.gaussianBlurSigma.toFixed(1)}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Gaussian Blur Sigma: {params.gaussianBlurSigma.toFixed(1)}
+                    </Typography>
+                    <Tooltip title="Controls how much the blur spreads from the center. Higher values (2.5-5.0) create a wider, smoother blur effect. Lower values (0.5-1.0) create a tighter blur. Works together with kernel size - higher sigma with larger kernel creates stronger noise reduction. Recommended: 1.0 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.gaussianBlurSigma}
                     onChange={(_, value) => handleParamChange('gaussianBlurSigma', value as number)}
@@ -186,15 +203,22 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
                     ]}
                   />
                 </Box>
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={params.useHistogramEqualization}
-                      onChange={(e) => handleParamChange('useHistogramEqualization', e.target.checked)}
-                    />
-                  }
-                  label="Use Histogram Equalization"
-                />
+                <Box display="flex" alignItems="center" gap={1}>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={params.useHistogramEqualization}
+                        onChange={(e) => handleParamChange('useHistogramEqualization', e.target.checked)}
+                      />
+                    }
+                    label="Use Histogram Equalization"
+                  />
+                  <Tooltip title="Improves image contrast by redistributing pixel intensities. Useful for images with poor lighting or low contrast. Enhances edge visibility but may over-enhance already high-contrast images. Enable for dim or washed-out blueprints. Disable if image is already high contrast." arrow>
+                    <IconButton size="small">
+                      <InfoIcon fontSize="small" />
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               </Stack>
             </AccordionDetails>
           </Accordion>
@@ -209,9 +233,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
             <AccordionDetails>
               <Stack spacing={3}>
                 <Box>
-                  <Typography gutterBottom>
-                    Low Threshold: {params.cannyLowThreshold}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Low Threshold: {params.cannyLowThreshold}
+                    </Typography>
+                    <Tooltip title="Minimum edge strength to be considered a valid edge. Lower values (10-30) detect more weak edges and noise, creating more edge pixels. Higher values (100-200) only detect strong edges, reducing noise but potentially missing faint lines. Should be about 1/3 of the high threshold. Recommended: 50 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.cannyLowThreshold}
                     onChange={(_, value) => handleParamChange('cannyLowThreshold', value as number)}
@@ -228,9 +259,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
                   />
                 </Box>
                 <Box>
-                  <Typography gutterBottom>
-                    High Threshold: {params.cannyHighThreshold}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      High Threshold: {params.cannyHighThreshold}
+                    </Typography>
+                    <Tooltip title="Strong edge threshold - edges above this are definitely kept. Lower values (50-100) keep more edges including weak ones. Higher values (200-300) only keep very strong edges, reducing false positives but potentially missing valid lines. Should be about 2-3x the low threshold. Recommended: 150 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.cannyHighThreshold}
                     onChange={(_, value) => handleParamChange('cannyHighThreshold', value as number)}
@@ -259,9 +297,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
             <AccordionDetails>
               <Stack spacing={3}>
                 <Box>
-                  <Typography gutterBottom>
-                    Threshold: {params.houghThreshold}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Threshold: {params.houghThreshold}
+                    </Typography>
+                    <Tooltip title="Minimum number of edge points needed to form a line. Lower values (10-50) detect more lines including short or weak ones, but may create false positives. Higher values (150-300) only detect lines with strong edge support, reducing noise but potentially missing valid lines. Recommended: 100 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.houghThreshold}
                     onChange={(_, value) => handleParamChange('houghThreshold', value as number)}
@@ -278,9 +323,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
                   />
                 </Box>
                 <Box>
-                  <Typography gutterBottom>
-                    Min Line Length: {params.minLineLength}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Min Line Length: {params.minLineLength}
+                    </Typography>
+                    <Tooltip title="Minimum length (in pixels) for a detected line segment. Shorter lines are discarded. Lower values (10-30) detect more short segments, useful for detailed blueprints but may include noise. Higher values (100-200) only keep long lines, reducing noise but potentially missing short wall segments. Recommended: 50 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.minLineLength}
                     onChange={(_, value) => handleParamChange('minLineLength', value as number)}
@@ -297,9 +349,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
                   />
                 </Box>
                 <Box>
-                  <Typography gutterBottom>
-                    Max Line Gap: {params.maxLineGap}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Max Line Gap: {params.maxLineGap}
+                    </Typography>
+                    <Tooltip title="Maximum gap (in pixels) between line segments that can be connected into a single line. Useful for connecting broken lines. Lower values (5-10) keep lines separate, preserving detail. Higher values (20-50) connect more segments, creating longer continuous lines but may incorrectly join separate walls. Recommended: 10 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.maxLineGap}
                     onChange={(_, value) => handleParamChange('maxLineGap', value as number)}
@@ -329,9 +388,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
             <AccordionDetails>
               <Stack spacing={3}>
                 <Box>
-                  <Typography gutterBottom>
-                    Min Length: {params.minLength}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Min Length: {params.minLength}
+                    </Typography>
+                    <Tooltip title="Final minimum length filter for detected lines after all processing. Removes very short line segments that are likely noise. Lower values (5-15) keep more short segments, useful for detailed drawings. Higher values (50-100) filter out more short lines, reducing noise but potentially removing valid short walls. Recommended: 20 for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.minLength}
                     onChange={(_, value) => handleParamChange('minLength', value as number)}
@@ -347,9 +413,16 @@ const ParameterTuning: React.FC<ParameterTuningProps> = ({
                   />
                 </Box>
                 <Box>
-                  <Typography gutterBottom>
-                    Angle Tolerance (degrees): {params.angleTolerance}
-                  </Typography>
+                  <Box display="flex" alignItems="center" gap={1}>
+                    <Typography gutterBottom>
+                      Angle Tolerance (degrees): {params.angleTolerance}
+                    </Typography>
+                    <Tooltip title="Maximum angle difference (in degrees) for lines to be considered parallel or aligned. Used to merge nearly-parallel lines and filter lines by orientation. Lower values (1-3°) are strict, only merging very similar angles. Higher values (10-15°) are lenient, merging more lines but potentially combining non-parallel walls. Recommended: 5° for most images." arrow>
+                      <IconButton size="small">
+                        <InfoIcon fontSize="small" />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
                   <Slider
                     value={params.angleTolerance}
                     onChange={(_, value) => handleParamChange('angleTolerance', value as number)}
