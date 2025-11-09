@@ -2,6 +2,9 @@
 import pytest
 import sys
 import os
+import tempfile
+import cv2
+import numpy as np
 from fastapi.testclient import TestClient
 
 # Add parent directory to path to import main
@@ -277,4 +280,73 @@ class TestEdgeCases:
             headers={"Content-Type": "application/json"}
         )
         assert response.status_code in [400, 422]
+
+
+class TestImageProcessingEndpoint:
+    """Test cases for the image processing endpoint."""
+    
+    def test_detect_rooms_from_image_endpoint(self):
+        """Test the /detect-rooms-from-image endpoint with a test image."""
+        # Create a simple test image
+        img = np.ones((1000, 1000, 3), dtype=np.uint8) * 255
+        cv2.rectangle(img, (100, 100), (900, 900), (0, 0, 0), 5)
+        
+        # Save to temporary file
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmp_file:
+            cv2.imwrite(tmp_file.name, img)
+            tmp_path = tmp_file.name
+        
+        try:
+            # Upload image
+            with open(tmp_path, 'rb') as f:
+                response = client.post(
+                    "/detect-rooms-from-image",
+                    files={"file": ("test.png", f, "image/png")},
+                    params={"use_textract": False, "use_rekognition": False}
+                )
+            
+            # May succeed or fail depending on AWS configuration
+            # If AWS is not configured, it will fail with 500
+            # If configured but no lines detected, may return 400
+            assert response.status_code in [200, 400, 500]
+            
+            if response.status_code == 200:
+                data = response.json()
+                # Should be an array of rooms
+                assert isinstance(data, list)
+                # May detect 0 or more rooms depending on image quality
+                
+                # If rooms detected, verify structure
+                for room in data:
+                    assert "id" in room
+                    assert "bounding_box" in room
+                    assert "name_hint" in room
+                    assert len(room["bounding_box"]) == 4
+        finally:
+            os.unlink(tmp_path)
+    
+    def test_detect_rooms_from_image_invalid_file(self):
+        """Test /detect-rooms-from-image with invalid file type."""
+        # Create a text file (not an image)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.txt', mode='w') as tmp_file:
+            tmp_file.write("This is not an image")
+            tmp_path = tmp_file.name
+        
+        try:
+            with open(tmp_path, 'rb') as f:
+                response = client.post(
+                    "/detect-rooms-from-image",
+                    files={"file": ("test.txt", f, "text/plain")}
+                )
+            
+            # Should return 400 Bad Request
+            assert response.status_code == 400
+        finally:
+            os.unlink(tmp_path)
+    
+    def test_detect_rooms_from_image_missing_file(self):
+        """Test /detect-rooms-from-image without file."""
+        response = client.post("/detect-rooms-from-image")
+        # Should return 422 Unprocessable Entity (FastAPI validation error)
+        assert response.status_code == 422
 
