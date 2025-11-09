@@ -233,7 +233,9 @@ async def detect_rooms_from_pdf(
             temp_json_path = f.name
         
         try:
-            rooms = detect_rooms(temp_json_path, tolerance=1.0)
+            # Use higher tolerance for PDF-extracted segments (matching validator)
+            # PDF coordinates may have precision issues after normalization
+            rooms = detect_rooms(temp_json_path, tolerance=5.0)
             print(f"✅ Detected {len(rooms)} rooms")
         finally:
             if os.path.exists(temp_json_path):
