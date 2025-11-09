@@ -206,13 +206,14 @@ function App() {
             <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
                 <Typography variant="h6">
-                  {showGraphView ? 'Graph Visualization' : 'Floorplan Visualization'}
+                  {showJsonView ? 'JSON Payload' : showGraphView ? 'Graph Visualization' : 'Floorplan Visualization'}
                 </Typography>
                 <ToggleButtonGroup
-                  value={showGraphView ? 'graph' : 'rooms'}
+                  value={showJsonView ? 'json' : showGraphView ? 'graph' : 'rooms'}
                   exclusive
                   onChange={(_, value) => {
                     if (value !== null) {
+                      setShowJsonView(value === 'json');
                       setShowGraphView(value === 'graph');
                     }
                   }}
@@ -226,10 +227,38 @@ function App() {
                     <AccountTreeIcon sx={{ mr: 1 }} />
                     Graph
                   </ToggleButton>
+                  <ToggleButton value="json" aria-label="json view" disabled={!rooms || rooms.length === 0}>
+                    <CodeIcon sx={{ mr: 1 }} />
+                    JSON
+                  </ToggleButton>
                 </ToggleButtonGroup>
               </Box>
 
-              {showGraphView ? (
+              {showJsonView ? (
+                <Box sx={{ mt: 2 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                    PRD-Compliant API Response Format:
+                  </Typography>
+                  <Paper 
+                    elevation={1} 
+                    sx={{ 
+                      p: 2, 
+                      backgroundColor: '#f5f5f5',
+                      overflow: 'auto',
+                      maxHeight: '600px',
+                      fontFamily: 'monospace',
+                      fontSize: '0.875rem'
+                    }}
+                  >
+                    <pre style={{ margin: 0, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>
+                      {JSON.stringify(rooms, null, 2)}
+                    </pre>
+                  </Paper>
+                  <Typography variant="caption" color="text.secondary" sx={{ mt: 1, display: 'block' }}>
+                    This is the exact JSON payload returned by the /detect-rooms API endpoint (PRD Section 4.2)
+                  </Typography>
+                </Box>
+              ) : showGraphView ? (
                 <GraphVisualization 
                   graphData={graphData}
                   width={800}
