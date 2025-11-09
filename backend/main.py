@@ -198,8 +198,10 @@ async def detect_rooms_from_pdf(
             for seg in wall_segments_dict
         ]
         
-        # Validate segments
+        # Validate segments (with relaxed connectivity check for PDFs)
         print("✅ Validating segments...")
+        # For PDF-extracted segments, use non-strict mode and allow higher isolated ratio
+        # since endpoints may need snapping tolerance applied
         validation_result = validate_pdf_segments(wall_segments, strict=False)
         
         if not validation_result['valid']:

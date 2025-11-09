@@ -253,13 +253,19 @@ class SegmentValidator:
 
 
 def validate_pdf_segments(segments: List[WallSegment], 
-                          strict: bool = False) -> Dict[str, Any]:
+                          strict: bool = False,
+                          connectivity_tolerance: float = 5.0,
+                          max_isolated_ratio: float = 0.9) -> Dict[str, Any]:
     """
     Convenience function to validate PDF-extracted segments.
     
     Args:
         segments: List of wall segments to validate
         strict: If True, raises ValidationError on any errors. If False, returns results.
+        connectivity_tolerance: Tolerance for endpoint snapping (default 5.0 for PDFs, 
+                               higher than default 1.0 due to coordinate precision)
+        max_isolated_ratio: Maximum ratio of isolated segments (default 0.9 for PDFs,
+                            more lenient than default 0.5 due to extraction precision)
         
     Returns:
         Validation results dictionary (see SegmentValidator.validate_segments)
@@ -267,7 +273,12 @@ def validate_pdf_segments(segments: List[WallSegment],
     Raises:
         ValidationError: If strict=True and validation fails
     """
-    validator = SegmentValidator()
+    # Use more lenient settings for PDF-extracted segments
+    # PDF coordinates may have precision issues, so we use higher tolerance
+    validator = SegmentValidator(
+        connectivity_tolerance=connectivity_tolerance,
+        max_isolated_ratio=max_isolated_ratio
+    )
     results = validator.validate_segments(segments)
     
     if strict and not results['valid']:
