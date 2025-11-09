@@ -100,7 +100,16 @@ class PDFParser:
         for drawing in drawings:
             # Get line properties
             thickness = drawing.get("width", 1.0)
+            # Handle None thickness (can occur if width key exists but value is None)
+            if thickness is None:
+                thickness = 1.0
+            
             color = drawing.get("color", (0.0, 0.0, 0.0))  # Default to black (RGB 0-1)
+            # Handle None color
+            if color is None:
+                color = (0.0, 0.0, 0.0)
+            elif not isinstance(color, (list, tuple)) or len(color) < 3:
+                color = (0.0, 0.0, 0.0)  # Default to black if invalid format
             
             # Filter by minimum thickness
             if thickness < self.min_line_thickness:
