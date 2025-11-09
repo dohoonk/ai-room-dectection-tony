@@ -17,7 +17,8 @@ sys.path.insert(0, os.path.dirname(__file__))
 from src.room_detector import detect_rooms
 from src.pdf_parser import PDFParser
 from src.pdf_validator import validate_pdf_segments
-from src.parser import parse_line_segments, WallSegment
+from src.parser import parse_line_segments
+from src.parser import WallSegment as ParserWallSegment
 from src.aws_s3 import S3Client
 from src.aws_textract import TextractClient
 from src.aws_rekognition import RekognitionClient
@@ -187,8 +188,9 @@ async def detect_rooms_from_pdf(
         wall_segments_dict = parser.convert_to_wall_segments(filtered_lines, normalize=True)
         
         # Convert to WallSegment objects for validation
+        # Use ParserWallSegment (simple class, not Pydantic model)
         wall_segments = [
-            WallSegment(
+            ParserWallSegment(
                 start=(seg['start'][0], seg['start'][1]),
                 end=(seg['end'][0], seg['end'][1]),
                 is_load_bearing=seg.get('is_load_bearing', False)
