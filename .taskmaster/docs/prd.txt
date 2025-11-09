@@ -167,6 +167,228 @@ Confidence Score: 0.00–1.00
 | 2C | Room Label OCR | Textract → auto populate `name_hint` |
 | 2D | Polygon Output | Replace bounding boxes with true room polygons |
 
+## 9A. PDF Vector Extraction (Phase 2A)
+
+### 9A.1 Goal
+Enable automatic extraction of wall line segments from PDF blueprint files, eliminating the need for manual JSON input. The system should parse PDF vector graphics and convert them to the existing wall segment format.
+
+### 9A.2 Technical Approach
+
+**Input**: PDF file (architectural blueprint)
+**Output**: Wall segments in JSON format (compatible with existing `/detect-rooms` endpoint)
+
+**Processing Pipeline**:
+1. **PDF Parsing**: Extract vector paths and line segments from PDF
+2. **Coordinate Transformation**: Map PDF coordinate system to normalized 0-1000 range
+3. **Line Filtering**: Identify wall-like elements (thickness, style, layer)
+4. **Segment Conversion**: Convert PDF paths to wall segment format
+5. **Validation**: Ensure extracted segments form valid wall connections
+
+### 9A.3 Technology Stack
+
+| Component | Technology | Purpose |
+|---|---|---|
+| PDF Parser | `PyMuPDF` (fitz) or `pdfplumber` | Extract vector paths and line segments |
+| Geometry Processing | `shapely` | Process and validate extracted lines |
+| Coordinate Transformation | Custom transformation logic | Normalize PDF coordinates to 0-1000 range |
+
+### 9A.4 Implementation Details
+
+**PDF Parsing Strategy**:
+- Extract all vector paths from PDF pages
+- Filter paths by:
+  - Line thickness (walls typically thicker than annotations)
+  - Color/style (walls often black or specific color)
+  - Layer name (if available in PDF structure)
+- Convert paths to line segments (start/end coordinates)
+
+**Coordinate System Handling**:
+- Detect PDF page dimensions
+- Map PDF coordinates to normalized 0-1000 system
+- Preserve aspect ratio during transformation
+- Handle rotated or scaled PDFs
+
+**Line Segment Extraction**:
+- Identify wall-like elements:
+  - Thickness > threshold (e.g., 2-5 pixels)
+  - Straight lines (not curves or complex paths)
+  - Connected endpoints (form closed regions)
+- Filter out annotations, dimensions, text, symbols
+
+**Validation**:
+- Ensure extracted segments form connected graph
+- Verify minimum segment length
+- Check for reasonable wall density
+
+### 9A.5 API Endpoint
+
+**New Endpoint**: `POST /detect-rooms-from-pdf`
+
+**Request**:
+- `multipart/form-data` with PDF file
+- Optional parameters:
+  - `min_line_thickness`: Minimum wall thickness (default: 2.0)
+  - `coordinate_tolerance`: Endpoint snapping tolerance (default: 1.0)
+
+**Response**:
+- Same format as `/detect-rooms` (array of room objects)
+- Includes metadata:
+  - `extraction_method`: "pdf_vector"
+  - `segments_extracted`: Number of wall segments found
+  - `processing_time`: Time for PDF parsing + room detection
+
+### 9A.6 Success Criteria
+
+| Metric | Target |
+|--------|--------|
+| PDF parsing accuracy | ≥ 85% of walls correctly extracted |
+| Coordinate accuracy | < 2% coordinate transformation error |
+| Processing latency | < 10 seconds for typical PDF (1-5 pages) |
+| False positives | < 15% non-wall lines incorrectly identified as walls |
+
+### 9A.7 Testing Strategy
+
+- Test with various PDF types:
+  - CAD-generated PDFs (vector-based)
+  - Scanned PDFs (raster embedded in PDF)
+  - Multi-page blueprints
+  - Different coordinate systems
+- Compare extracted segments with ground truth JSON
+- Validate room detection accuracy matches JSON input method
+
+## 9B. Raster Image Processing (Phase 2B)
+
+### 9B.1 Goal
+Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans. The system should use computer vision techniques to detect wall lines.
+
+### 9B.2 Technical Approach
+
+**Input**: Raster image file (PNG, JPG, JPEG)
+**Output**: Wall segments in JSON format (compatible with existing `/detect-rooms` endpoint)
+
+**Processing Pipeline**:
+1. **Image Preprocessing**: Enhance image quality, remove noise
+2. **Edge Detection**: Identify edges using Canny or similar algorithms
+3. **Line Detection**: Extract straight lines using Hough transforms
+4. **Line Filtering**: Filter wall-like lines (length, orientation, connectivity)
+5. **Segment Conversion**: Convert detected lines to wall segment format
+6. **Validation**: Ensure segments form valid wall connections
+
+### 9B.3 Technology Stack
+
+| Component | Technology | Purpose |
+|---|---|---|
+| Image Processing | `opencv-python` (cv2) | Image loading, preprocessing, edge detection |
+| Line Detection | `opencv-python` (Hough transforms) | Detect straight lines in images |
+| Geometry Processing | `shapely`, `numpy` | Process and validate detected lines |
+| Coordinate Transformation | Custom transformation logic | Normalize image coordinates to 0-1000 range |
+
+### 9B.4 Implementation Details
+
+**Image Preprocessing**:
+- Convert to grayscale
+- Apply noise reduction (Gaussian blur, median filter)
+- Enhance contrast (histogram equalization, adaptive thresholding)
+- Handle different image orientations (rotation correction)
+
+**Edge Detection**:
+- Apply Canny edge detector with adaptive thresholds
+- Parameters:
+  - `low_threshold`: Lower bound for edge detection
+  - `high_threshold`: Upper bound for edge detection
+  - Adjust based on image quality
+
+**Line Detection**:
+- Use Probabilistic Hough Line Transform (`cv2.HoughLinesP`)
+- Parameters:
+  - `rho`: Distance resolution (1 pixel)
+  - `theta`: Angular resolution (1 degree)
+  - `threshold`: Minimum votes for line detection
+  - `min_line_length`: Minimum line length (filter short segments)
+  - `max_line_gap`: Maximum gap between line segments to connect
+
+**Line Filtering**:
+- Filter by length (walls typically longer than annotations)
+- Filter by orientation (prefer horizontal/vertical, but allow angles)
+- Group nearby parallel lines (merge close lines)
+- Remove duplicate or overlapping lines
+
+**Coordinate System Handling**:
+- Detect image dimensions
+- Map image pixel coordinates to normalized 0-1000 system
+- Preserve aspect ratio during transformation
+- Handle different image resolutions
+
+**Segment Conversion**:
+- Convert detected lines to wall segments:
+  - Start/end coordinates
+  - Calculate approximate thickness (if detectable)
+  - Set `is_load_bearing` to false (not detectable from raster)
+
+**Validation**:
+- Ensure extracted segments form connected graph
+- Verify minimum segment count
+- Check for reasonable wall density
+
+### 9B.5 API Endpoint
+
+**New Endpoint**: `POST /detect-rooms-from-image`
+
+**Request**:
+- `multipart/form-data` with image file (PNG, JPG, JPEG)
+- Optional parameters:
+  - `canny_low`: Canny edge detection low threshold (default: 50)
+  - `canny_high`: Canny edge detection high threshold (default: 150)
+  - `hough_threshold`: Hough line detection threshold (default: 100)
+  - `min_line_length`: Minimum line length in pixels (default: 50)
+  - `coordinate_tolerance`: Endpoint snapping tolerance (default: 1.0)
+
+**Response**:
+- Same format as `/detect-rooms` (array of room objects)
+- Includes metadata:
+  - `extraction_method`: "raster_image"
+  - `segments_extracted`: Number of wall segments found
+  - `processing_time`: Time for image processing + room detection
+  - `image_dimensions`: Original image width/height
+
+### 9B.6 Success Criteria
+
+| Metric | Target |
+|--------|--------|
+| Line detection accuracy | ≥ 75% of walls correctly detected |
+| False positive rate | < 25% non-wall lines incorrectly identified |
+| Processing latency | < 15 seconds for typical image (2000x3000 pixels) |
+| Image quality tolerance | Works with images ≥ 150 DPI |
+
+### 9B.7 Testing Strategy
+
+- Test with various image types:
+  - High-resolution scanned blueprints
+  - Low-resolution photographs
+  - Different lighting conditions
+  - Various architectural styles
+  - Hand-drawn vs CAD-generated plans
+- Compare detected segments with ground truth JSON
+- Validate room detection accuracy matches JSON input method
+- Test parameter tuning for different image qualities
+
+### 9B.8 Challenges & Mitigation
+
+**Challenge**: Variable image quality
+- **Mitigation**: Adaptive thresholding, multiple preprocessing strategies
+
+**Challenge**: Noise and artifacts
+- **Mitigation**: Noise reduction filters, line length filtering
+
+**Challenge**: Perspective distortion
+- **Mitigation**: Perspective correction (if detectable), tolerance for non-perfect lines
+
+**Challenge**: Different drawing styles
+- **Mitigation**: Parameter tuning, user-configurable thresholds
+
+**Challenge**: Text and annotations
+- **Mitigation**: Filter short lines, prefer longer continuous lines
+
 ## 10. Deliverables
 
 | Deliverable | Description |

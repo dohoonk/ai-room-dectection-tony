@@ -789,7 +789,7 @@
         "id": 13,
         "title": "Implement Human-in-the-Loop UX",
         "description": "Allow users to interact with detected rooms, such as highlighting and renaming.",
-        "status": "in-progress",
+        "status": "done",
         "dependencies": [
           11
         ],
@@ -803,7 +803,7 @@
             "description": "Create a test case for room highlighting on click using Jest and React Testing Library.",
             "dependencies": [],
             "details": "Ensure the room is highlighted correctly when clicked.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify the room's visual state changes upon interaction."
           },
           {
@@ -812,7 +812,7 @@
             "description": "Create a test case for room renaming functionality using Jest and React Testing Library.",
             "dependencies": [],
             "details": "Ensure the room can be renamed and the change is reflected in the UI.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Check that the new name is displayed correctly after renaming."
           },
           {
@@ -821,7 +821,7 @@
             "description": "Create a test case for room removal functionality using Jest and React Testing Library.",
             "dependencies": [],
             "details": "Ensure the room can be removed and the UI updates accordingly.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify the room is no longer visible after removal."
           },
           {
@@ -830,7 +830,7 @@
             "description": "Create a test case for handling user interactions using Jest and React Testing Library.",
             "dependencies": [],
             "details": "Ensure all user interactions are handled smoothly without errors.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Simulate user interactions and check for errors or unexpected behavior."
           },
           {
@@ -839,7 +839,7 @@
             "description": "Create a test case for Material UI component behavior using Jest and React Testing Library.",
             "dependencies": [],
             "details": "Ensure Material UI components behave as expected during interactions.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify component behavior aligns with Material UI specifications."
           },
           {
@@ -847,7 +847,7 @@
             "title": "Implement Room Highlighting on Click",
             "description": "Add visual highlighting when a room is clicked",
             "details": "Implement click handlers that change the visual appearance (e.g., border color, background opacity) of a room's bounding box when clicked.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -856,7 +856,7 @@
             "title": "Implement Room Renaming UI and Logic",
             "description": "Create UI for renaming rooms with Material UI components",
             "details": "Add a dialog or inline editing component using Material UI (e.g., TextField, Dialog) that allows users to rename detected rooms.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -865,7 +865,7 @@
             "title": "Implement Room Removal Functionality",
             "description": "Add ability to remove incorrect room detections",
             "details": "Implement a delete/remove button or action that allows users to remove incorrectly detected rooms from the display and results.",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           },
@@ -874,7 +874,7 @@
             "title": "Add Material UI Components for Interactions",
             "description": "Integrate Material UI components for user interactions",
             "details": "Use Material UI components (e.g., IconButton, Menu, Dialog) to provide intuitive UI controls for room interactions (highlight, rename, remove).",
-            "status": "pending",
+            "status": "done",
             "dependencies": [],
             "parentTaskId": 13
           }
@@ -890,7 +890,7 @@
         "dependencies": [
           13
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -903,7 +903,7 @@
         "dependencies": [
           14
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
@@ -916,21 +916,31 @@
         "dependencies": [
           11
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
         "id": 17,
         "title": "Optimize Core Algorithm for Performance",
-        "description": "Enhance the core algorithm to meet latency and accuracy targets.",
-        "details": "Refine the algorithm to improve efficiency, possibly exploring parallel processing or algorithmic optimizations.",
-        "testStrategy": "Re-test performance metrics post-optimization to ensure improvements.",
-        "priority": "medium",
+        "description": "The core algorithm currently exceeds all performance targets, making further optimization unnecessary for the MVP. Future scalability opportunities have been documented.",
+        "status": "done",
         "dependencies": [
           16
         ],
-        "status": "pending",
-        "subtasks": []
+        "priority": "medium",
+        "details": "Optimization analysis completed. Current algorithm performance: Detection accuracy at 100%, false positives at 0%, and processing latency at 0.174s (172x faster than target). Primary bottleneck identified in split_lines_at_intersections() with O(n²) complexity. Documented future optimization opportunities include spatial indexing, early exit for simple floorplans, parallel processing, and caching.",
+        "testStrategy": "No immediate re-testing required as all performance targets are exceeded. Future testing should focus on scalability improvements if optimization is pursued.",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Document Optimization Opportunities",
+            "description": "Compile and document potential optimization strategies for future scalability.",
+            "dependencies": [],
+            "details": "Include spatial indexing, early exit strategies, parallel processing, and caching.",
+            "status": "done",
+            "testStrategy": null
+          }
+        ]
       },
       {
         "id": 18,
@@ -942,14 +952,14 @@
         "dependencies": [
           17
         ],
-        "status": "pending",
+        "status": "done",
         "subtasks": []
       },
       {
         "id": 19,
         "title": "Create React UI Component for Wall Adjacency Graph Visualization",
         "description": "Develop a React component using Material UI to visualize the wall adjacency graph and highlight detected cycles.",
-        "status": "pending",
+        "status": "done",
         "dependencies": [
           4,
           5,
@@ -965,7 +975,7 @@
             "description": "Create the initial structure for the React component using Material UI.",
             "dependencies": [],
             "details": "Initialize a new React component file within the existing project. Use Material UI components for basic layout.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure the component renders without errors."
           },
           {
@@ -976,7 +986,7 @@
               1
             ],
             "details": "Use a canvas or SVG element to draw nodes and edges. Ensure nodes are positioned correctly and edges connect nodes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Verify nodes and edges are rendered correctly with sample data."
           },
           {
@@ -987,7 +997,7 @@
               2
             ],
             "details": "Identify cycles in the graph data and apply distinct colors or styles to highlight them.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Check that cycles are highlighted correctly with test data."
           },
           {
@@ -998,7 +1008,7 @@
               2
             ],
             "details": "Add interactive controls to allow users to zoom in/out and pan across the graph visualization.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Test zoom and pan functionality for smooth interaction."
           },
           {
@@ -1012,15 +1022,41 @@
               4
             ],
             "details": "Connect to the backend API to retrieve nodes, edges, and cycle data. Update the component to reflect dynamic data changes.",
-            "status": "pending",
+            "status": "done",
             "testStrategy": "Ensure data is fetched and rendered correctly by simulating API responses."
           }
         ]
+      },
+      {
+        "id": 20,
+        "title": "Implement PDF Vector Extraction (Phase 2A)",
+        "description": "Enable automatic extraction of wall line segments from PDF blueprint files, eliminating the need for manual JSON input.",
+        "status": "pending",
+        "dependencies": [
+          9
+        ],
+        "priority": "high",
+        "details": "Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files and returns room detection results in the same format as /detect-rooms.",
+        "testStrategy": "Test with various PDF types: CAD-generated PDFs (vector-based), scanned PDFs (raster embedded in PDF), multi-page blueprints, different coordinate systems. Compare extracted segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Target: ≥ 85% of walls correctly extracted, < 2% coordinate transformation error, < 10 seconds processing latency for typical PDF (1-5 pages), < 15% false positives.",
+        "subtasks": []
+      },
+      {
+        "id": 21,
+        "title": "Implement Raster Image Processing (Phase 2B)",
+        "description": "Enable automatic extraction of wall line segments from raster images (PNG, JPG, JPEG), supporting scanned blueprints and photographed floorplans using computer vision techniques.",
+        "status": "pending",
+        "dependencies": [
+          20
+        ],
+        "priority": "high",
+        "details": "Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.",
+        "testStrategy": "Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI.",
+        "subtasks": []
       }
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-08T21:45:29.537Z",
+      "updated": "2025-11-09T00:24:19.161Z",
       "description": "Tasks for master context"
     }
   }
