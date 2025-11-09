@@ -447,6 +447,17 @@ function App() {
               </Button>
             </DialogActions>
           </Dialog>
+          
+          {/* Parameter Tuning Dialog */}
+          <ParameterTuning
+            open={parameterTuningOpen}
+            onClose={() => setParameterTuningOpen(false)}
+            onApply={(params) => {
+              setImageProcessingParams(params);
+              setParameterTuningOpen(false);
+            }}
+            currentParams={imageProcessingParams}
+          />
         </Box>
       </Container>
     </ThemeProvider>
