@@ -1154,8 +1154,8 @@
             "id": 11,
             "title": "Set Up AWS S3 Integration",
             "description": "Configure Amazon S3 for PDF file storage (AWS requirement).",
-            "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.",
-            "status": "pending",
+            "details": "Set up S3 bucket, configure IAM roles and policies for S3 access, implement file upload functionality to S3, and handle file retrieval. S3 is required for AWS services (Textract, Rekognition) to access files.\n<info added on 2025-11-09T01:57:18.785Z>\nCompleted S3 integration code implementation:\n\n1. Installed boto3: Added boto3 and botocore to requirements.txt and installed successfully.\n\n2. Created S3Client class (backend/src/aws_s3.py):\n   - Initialize with bucket name, region, and credentials (from env vars or parameters).\n   - upload_file(): Upload files to S3 with automatic naming and folder support.\n   - get_file(): Download files from S3.\n   - delete_file(): Delete files from S3.\n   - get_file_url(): Generate presigned URLs for temporary access.\n   - file_exists(): Check if file exists.\n   - test_connection(): Test S3 connection and bucket access.\n\n3. Created comprehensive tests (14 tests, all passing):\n   - Test initialization with parameters and env vars.\n   - Test upload/download operations.\n   - Test error handling (file not found, access denied).\n   - Test file existence checks.\n   - Test presigned URL generation.\n   - Test connection validation.\n\n4. Created setup guides:\n   - AWS_S3_SETUP_GUIDE.md: Detailed step-by-step AWS Console instructions.\n   - AWS_CONSOLE_CHECKLIST.md: Quick checklist for AWS Console setup.\n   - backend/test_s3_connection.py: Test script to verify setup.\n\n5. Fixed deprecation warning: Updated datetime.utcnow() to datetime.now(timezone.utc).\n\nStatus: Code is ready. User needs to complete AWS Console setup (Steps 1-7 in AWS_S3_SETUP_GUIDE.md) and configure environment variables before testing.\n</info added on 2025-11-09T01:57:18.785Z>",
+            "status": "in-progress",
             "dependencies": [],
             "parentTaskId": 20
           },
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T01:55:19.003Z",
+      "updated": "2025-11-09T01:56:05.910Z",
       "description": "Tasks for master context"
     }
   }
