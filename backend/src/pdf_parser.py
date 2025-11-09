@@ -50,10 +50,11 @@ class PDFParser:
         try:
             doc = fitz.open(pdf_path)
             return doc
-        except FileNotFoundError:
-            raise FileNotFoundError(f"PDF file not found: {pdf_path}")
+        except (FileNotFoundError, fitz.FileNotFoundError) as e:
+            # PyMuPDF raises fitz.FileNotFoundError which is a subclass
+            raise FileNotFoundError(f"PDF file not found: {pdf_path}") from e
         except Exception as e:
-            raise Exception(f"Error opening PDF: {str(e)}")
+            raise Exception(f"Error opening PDF: {str(e)}") from e
     
     def get_page_dimensions(self, page: fitz.Page) -> Tuple[float, float]:
         """
@@ -207,6 +208,37 @@ class PDFParser:
             doc.close()
 
 
+    def convert_to_wall_segments(self, pdf_lines: List[PDFLineSegment]) -> List[Dict[str, Any]]:
+        """
+        Convert PDFLineSegment objects to wall segment format.
+        
+        This converts the extracted PDF lines to a format compatible with
+        our existing wall segment parser (for use before coordinate transformation).
+        
+        Args:
+            pdf_lines: List of PDFLineSegment objects
+            
+        Returns:
+            List of dictionaries in wall segment format (with PDF coordinates)
+        """
+        wall_segments = []
+        
+        for line in pdf_lines:
+            wall_segments.append({
+                "type": "line",
+                "start": [line.start[0], line.start[1]],
+                "end": [line.end[0], line.end[1]],
+                "is_load_bearing": line.thickness >= 3.0,  # Heuristic: thicker lines are load-bearing
+                "pdf_metadata": {
+                    "thickness": line.thickness,
+                    "color": line.color,
+                    "page_number": line.page_number
+                }
+            })
+        
+        return wall_segments
+
+
 def test_pdf_parser():
     """Test function to verify PDF parser setup."""
     parser = PDFParser(min_line_thickness=2.0)
@@ -221,7 +253,80 @@ def test_pdf_parser():
     return parser
 
 
+def test_extraction_with_pdf(pdf_path: str):
+    """
+    Test PDF extraction with an actual PDF file.
+    
+    Args:
+        pdf_path: Path to PDF file to test
+    """
+    if not os.path.exists(pdf_path):
+        print(f"⚠️  PDF file not found: {pdf_path}")
+        print("   Skipping extraction test. Provide a PDF file to test extraction.")
+        return
+    
+    parser = PDFParser(min_line_thickness=2.0)
+    
+    try:
+        # Get PDF info
+        info = parser.get_pdf_info(pdf_path)
+        print(f"\n📄 PDF Info:")
+        print(f"   Pages: {info['page_count']}")
+        for page in info['pages']:
+            print(f"   Page {page['page_number']}: {page['width']:.1f} x {page['height']:.1f} points")
+        
+        # Extract lines
+        lines = parser.extract_all_lines(pdf_path)
+        print(f"\n📏 Extracted Lines:")
+        print(f"   Total lines: {len(lines)}")
+        
+        if lines:
+            # Group by page
+            by_page = {}
+            for line in lines:
+                page = line.page_number
+                if page not in by_page:
+                    by_page[page] = []
+                by_page[page].append(line)
+            
+            for page_num, page_lines in sorted(by_page.items()):
+                print(f"   Page {page_num}: {len(page_lines)} lines")
+            
+            # Show sample lines
+            print(f"\n   Sample lines (first 5):")
+            for i, line in enumerate(lines[:5]):
+                print(f"     {i+1}. ({line.start[0]:.1f}, {line.start[1]:.1f}) -> ({line.end[0]:.1f}, {line.end[1]:.1f}), thickness: {line.thickness:.1f}")
+        
+        # Convert to wall segments
+        wall_segments = parser.convert_to_wall_segments(lines)
+        print(f"\n🏗️  Wall Segments:")
+        print(f"   Total segments: {len(wall_segments)}")
+        
+        if wall_segments:
+            load_bearing = sum(1 for seg in wall_segments if seg['is_load_bearing'])
+            print(f"   Load-bearing: {load_bearing}")
+            print(f"   Regular: {len(wall_segments) - load_bearing}")
+        
+        print("\n✅ PDF extraction test completed!")
+        
+    except Exception as e:
+        print(f"\n❌ Error during extraction: {str(e)}")
+        import traceback
+        traceback.print_exc()
+
+
 if __name__ == "__main__":
-    # Run test
+    import sys
+    import os
+    
+    # Run basic test
     test_pdf_parser()
+    
+    # If PDF path provided, test extraction
+    if len(sys.argv) > 1:
+        pdf_path = sys.argv[1]
+        test_extraction_with_pdf(pdf_path)
+    else:
+        print("\n💡 To test extraction with a PDF file:")
+        print("   python -m src.pdf_parser <path_to_pdf>")
 
