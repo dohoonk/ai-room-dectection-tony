@@ -279,7 +279,7 @@ class PDFParser:
                 line.start[1] * scale + offset_y
             )
             normalized_end = (
-                line.end[0] * scale + offset_y,
+                line.end[0] * scale + offset_x,
                 line.end[1] * scale + offset_y
             )
             
