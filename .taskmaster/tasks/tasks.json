@@ -1236,8 +1236,8 @@
               13,
               14
             ],
-            "details": "Implement an API endpoint that accepts image files, uploads them to S3, calls AWS services in parallel, processes responses, and returns detected room segments.\n<info added on 2025-11-09T01:43:04.785Z>\nThe API endpoint should:\n\n1. Accept image file uploads using multipart/form-data.\n2. Upload images to S3.\n3. Call AWS Textract for OCR and Rekognition for object detection in parallel.\n4. Process images using OpenCV for line detection.\n5. Use Rekognition results to filter out non-wall elements.\n6. Combine AWS service responses with extracted wall segments.\n7. Apply the existing room detection algorithm.\n8. Return room detection results in PRD format.\n\nInclude error handling for AWS service failures and implement a fallback to our algorithms if AWS services are unavailable.\n</info added on 2025-11-09T01:43:04.785Z>",
-            "status": "pending",
+            "details": "Implement an API endpoint that accepts image files, uploads them to S3, calls AWS services in parallel, processes responses, and returns detected room segments.\n<info added on 2025-11-09T01:43:04.785Z>\nThe API endpoint should:\n\n1. Accept image file uploads using multipart/form-data.\n2. Upload images to S3.\n3. Call AWS Textract for OCR and Rekognition for object detection in parallel.\n4. Process images using OpenCV for line detection.\n5. Use Rekognition results to filter out non-wall elements.\n6. Combine AWS service responses with extracted wall segments.\n7. Apply the existing room detection algorithm.\n8. Return room detection results in PRD format.\n\nInclude error handling for AWS service failures and implement a fallback to our algorithms if AWS services are unavailable.\n</info added on 2025-11-09T01:43:04.785Z>\n<info added on 2025-11-09T03:18:27.673Z>\nCompleted API endpoint implementation for image processing:\n\n1. Created POST /detect-rooms-from-image endpoint:\n   - Accepts image file uploads (PNG, JPG, JPEG, BMP, TIFF)\n   - Validates file type and loads image using OpenCV\n   - Uploads image to S3 (folder: 'images/')\n   - Optional: Calls Textract and Rekognition in parallel\n   - Full processing pipeline:\n     * Image preprocessing (grayscale, noise reduction, contrast)\n     * Edge detection (Canny)\n     * Line detection (Hough transform)\n     * Line filtering (length, orientation, duplicates)\n     * Rekognition-based filtering (if enabled) - logs architectural elements\n     * Convert to wall segments with coordinate normalization\n     * Validate segments (using image_validator)\n     * Detect rooms using existing algorithm (tolerance=5.0)\n     * Return PRD-compliant format\n\n2. Features:\n   - Reuses existing AWS services (S3, Textract, Rekognition) from PDF endpoint\n   - Integrates all image processing modules (preprocessor, line_detector, line_filter)\n   - Uses image_validator for segment validation\n   - Handles errors gracefully with proper HTTP status codes\n   - Cleans up temporary files\n   - Returns array of rooms matching PRD format\n\n3. Error handling:\n   - File type validation\n   - Image loading validation\n   - No lines detected error\n   - No lines after filtering error\n   - Validation errors\n   - AWS service errors (logged, not fatal)\n\n4. Ready for testing ✅\n\nThe endpoint follows the same pattern as the PDF endpoint, ensuring consistency across the API.\n</info added on 2025-11-09T03:18:27.673Z>",
+            "status": "done",
             "testStrategy": "Test API with various image inputs and verify response accuracy, including AWS service integration."
           },
           {
@@ -1353,7 +1353,7 @@
     ],
     "metadata": {
       "created": "2025-11-08T20:18:15.982Z",
-      "updated": "2025-11-09T03:15:35.381Z",
+      "updated": "2025-11-09T03:18:28.176Z",
       "description": "Tasks for master context"
     }
   }
