@@ -1038,7 +1038,105 @@
         "priority": "high",
         "details": "Parse PDF vector graphics to extract wall line segments. Implement PDF parsing using PyMuPDF or pdfplumber, coordinate transformation to normalize PDF coordinates to 0-1000 range, line filtering to identify wall-like elements (thickness, style, layer), segment conversion to wall segment format, and validation to ensure extracted segments form valid wall connections. Create new API endpoint POST /detect-rooms-from-pdf that accepts PDF files and returns room detection results in the same format as /detect-rooms.",
         "testStrategy": "Test with various PDF types: CAD-generated PDFs (vector-based), scanned PDFs (raster embedded in PDF), multi-page blueprints, different coordinate systems. Compare extracted segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Target: ≥ 85% of walls correctly extracted, < 2% coordinate transformation error, < 10 seconds processing latency for typical PDF (1-5 pages), < 15% false positives.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up PDF Parsing Library",
+            "description": "Integrate PyMuPDF or pdfplumber for PDF parsing.",
+            "dependencies": [],
+            "details": "Install and configure PyMuPDF or pdfplumber to extract vector graphics from PDF files.",
+            "status": "pending",
+            "testStrategy": "Verify library setup by parsing sample PDFs and checking for successful extraction of vector data."
+          },
+          {
+            "id": 2,
+            "title": "Extract Vector Paths from PDFs",
+            "description": "Implement extraction of vector paths from PDF files.",
+            "dependencies": [
+              1
+            ],
+            "details": "Develop functionality to extract vector paths representing wall line segments from PDFs.",
+            "status": "pending",
+            "testStrategy": "Test extraction on various PDF samples to ensure paths are correctly identified."
+          },
+          {
+            "id": 3,
+            "title": "Coordinate Transformation Implementation",
+            "description": "Normalize PDF coordinates to a 0-1000 range.",
+            "dependencies": [
+              2
+            ],
+            "details": "Transform extracted vector coordinates to a standardized 0-1000 range for consistency.",
+            "status": "pending",
+            "testStrategy": "Validate coordinate transformation by comparing transformed coordinates against expected values."
+          },
+          {
+            "id": 4,
+            "title": "Line Filtering and Segment Conversion",
+            "description": "Filter lines and convert to wall segment format.",
+            "dependencies": [
+              3
+            ],
+            "details": "Filter extracted lines based on thickness, style, and layer, then convert to wall segment format.",
+            "status": "pending",
+            "testStrategy": "Ensure filtering criteria correctly identify wall-like elements and conversion is accurate."
+          },
+          {
+            "id": 5,
+            "title": "Create API Endpoint for Room Detection",
+            "description": "Develop POST /detect-rooms-from-pdf endpoint.",
+            "dependencies": [
+              4
+            ],
+            "details": "Implement API endpoint to accept PDFs and return room detection results in the specified format.",
+            "status": "pending",
+            "testStrategy": "Test API with various PDFs to ensure correct room detection and response format."
+          },
+          {
+            "id": 6,
+            "title": "Validate Extracted Segments",
+            "description": "Implement validation logic to ensure extracted segments form valid wall connections.",
+            "details": "Validate that extracted segments form a connected graph, verify minimum segment length, and check for reasonable wall density. Ensure segments can be processed by the existing room detection algorithm.",
+            "status": "pending",
+            "dependencies": [
+              4
+            ],
+            "parentTaskId": 20
+          },
+          {
+            "id": 7,
+            "title": "Create Frontend PDF Upload Component",
+            "description": "Build React component for PDF file upload using Material UI.",
+            "details": "Create a FileUpload component specifically for PDF files that integrates with the existing UI. Allow users to upload PDF files and display processing status. Use Material UI components for consistency.",
+            "status": "pending",
+            "dependencies": [
+              5
+            ],
+            "parentTaskId": 20
+          },
+          {
+            "id": 8,
+            "title": "Integrate PDF Upload with Room Detection",
+            "description": "Connect PDF upload component to the new API endpoint and display results.",
+            "details": "Update App.tsx to handle PDF uploads, call the /detect-rooms-from-pdf endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time).",
+            "status": "pending",
+            "dependencies": [
+              6
+            ],
+            "parentTaskId": 20
+          },
+          {
+            "id": 9,
+            "title": "Write Comprehensive Tests for PDF Extraction",
+            "description": "Create unit and integration tests for PDF extraction functionality.",
+            "details": "Test PDF parsing with various PDF types (CAD-generated, scanned, multi-page), coordinate transformation accuracy, line filtering effectiveness, and API endpoint integration. Compare results with ground truth JSON data.",
+            "status": "pending",
+            "dependencies": [
+              5
+            ],
+            "parentTaskId": 20
+          }
+        ]
       },
       {
         "id": 21,
@@ -1051,7 +1149,127 @@
         "priority": "high",
         "details": "Use OpenCV for image preprocessing, edge detection (Canny), and line detection (Hough transforms). Implement image preprocessing (grayscale conversion, noise reduction, contrast enhancement, rotation correction), edge detection with adaptive thresholds, line detection using Probabilistic Hough Line Transform, line filtering (by length, orientation, grouping parallel lines), segment conversion to wall segment format, and validation. Create new API endpoint POST /detect-rooms-from-image that accepts image files and returns room detection results. Handle variable image quality, noise, perspective distortion, different drawing styles, and text/annotations.",
         "testStrategy": "Test with various image types: high-resolution scanned blueprints, low-resolution photographs, different lighting conditions, various architectural styles, hand-drawn vs CAD-generated plans. Compare detected segments with ground truth JSON. Validate room detection accuracy matches JSON input method. Test parameter tuning for different image qualities. Target: ≥ 75% of walls correctly detected, < 25% false positive rate, < 15 seconds processing latency for typical image (2000x3000 pixels), works with images ≥ 150 DPI.",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Set Up OpenCV Environment",
+            "description": "Install and configure OpenCV for image processing tasks.",
+            "dependencies": [],
+            "details": "Ensure OpenCV is installed and configured in the development environment. Verify compatibility with existing libraries and tools.",
+            "status": "pending",
+            "testStrategy": "Verify OpenCV installation by running a sample image processing script."
+          },
+          {
+            "id": 2,
+            "title": "Implement Image Preprocessing",
+            "description": "Develop functions for grayscale conversion, noise reduction, and contrast enhancement.",
+            "dependencies": [
+              1
+            ],
+            "details": "Use OpenCV to convert images to grayscale, apply Gaussian blur for noise reduction, and enhance contrast using histogram equalization.",
+            "status": "pending",
+            "testStrategy": "Test preprocessing on various image types to ensure clarity and consistency."
+          },
+          {
+            "id": 3,
+            "title": "Develop Edge and Line Detection",
+            "description": "Implement edge detection using Canny and line detection using Hough transforms.",
+            "dependencies": [
+              2
+            ],
+            "details": "Apply Canny edge detection with adaptive thresholds. Use Probabilistic Hough Line Transform for detecting lines.",
+            "status": "pending",
+            "testStrategy": "Validate edge and line detection accuracy against known patterns in test images."
+          },
+          {
+            "id": 4,
+            "title": "Create API Endpoint for Image Processing",
+            "description": "Develop the POST /detect-rooms-from-image API endpoint.",
+            "dependencies": [
+              3
+            ],
+            "details": "Implement an API endpoint that accepts image files, processes them, and returns detected room segments.",
+            "status": "pending",
+            "testStrategy": "Test API with various image inputs and verify response accuracy."
+          },
+          {
+            "id": 5,
+            "title": "Design Frontend UI for Image Upload",
+            "description": "Create a user interface for uploading images and displaying results.",
+            "dependencies": [
+              4
+            ],
+            "details": "Develop a React component for image upload and display processing results using Material UI.",
+            "status": "pending",
+            "testStrategy": "Perform manual testing to ensure the UI is intuitive and responsive."
+          },
+          {
+            "id": 6,
+            "title": "Implement Line Filtering and Segment Conversion",
+            "description": "Filter detected lines and convert to wall segment format.",
+            "details": "Filter lines by length (walls typically longer than annotations), orientation (prefer horizontal/vertical but allow angles), group nearby parallel lines, and remove duplicates. Convert filtered lines to wall segment format with start/end coordinates.",
+            "status": "pending",
+            "dependencies": [
+              3
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 7,
+            "title": "Validate Extracted Segments from Images",
+            "description": "Implement validation logic for image-extracted segments.",
+            "details": "Ensure extracted segments form a connected graph, verify minimum segment count, and check for reasonable wall density. Validate that segments can be processed by the existing room detection algorithm.",
+            "status": "pending",
+            "dependencies": [
+              4
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 8,
+            "title": "Create Frontend Image Upload Component",
+            "description": "Build React component for image file upload (PNG, JPG, JPEG) using Material UI.",
+            "details": "Create a FileUpload component specifically for image files that integrates with the existing UI. Allow users to upload image files and display processing status. Use Material UI components for consistency.",
+            "status": "pending",
+            "dependencies": [
+              4
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 9,
+            "title": "Integrate Image Upload with Room Detection",
+            "description": "Connect image upload component to the new API endpoint and display results.",
+            "details": "Update App.tsx to handle image uploads, call the /detect-rooms-from-image endpoint, and display detected rooms in the existing visualization components. Show extraction metadata (segments_extracted, processing_time, image_dimensions).",
+            "status": "pending",
+            "dependencies": [
+              7
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 10,
+            "title": "Implement Parameter Tuning Interface",
+            "description": "Create UI controls for adjusting image processing parameters.",
+            "details": "Add optional UI controls (sliders, inputs) for Canny thresholds, Hough parameters, and minimum line length. Allow users to fine-tune detection for different image qualities. Store user preferences.",
+            "status": "pending",
+            "dependencies": [
+              7
+            ],
+            "parentTaskId": 21
+          },
+          {
+            "id": 11,
+            "title": "Write Comprehensive Tests for Image Processing",
+            "description": "Create unit and integration tests for raster image processing functionality.",
+            "details": "Test image preprocessing, edge detection, line detection with various image types (high-res scanned, low-res photos, different lighting, various styles). Compare results with ground truth JSON data. Test parameter tuning effectiveness.",
+            "status": "pending",
+            "dependencies": [
+              4
+            ],
+            "parentTaskId": 21
+          }
+        ]
       }
     ],
     "metadata": {
