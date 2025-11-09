@@ -251,7 +251,7 @@ function App() {
             Room Detection AI
           </Typography>
           <Typography variant="body1" color="text.secondary" paragraph>
-            Upload a JSON file with wall line segments, or a PDF blueprint file to detect rooms.
+            Upload a JSON file with wall line segments, a PDF blueprint, or an image file (PNG, JPG, JPEG, BMP, TIFF) to detect rooms.
           </Typography>
           
           <Paper elevation={3} sx={{ p: 3, mt: 3 }}>
