@@ -500,7 +500,6 @@ async def detect_rooms_from_image(
         # Detect rooms using existing algorithm
         print("🔍 Detecting rooms...")
         # Convert wall segments to temporary JSON for detect_rooms function
-        import json
         with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
             walls_data = [
                 {
