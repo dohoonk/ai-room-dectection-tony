@@ -124,32 +124,86 @@ class PDFParser:
                     continue
                 
                 # Handle different path command types
-                if item[0] == "l":  # Line command: ("l", x1, y1, x2, y2)
+                if item[0] == "l":  # Line command
+                    # PyMuPDF can return lines in two formats:
+                    # 1. ("l", x1, y1, x2, y2) - 5 elements (legacy format)
+                    # 2. ("l", Point(x1, y1), Point(x2, y2)) - 3 elements with Point objects (current format)
                     if len(item) == 5:
+                        # Legacy format: ("l", x1, y1, x2, y2)
                         start = (float(item[1]), float(item[2]))
                         end = (float(item[3]), float(item[4]))
+                    elif len(item) == 3:
+                        # Current format: ("l", Point(x1, y1), Point(x2, y2))
+                        start_point = item[1]
+                        end_point = item[2]
+                        # Handle both Point objects and tuples
+                        if hasattr(start_point, 'x') and hasattr(start_point, 'y'):
+                            start = (float(start_point.x), float(start_point.y))
+                        elif isinstance(start_point, (tuple, list)) and len(start_point) >= 2:
+                            start = (float(start_point[0]), float(start_point[1]))
+                        else:
+                            continue
                         
-                        # Only add if start and end are different
-                        if start != end:
-                            lines.append(PDFLineSegment(
-                                start=start,
-                                end=end,
-                                thickness=thickness,
-                                color=color,
-                                page_number=page_number
-                            ))
-                            current_point = end
+                        if hasattr(end_point, 'x') and hasattr(end_point, 'y'):
+                            end = (float(end_point.x), float(end_point.y))
+                        elif isinstance(end_point, (tuple, list)) and len(end_point) >= 2:
+                            end = (float(end_point[0]), float(end_point[1]))
+                        else:
+                            continue
+                    else:
+                        continue
+                    
+                    # Only add if start and end are different
+                    if start != end:
+                        lines.append(PDFLineSegment(
+                            start=start,
+                            end=end,
+                            thickness=thickness,
+                            color=color,
+                            page_number=page_number
+                        ))
+                        current_point = end
                 
-                elif item[0] == "m":  # Move command: ("m", x, y)
+                elif item[0] == "m":  # Move command
+                    # PyMuPDF can return moves in two formats:
+                    # 1. ("m", x, y) - 3 elements (legacy format)
+                    # 2. ("m", Point(x, y)) - 2 elements with Point object (current format)
                     if len(item) == 3:
+                        # Legacy format: ("m", x, y)
                         current_point = (float(item[1]), float(item[2]))
+                    elif len(item) == 2:
+                        # Current format: ("m", Point(x, y))
+                        point = item[1]
+                        if hasattr(point, 'x') and hasattr(point, 'y'):
+                            current_point = (float(point.x), float(point.y))
+                        elif isinstance(point, (tuple, list)) and len(point) >= 2:
+                            current_point = (float(point[0]), float(point[1]))
+                        else:
+                            continue
                 
-                elif item[0] == "c":  # Cubic Bezier curve: ("c", x1, y1, x2, y2, x3, y3)
+                elif item[0] == "c":  # Cubic Bezier curve
+                    # PyMuPDF can return curves in different formats:
+                    # 1. ("c", x1, y1, x2, y2, x3, y3) - 7 elements (legacy)
+                    # 2. ("c", Point(...), Point(...), Point(...), Point(end)) - 5 elements with Points (current)
                     # For curves, we'll approximate with a line from start to end
                     # This is a simplification - could be improved to extract more points
-                    if len(item) == 7 and current_point:
-                        start = current_point
-                        end = (float(item[5]), float(item[6]))  # End point of curve
+                    if current_point:
+                        if len(item) == 7:
+                            # Legacy format: ("c", x1, y1, x2, y2, x3, y3)
+                            start = current_point
+                            end = (float(item[5]), float(item[6]))  # End point of curve
+                        elif len(item) == 5:
+                            # Current format: ("c", Point(...), Point(...), Point(...), Point(end))
+                            end_point = item[4]  # Last point is the end
+                            if hasattr(end_point, 'x') and hasattr(end_point, 'y'):
+                                end = (float(end_point.x), float(end_point.y))
+                            elif isinstance(end_point, (tuple, list)) and len(end_point) >= 2:
+                                end = (float(end_point[0]), float(end_point[1]))
+                            else:
+                                continue
+                            start = current_point
+                        else:
+                            continue
                         
                         if start != end:
                             lines.append(PDFLineSegment(
