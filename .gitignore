@@ -133,3 +133,9 @@ ml/results/*.jpg
 
 # Demo scripts (may contain sensitive information or personal notes)
 DEMO_SCRIPT.md
+
+# ML training data and models (large files)
+ml/
+
+# Test files and data
+tests/
