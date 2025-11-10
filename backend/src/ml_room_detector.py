@@ -100,13 +100,15 @@ class MLRoomDetector:
                 # Convert mask to polygon
                 # Method 1: Use YOLOv8's built-in polygon extraction
                 if hasattr(result.masks, 'xy') and len(result.masks.xy) > i:
-                    # Get polygon coordinates (already normalized)
-                    polygon_normalized = result.masks.xy[i].flatten().tolist()
-                    polygon = self.denormalize_polygon(
-                        polygon_normalized,
-                        img_width,
-                        img_height
-                    )
+                    # result.masks.xy[i] returns pixel coordinates (already in original image size)
+                    # Shape: (N, 2) where N is number of points, each point is [x, y]
+                    # It's already a numpy array, no need for .cpu() or .numpy()
+                    polygon_array = result.masks.xy[i]
+                    if hasattr(polygon_array, 'cpu'):
+                        polygon_array = polygon_array.cpu().numpy()
+                    elif not isinstance(polygon_array, np.ndarray):
+                        polygon_array = np.array(polygon_array)
+                    polygon = [(int(point[0]), int(point[1])) for point in polygon_array]
                 else:
                     # Method 2: Extract polygon from mask using OpenCV
                     # Resize mask to original image size
@@ -168,8 +170,9 @@ class MLRoomDetector:
         """
         img_height, img_width = image.shape[:2]
         
-        # Run inference
-        results = self.model(image, conf=confidence_threshold, imgsz=imgsz, verbose=False)
+        # Run inference with low confidence to get all detections, then filter by our threshold
+        # YOLOv8's conf parameter filters before returning, so use a very low value
+        results = self.model(image, conf=0.001, imgsz=imgsz, verbose=False)
         
         # Extract polygons
         rooms = self.extract_polygons_from_predictions(
@@ -269,4 +272,5 @@ class MLRoomDetector:
             })
         
         return converted_rooms
+
 

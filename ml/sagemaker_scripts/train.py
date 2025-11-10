@@ -9,13 +9,14 @@ It downloads the dataset from S3 and trains the model.
 import os
 import subprocess
 import sys
+import boto3
 
 def install_dependencies():
     """Install required packages on SageMaker instance."""
     print("📦 Installing dependencies...")
     subprocess.check_call([
         sys.executable, "-m", "pip", "install", 
-        "ultralytics", "opencv-python", "numpy", "tqdm", "-q"
+        "ultralytics", "opencv-python", "numpy", "tqdm", "boto3", "-q"
     ])
 
 def download_dataset():
@@ -32,6 +33,42 @@ def download_dataset():
         return training_data
     else:
         raise FileNotFoundError(f"Dataset not found at {training_data}")
+
+def download_model_from_s3(s3_path: str, local_path: str) -> str:
+    """
+    Download model from S3 if path is an S3 URL.
+    
+    Args:
+        s3_path: S3 path (e.g., "s3://bucket/path/model.pt") or local path
+        local_path: Local path to save the model
+        
+    Returns:
+        Local path to the model file
+    """
+    if not s3_path.startswith("s3://"):
+        # Already a local path or model name (like "yolov8n-seg.pt")
+        return s3_path
+    
+    print(f"📥 Downloading model from S3: {s3_path}")
+    
+    # Parse S3 path
+    # s3://bucket-name/path/to/file.pt
+    s3_path = s3_path.replace("s3://", "")
+    parts = s3_path.split("/", 1)
+    bucket_name = parts[0]
+    s3_key = parts[1] if len(parts) > 1 else ""
+    
+    # Create local directory if needed
+    os.makedirs(os.path.dirname(local_path), exist_ok=True)
+    
+    # Download using boto3
+    s3_client = boto3.client('s3')
+    try:
+        s3_client.download_file(bucket_name, s3_key, local_path)
+        print(f"✅ Model downloaded to: {local_path}")
+        return local_path
+    except Exception as e:
+        raise FileNotFoundError(f"Failed to download model from S3: {str(e)}")
 
 def train_model(dataset_path):
     """Train YOLOv8 model."""
@@ -69,7 +106,15 @@ def train_model(dataset_path):
     epochs = int(os.environ.get("SM_HP_EPOCHS", "50"))
     imgsz = int(os.environ.get("SM_HP_IMGSZ", "1024"))
     batch = int(os.environ.get("SM_HP_BATCH", "8"))
-    model = os.environ.get("SM_HP_MODEL", "yolov8n-seg.pt")
+    model_param = os.environ.get("SM_HP_MODEL", "yolov8n-seg.pt")
+    
+    # Download model from S3 if needed
+    if model_param.startswith("s3://"):
+        local_model_path = "/tmp/pretrained_model.pt"
+        model = download_model_from_s3(model_param, local_model_path)
+    else:
+        # Use model as-is (local path or model name like "yolov8n-seg.pt")
+        model = model_param
     
     # Run YOLOv8 training
     cmd = [

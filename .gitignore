@@ -102,4 +102,34 @@ dev-debug.log
 
 # Task files
 # tasks.json
-# tasks/ 
+# tasks/
+
+# ML Training - Datasets (large files, don't commit)
+ml/datasets/archive/
+ml/datasets/yolo_format/
+ml/datasets/**/*.png
+ml/datasets/**/*.jpg
+ml/datasets/**/*.jpeg
+ml/datasets/**/*.json
+ml/datasets/**/*.txt
+ml/datasets/**/*.svg
+
+# ML Training - Models (large files)
+ml/models/*.pt
+ml/models/*.pth
+ml/models/*.onnx
+ml/models/*.pb
+
+# ML Training - Training outputs (auto-generated)
+ml/runs/
+ml/results/*.json
+ml/results/*.png
+ml/results/*.jpg
+
+# Keep directory structure but ignore contents
+!ml/datasets/.gitkeep
+!ml/models/.gitkeep
+!ml/results/.gitkeep
+
+# Demo scripts (may contain sensitive information or personal notes)
+DEMO_SCRIPT.md

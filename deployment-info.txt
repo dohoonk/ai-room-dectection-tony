@@ -1,0 +1,27 @@
+Room Detection AI - Deployment Information
+Generated: Mon Nov 10 00:44:48 CST 2025
+
+AWS Account: 971422717446
+Region: us-east-1
+
+S3 Buckets:
+- Frontend: room-detection-frontend-971422717446
+  URL: http://room-detection-frontend-971422717446.s3-website-us-east-1.amazonaws.com
+  
+- Backend Storage: room-detection-blueprints-971422717446
+  
+- Models: room-detection-models-971422717446
+  Model: s3://room-detection-models-971422717446/best.pt
+
+Docker:
+- ECR Repository: room-detection-backend
+- Image URI: 971422717446.dkr.ecr.us-east-1.amazonaws.com/room-detection-backend:latest
+
+Next Steps:
+1. Set up CloudFront distribution for frontend (optional but recommended)
+2. Create ECS cluster and service for backend
+3. Set up Application Load Balancer
+4. Configure environment variables in ECS task definition
+5. Set up custom domain (optional)
+
+See DEPLOYMENT_GUIDE.md for detailed instructions.
