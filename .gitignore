@@ -131,8 +131,9 @@ ml/results/*.jpg
 !ml/models/.gitkeep
 !ml/results/.gitkeep
 
-# Demo scripts (may contain sensitive information or personal notes)
-DEMO_SCRIPT.md
+# Documentation files (ignore all top-level .md files except README.md)
+/*.md
+!README.md
 
 # ML training data and models (large files)
 ml/
