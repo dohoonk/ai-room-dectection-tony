@@ -139,3 +139,15 @@ ml/
 
 # Test files and data
 tests/
+backend/venv/
+frontend/node_modules/
+ml/runs/
+ml/models/*.pt
+ml/models/*.pth
+*.tar.gz
+
+# Python virtual environments
+backend/venv/
+venv/
+__pycache__/
+*.pyc
